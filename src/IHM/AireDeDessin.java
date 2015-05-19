@@ -26,7 +26,7 @@ class AireDeDessin extends JComponent {
 	public AireDeDessin(int largeur, int hauteur, Plateau g) {
 		image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);;
 // a déplacer dans moteur		histo = new Historique(gaufre);
-		moteur = new Moteur(2);
+		moteur = new Moteur(2,0,0);
 // moteur		ordiFacile = new OrdiFacile();
 // moteur		humain = new Humain(false, true);
     }
