@@ -3,7 +3,7 @@ package IHM;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import Moteur.Gaufre;
+import Moteur.GameBoard;
 
 public class NouvelleApplication implements ActionListener {
 

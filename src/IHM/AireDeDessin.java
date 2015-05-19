@@ -9,20 +9,20 @@ import Moteur.Moteur;
 
 import javax.swing.*;
 
-import Moteur.Gaufre;
+import Moteur.GameBoard;
 
 
 class AireDeDessin extends JComponent {
 
 	private static final long serialVersionUID = 1L;
-	private Gaufre gaufre;
+	private GameBoard gaufre;
     private BufferedImage image;
     private Moteur moteur;
     private Historique histo;
     private OrdiFacile ordiFacile;
     private Humain humain;
 	
-	public AireDeDessin(int largeur, int hauteur, Gaufre g) {
+	public AireDeDessin(int largeur, int hauteur, GameBoard g) {
 		image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);;
 		gaufre = g;
 		histo = new Historique(gaufre);
@@ -127,12 +127,12 @@ class AireDeDessin extends JComponent {
 	}
 
 
-	public Gaufre getGaufre() {
+	public GameBoard getGaufre() {
 		return gaufre;
 	}
 
 
-	public void setGaufre(Gaufre gaufre) {
+	public void setGaufre(GameBoard gaufre) {
 		this.gaufre = gaufre;
 	}
 

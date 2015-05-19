@@ -3,7 +3,7 @@ import java.awt.image.*;
 
 import javax.swing.*;
 
-import Moteur.Gaufre;
+import Moteur.GameBoard;
 
 
 public class Fenetre implements Runnable {
@@ -20,7 +20,7 @@ public class Fenetre implements Runnable {
 
 		
 		
-		Gaufre g = new Gaufre(nbLigne,nbCol);
+		GameBoard g = new GameBoard(nbLigne,nbCol);
 		
 		aireDessin = new AireDeDessin(largeur,hauteur,g);
 		aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));

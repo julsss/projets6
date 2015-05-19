@@ -2,14 +2,14 @@ package IHM;
 import java.util.*;
 import java.awt.*;
 
-import Moteur.Gaufre;
+import Moteur.GameBoard;
 public class Historique{
 
   private LinkedList<Point> coup;
   private Stack<Point> annuler;
-  Gaufre gaufre;
+  GameBoard gaufre;
   
-  public Historique(Gaufre g){
+  public Historique(GameBoard g){
 	gaufre = g;
     coup = new LinkedList<Point>();
     annuler = new Stack<Point>();
