@@ -1,6 +1,8 @@
-package Moteur;
+package Modele;
 
 import java.awt.Point;
+
+import Moteur.Moteur;
 
 public class Plateau{
 

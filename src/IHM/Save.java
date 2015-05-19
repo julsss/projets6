@@ -5,8 +5,10 @@ import java.util.*;
 import java.lang.Math;
 import java.io.*;
 
-import Joueur.Joueur;
+import Modele.Joueur;
 
+
+// a metre dans le moteur 
 public class Save{
 
 public void sauvegarde( int gaufre [][], Joueur j1, Joueur j2){

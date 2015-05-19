@@ -1,5 +1,8 @@
 package Moteur;
 
+import Modele.Historique;
+import Modele.Plateau;
+
 //import package ihm
 
 public class Moteur{

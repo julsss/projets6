@@ -2,15 +2,15 @@ package IHM;
 import java.awt.*;
 import java.awt.image.*;
 
-import Joueur.Humain;
-import Joueur.Joueur;
-import Joueur.OrdiFacile;
-import Moteur.Historique;
-import Moteur.Moteur;
+import Modele.Historique;
+import Modele.Humain;
+import Modele.Joueur;
+import Modele.OrdiFacile;
+import Modele.Plateau;
 
 import javax.swing.*;
 
-import Moteur.Plateau;
+import Moteur.Moteur;
 
 
 class AireDeDessin extends JComponent {

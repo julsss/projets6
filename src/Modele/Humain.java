@@ -1,4 +1,4 @@
-package Joueur;
+package Modele;
 
 public class Humain extends Joueur{
 	

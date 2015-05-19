@@ -1,4 +1,4 @@
-package Joueur;
+package Modele;
 
 
 //import moteur.*;
@@ -9,6 +9,7 @@ import java.lang.Math;
 //import package ihm
 
 import Moteur.Moteur;
+
 
 public class OrdiFacile extends Joueur {
   

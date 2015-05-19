@@ -4,7 +4,7 @@ package IHM;
 import java.awt.Point;
 import java.awt.event.*;
 
-import Joueur.OrdiFacile;
+import Modele.OrdiFacile;
 
 class EcouteurDeSouris implements MouseListener {
     AireDeDessin aire;

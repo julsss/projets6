@@ -1,4 +1,4 @@
-package Moteur;
+package Modele;
 
 import java.awt.Point;
 

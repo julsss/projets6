@@ -3,7 +3,7 @@ import java.awt.image.*;
 
 import javax.swing.*;
 
-import Moteur.Plateau;
+import Modele.Plateau;
 
 
 public class Fenetre implements Runnable {

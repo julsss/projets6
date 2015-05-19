@@ -1,4 +1,4 @@
-package Joueur;
+package Modele;
 
 import java.awt.*;
 import java.*;
