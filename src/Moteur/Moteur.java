@@ -1,7 +1,5 @@
 package Moteur;
 
-import java.*;
-import java.util.*;
 //import package ihm
 
 public class Moteur{
