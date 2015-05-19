@@ -2,14 +2,14 @@ package IHM;
 import java.util.*;
 import java.awt.*;
 
-import Moteur.GameBoard;
+import Moteur.Plateau;
 public class Historique{
 
   private LinkedList<Point> coup;
   private Stack<Point> annuler;
-  GameBoard gaufre;
+  Plateau gaufre;
   
-  public Historique(GameBoard g){
+  public Historique(Plateau g){
 	gaufre = g;
     coup = new LinkedList<Point>();
     annuler = new Stack<Point>();
@@ -27,7 +27,7 @@ public class Historique{
 	
 	    while(iter.hasNext()){
 	    	Point tmp = (Point) iter.next();
-	    	gaufre.rayeCase(tmp.x, tmp.y);
+	    	//gaufre.rayeCase(tmp.x, tmp.y);
 	    }
 	}
   }
@@ -36,7 +36,7 @@ public class Historique{
 	if(!annuler.isEmpty()){
 	    Point p = annuler.pop();
 	    ajouter(p);
-	    gaufre.rayeCase(p);
+	   // gaufre.rayeCase(p);
 	}
   }
 }

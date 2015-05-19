@@ -3,7 +3,7 @@ import java.awt.image.*;
 
 import javax.swing.*;
 
-import Moteur.GameBoard;
+import Moteur.Plateau;
 
 
 public class Fenetre implements Runnable {
@@ -20,7 +20,7 @@ public class Fenetre implements Runnable {
 
 		
 		
-		GameBoard g = new GameBoard(nbLigne,nbCol);
+		/*Plateau g = new Plateau(nbLigne,nbCol);
 		
 		aireDessin = new AireDeDessin(largeur,hauteur,g);
 		aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
@@ -65,7 +65,7 @@ public class Fenetre implements Runnable {
 
 		// On fixe la taille et on demarre
 		frame.setSize(500, 250);
-		frame.setVisible(true);
+		frame.setVisible(true);*/
 	}
 
 	public static void main(String [] args) {

@@ -13,7 +13,7 @@ public class AnnulerApplication implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		aireDessin.getHisto().annuler();
+		//aireDessin.getHisto().annuler();
 		aireDessin.repaint();
 
 	}

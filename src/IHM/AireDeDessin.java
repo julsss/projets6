@@ -9,26 +9,25 @@ import Moteur.Moteur;
 
 import javax.swing.*;
 
-import Moteur.GameBoard;
+import Moteur.Plateau;
 
 
 class AireDeDessin extends JComponent {
 
 	private static final long serialVersionUID = 1L;
-	private GameBoard gaufre;
+	private Plateau gaufre;
     private BufferedImage image;
     private Moteur moteur;
     private Historique histo;
     private OrdiFacile ordiFacile;
     private Humain humain;
 	
-	public AireDeDessin(int largeur, int hauteur, GameBoard g) {
+	public AireDeDessin(int largeur, int hauteur, Plateau g) {
 		image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);;
-		gaufre = g;
-		histo = new Historique(gaufre);
+// a déplacer dans moteur		histo = new Historique(gaufre);
 		moteur = new Moteur();
-		ordiFacile = new OrdiFacile();
-		humain = new Humain(false, true);
+// moteur		ordiFacile = new OrdiFacile();
+// moteur		humain = new Humain(false, true);
     }
     
 	public Point calculPoint(Point p){
@@ -53,13 +52,7 @@ class AireDeDessin extends JComponent {
 		return temp;
 	}
 
-    public void afficherCroix(Point p) {
-    	if(moteur.coup_valide(gaufre.getGaufre(), p.x, p.y)){
-    		gaufre.rayeCase(p.x,p.y);
-    		histo.ajouter(new Point(p.x, p.y));
-    	}
-    }
-
+/*
 	public OrdiFacile getOrdiFacile() {
 		return ordiFacile;
 	}
@@ -79,11 +72,11 @@ class AireDeDessin extends JComponent {
 		this.humain = humain;
 	}
 
-
+*/
 	public void paintComponent(Graphics g) {
         // Graphics 2D est le vrai type de l'objet passe en parametre
         // Le cast permet d'avoir acces a un peu plus de primitives de dessin
-        int largeurCase, hauteurCase;
+/*        int largeurCase, hauteurCase;
         Graphics2D drawable = image.createGraphics();
 		g.drawImage(image, 0, 0, null);
 		
@@ -123,20 +116,19 @@ class AireDeDessin extends JComponent {
 		}
 		
 		g.drawImage(image, 0, 0, null);
-		
+*/		
 	}
-
-
-	public GameBoard getGaufre() {
+/*
+	public Plateau getPateau() {
 		return gaufre;
 	}
 
 
-	public void setGaufre(GameBoard gaufre) {
+	public void setPlateau(Plateau gaufre) {
 		this.gaufre = gaufre;
 	}
 
-
+*/
 	public BufferedImage getImage() {
 		return image;
 	}
@@ -156,7 +148,7 @@ class AireDeDessin extends JComponent {
 		this.moteur = moteur;
 	}
 
-
+/*
 	public Historique getHisto() {
 		return histo;
 	}
@@ -166,5 +158,5 @@ class AireDeDessin extends JComponent {
 		this.histo = histo;
 	}
 	
-	
+	*/
 }

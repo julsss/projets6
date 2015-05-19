@@ -13,7 +13,7 @@ public class RefaireApplication implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		aireDessin.getHisto().refaire();
+		//aireDessin.getHisto().refaire();
 		aireDessin.repaint();
 	}
 

@@ -30,7 +30,7 @@ public class OrdiFacile extends Joueur {
       coup.x= rand.nextInt(gaufre.length);
       coup.y = rand.nextInt(gaufre[0].length);
       
-      valide = m.coup_valide(gaufre, coup.x, coup.y);
+      //valide = m.coup_valide(gaufre, coup.x, coup.y);
       
       //perdant = m.coup_perdant(gaufre, coup.x, coup.y);
     }

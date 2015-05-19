@@ -2,14 +2,14 @@ package Moteur;
 
 import java.awt.Point;
 
-public class GameBoard{
+public class Plateau{
 
-	private Pion [][] gameBoard;
+	private Pion [][] plateau;
 	private int nbLigne, nbCol;
 	private int nbPionNoirWin, nbPionBlancWin, nbPionBleuWin, nbPionVertWin;
 	private int nbJoueur;
 
-	public GameBoard(int n,int m, int nbN, int nbB, int nbV, int nbBE, int nbJoueur)
+	public Plateau(int n,int m, int nbN, int nbB, int nbV, int nbBE, int nbJoueur)
 	{
 		nbLigne = n;
 		nbCol = m;
@@ -18,7 +18,7 @@ public class GameBoard{
 		setNbPionBleuWin(0);
 		setNbPionVertWin(0);
 		setNbJoueur(nbJoueur);
-		gameBoard = new Pion[nbLigne][nbCol];
+		plateau = new Pion[nbLigne][nbCol];
 	}
 
 	public void posePionCase(Point p, int couleur){
@@ -29,22 +29,22 @@ public class GameBoard{
 	{
 		if(couleur == Moteur.PIONNOIR)
 		{
-			gameBoard[x][y] = new Pion(new Point(x,y),Moteur.PIONNOIR, nbJoueur);
+			plateau[x][y] = new Pion(new Point(x,y),Moteur.PIONNOIR, nbJoueur);
 		}
 		else if(couleur == Moteur.PIONBLANC)
 		{
-			gameBoard[x][y] = new Pion(new Point(x,y),Moteur.PIONBLANC, nbJoueur);
+			plateau[x][y] = new Pion(new Point(x,y),Moteur.PIONBLANC, nbJoueur);
 		}
 		else if(couleur == Moteur.PIONBLEU)
 		{
-			gameBoard[x][y] = new Pion(new Point(x,y),Moteur.PIONBLEU, nbJoueur);
+			plateau[x][y] = new Pion(new Point(x,y),Moteur.PIONBLEU, nbJoueur);
 		}
 		else if(couleur == Moteur.PIONVERT)
 		{
-			gameBoard[x][y] = new Pion(new Point(x,y),Moteur.PIONVERT, nbJoueur);
+			plateau[x][y] = new Pion(new Point(x,y),Moteur.PIONVERT, nbJoueur);
 		}else
 		{
-			gameBoard[x][y] = new Pion();
+			plateau[x][y] = new Pion();
 		}
 	}
 	
@@ -52,14 +52,14 @@ public class GameBoard{
 	{
 		boolean okX = false;
 		boolean okY = false;
-		Pion pion = gameBoard[coorPion.x][coorPion.y];
+		Pion pion = plateau[coorPion.x][coorPion.y];
 		if(coorPion.x == coorTarget.x && coorTarget.y == coorPion.y)
 		{
 			System.out.println("les coordonnée de la cible et celle du pion sont les même");
 		}
 		else
 		{
-			if(!pion.isVide() && gameBoard[coorTarget.x][coorTarget.y].isVide())
+			if(!pion.isVide() && plateau[coorTarget.x][coorTarget.y].isVide())
 			{
 				Point first = pion.getFirst();
 				if(first.x == 4)
@@ -92,8 +92,8 @@ public class GameBoard{
 				}
 				if(okX && okY && !(coorPion.x == coorTarget.x && coorPion.y == coorTarget.y))
 				{
-					gameBoard[coorTarget.x][coorTarget.y] = gameBoard[coorPion.x][coorPion.y];
-					gameBoard[coorPion.x][coorPion.y] = new Pion();
+					plateau[coorTarget.x][coorTarget.y] = plateau[coorPion.x][coorPion.y];
+					plateau[coorPion.x][coorPion.y] = new Pion();
 				}
 			}
 			else
@@ -105,10 +105,10 @@ public class GameBoard{
 	}
 	
 	private void deleteWinPawn() {
-		Pion zeroZero = gameBoard[0][0];
-		Pion zeroQuatre = gameBoard[0][4];
-		Pion quatreZero = gameBoard[4][0];
-		Pion quatreQuatre = gameBoard[4][4];
+		Pion zeroZero = plateau[0][0];
+		Pion zeroQuatre = plateau[0][4];
+		Pion quatreZero = plateau[4][0];
+		Pion quatreQuatre = plateau[4][4];
 		
 		if(!zeroZero.isVide() && zeroZero.getFirst().x == 4 && zeroZero.getFirst().y == 4)
 		{
@@ -120,7 +120,7 @@ public class GameBoard{
 				nbPionNoirWin++;
 			else if (zeroZero.getCouleur() == Moteur.PIONVERT)
 				nbPionVertWin++;
-			gameBoard[0][0] = new Pion();
+			plateau[0][0] = new Pion();
 		}
 		else if(!zeroQuatre.isVide() && zeroQuatre.getFirst().x == 4 && zeroQuatre.getFirst().y == 0)
 		{
@@ -132,7 +132,7 @@ public class GameBoard{
 				nbPionNoirWin++;
 			else if (zeroQuatre.getCouleur() == Moteur.PIONVERT)
 				nbPionVertWin++;
-			gameBoard[0][4] = new Pion();
+			plateau[0][4] = new Pion();
 		}
 		else if(!quatreQuatre.isVide() && quatreQuatre.getFirst().x == 4 && quatreQuatre.getFirst().y == 0)
 		{
@@ -144,7 +144,7 @@ public class GameBoard{
 				nbPionNoirWin++;
 			else if (quatreQuatre.getCouleur() == Moteur.PIONVERT)
 				nbPionVertWin++;
-			gameBoard[0][0] = new Pion();
+			plateau[0][0] = new Pion();
 		}
 		else if(!quatreZero.isVide() && quatreZero.getFirst().x == 0 && quatreZero.getFirst().y == 4)
 		{
@@ -156,7 +156,7 @@ public class GameBoard{
 				nbPionNoirWin++;
 			else if (quatreZero.getCouleur() == Moteur.PIONVERT)
 				nbPionVertWin++;
-			gameBoard[0][4] = new Pion();
+			plateau[0][4] = new Pion();
 		}
 	}
 
@@ -175,33 +175,33 @@ public class GameBoard{
 		{			
 			for (int i = nbLigne -2; i >= 0; i--)
 			{
-				gameBoard[i+1][y] = gameBoard[i][y];
+				plateau[i+1][y] = plateau[i][y];
 			}
-			gameBoard[x][y] = new Pion();
+			plateau[x][y] = new Pion();
 		}
 		else if(x == nbLigne -1  && y == y1 && autorizeMove(color, x, y, x1, y1))
 		{			
 			for (int i = 1; i < nbLigne; i++)
 			{
-				gameBoard[i-1][y] = gameBoard[i][y];
+				plateau[i-1][y] = plateau[i][y];
 			}
-			gameBoard[x][y] = new Pion();
+			plateau[x][y] = new Pion();
 		}
 		else if (x == x1 && y == 0 && autorizeMove(color, x, y, x1, y1))
 		{			
 			for (int i = nbCol -2; i >= 0; i--)
 			{
-				gameBoard[x][i+1] = gameBoard[x][i];
+				plateau[x][i+1] = plateau[x][i];
 			}
-			gameBoard[x][y] = new Pion();
+			plateau[x][y] = new Pion();
 		}
 		else if(x == x1 && y == nbCol - 1 && autorizeMove(color, x, y, x1, y1))
 		{			
 			for (int i = 1; i < nbCol; i++)
 			{
-				gameBoard[x][i-1] = gameBoard[x][i];
+				plateau[x][i-1] = plateau[x][i];
 			}
-			gameBoard[x][y] = new Pion();
+			plateau[x][y] = new Pion();
 		}
 		else 
 		{
@@ -210,35 +210,35 @@ public class GameBoard{
 	}
 	
 	private boolean autorizeMove(int color, int x, int y, int x1, int y1) {
-		if ((x == 0 && y == y1) && gameBoard[nbLigne-1][y].isVide())
+		if ((x == 0 && y == y1) && plateau[nbLigne-1][y].isVide())
 		{
 			for (int i = nbLigne -1; i >= 0; i--)
 			{
-				if((gameBoard[i][y]).getCouleur() == color)
+				if((plateau[i][y]).getCouleur() == color)
 					return true;
 			}
 		}
-		else if(x == nbLigne -1  && y == y1 && gameBoard[0][y].isVide())
+		else if(x == nbLigne -1  && y == y1 && plateau[0][y].isVide())
 		{
 			for (int i = 0; i < nbLigne; i++)
 			{
-				if((gameBoard[i][y]).getCouleur() == color)
+				if((plateau[i][y]).getCouleur() == color)
 					return true;
 			}
 		}
-		else if (x == x1 && y == 0 && gameBoard[x][nbCol-1].isVide())
+		else if (x == x1 && y == 0 && plateau[x][nbCol-1].isVide())
 		{
 			for (int i = nbCol -1; i >= 0; i--)
 			{
-				if((gameBoard[i][y]).getCouleur() == color)
+				if((plateau[i][y]).getCouleur() == color)
 					return true;
 			}
 		}
-		else if(x == x1 && y == nbCol - 1 && gameBoard[x][0].isVide())
+		else if(x == x1 && y == nbCol - 1 && plateau[x][0].isVide())
 		{
 			for (int i = 0; i < nbCol; i++)
 			{
-				if((gameBoard[i][y]).getCouleur() == color)
+				if((plateau[i][y]).getCouleur() == color)
 					return true;
 			}
 		}
@@ -246,19 +246,19 @@ public class GameBoard{
 	}
 	
 	public void reinit(){
-		gameBoard = new Pion[nbLigne][nbCol];
+		plateau = new Pion[nbLigne][nbCol];
 		setNbPionBlancWin(0);
 		setNbPionNoirWin(0);
 		setNbPionBleuWin(0);
 		setNbPionVertWin(0);
 	}
 	
-	public Pion[][] getGameBoard() {
-		return gameBoard;
+	public Pion[][] getPlateau() {
+		return plateau;
 	}
 	
-	public void setGameBoard(Pion[][] g){
-		gameBoard = g;
+	public void setPlateau(Pion[][] g){
+		plateau = g;
 	}
 	
 	public int getNbLigne() {
