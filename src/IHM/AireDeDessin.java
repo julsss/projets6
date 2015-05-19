@@ -5,6 +5,7 @@ import java.awt.image.*;
 import Joueur.Humain;
 import Joueur.Joueur;
 import Joueur.OrdiFacile;
+import Moteur.Historique;
 import Moteur.Moteur;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ class AireDeDessin extends JComponent {
 	public AireDeDessin(int largeur, int hauteur, Plateau g) {
 		image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);;
 // a déplacer dans moteur		histo = new Historique(gaufre);
-		moteur = new Moteur();
+		moteur = new Moteur(2);
 // moteur		ordiFacile = new OrdiFacile();
 // moteur		humain = new Humain(false, true);
     }

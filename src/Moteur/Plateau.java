@@ -9,7 +9,7 @@ public class Plateau{
 	private int nbPionNoirWin, nbPionBlancWin, nbPionBleuWin, nbPionVertWin;
 	private int nbJoueur;
 
-	public Plateau(int n,int m, int nbN, int nbB, int nbV, int nbBE, int nbJoueur)
+	public Plateau(int n,int m, int nbJoueur)
 	{
 		nbLigne = n;
 		nbCol = m;

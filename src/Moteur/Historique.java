@@ -1,8 +1,9 @@
-package IHM;
+package Moteur;
+
 import java.util.*;
 import java.awt.*;
 
-import Moteur.Plateau;
+//TODO a refaire
 public class Historique{
 
   private LinkedList<Point> coup;
