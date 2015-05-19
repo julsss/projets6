@@ -15,7 +15,7 @@ public class Moteur{
 	public static final int PIONVERT = 3;
   public Moteur(int nbJoueur){
 	  plateau = new Plateau(5, 5, nbJoueur);
-	  historique = new Historique(plateau);
+	  historique = new Historique();
   }
 public Historique getHistorique() {
 	return historique;
