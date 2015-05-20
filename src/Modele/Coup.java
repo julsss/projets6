@@ -7,8 +7,9 @@ public class Coup {
 	public static final String mvPlateau = "plateau";
 	private String typeMouv;
 	private Point depart, destination;
+	private int couleur;
 	
-	public Coup(String mouv, Point dep, Point dest)
+	public Coup(String mouv, Point dep, Point dest, int couleur)
 	{
 		typeMouv = mouv;
 		depart = dep;
@@ -34,6 +35,18 @@ public class Coup {
 	}
 	public void setDestination(Point destination) {
 		this.destination = destination;
+	}
+
+
+
+	public int getCouleur() {
+		return couleur;
+	}
+
+
+
+	public void setCouleur(int couleur) {
+		this.couleur = couleur;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package Modele;
 
 import java.awt.Point;
+import java.util.LinkedList;
 
 import Moteur.Moteur;
 
@@ -247,6 +248,108 @@ public class Plateau{
 		return false;
 	}
 	
+	public LinkedList<Coup> coupPossibleJoueur(int couleur)
+	{
+		LinkedList<Coup> coupPossible = new LinkedList<Coup>();
+		for(int i = 0; i < nbLigne; i++)
+		{
+			for(int j = 0; j < nbCol; j++)
+			{
+				if(plateau[i][j].getCouleur() == couleur)
+				{
+					LinkedList<Coup> tmp = coupPossiblePion(i, j);
+					while(!tmp.isEmpty())
+					{
+						coupPossible.add(tmp.removeFirst());
+					}
+					tmp = coupPossiblePlateau(i, j, couleur);
+					while(!tmp.isEmpty())
+					{
+						coupPossible.add(tmp.removeFirst());
+					}
+				}
+			}
+		}
+		return coupPossible;
+		
+	}
+	
+	public LinkedList<Coup> coupPossiblePlateau(int i, int j, int couleur) {
+		LinkedList<Coup> coupPossible = new LinkedList<Coup>();
+		if(plateau[0][j].isVide())
+			coupPossible.add(new Coup(Coup.mvPlateau, new Point(nbLigne-1, j), new Point(nbLigne-2, j), couleur));
+		if(plateau[nbLigne-1][j].isVide())
+			coupPossible.add(new Coup(Coup.mvPlateau, new Point(0, j), new Point(1, j), couleur));
+		if(plateau[i][0].isVide())
+			coupPossible.add(new Coup(Coup.mvPlateau, new Point(i, nbCol -1), new Point(i, nbCol -2), couleur));
+		if(plateau[i][nbCol-1].isVide())
+			coupPossible.add(new Coup(Coup.mvPlateau, new Point(i, 0), new Point(i, 1), couleur));
+		return coupPossible;
+	}
+
+	public LinkedList<Coup> coupPossiblePion(int i, int j) {
+		Pion pion = plateau[i][j];
+		LinkedList<Coup> coupPossible = new LinkedList<Coup>();
+		Point first = pion.getFirst();
+		if(first.x ==  0)
+		{
+			if(i < nbLigne -1 && plateau[i+1][j].isVide())
+			{
+				coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i+1, j), pion.getCouleur()));
+			}
+			if(first.y == 0)
+			{
+				if(j < nbCol -1)
+				{
+					if(plateau[i][j+1].isVide())
+						coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i, j+1), pion.getCouleur()));
+					if(plateau[i+1][j+1].isVide())
+						coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i+1, j+1), pion.getCouleur()));
+				}
+			}
+			if(first.y == 4)
+			{
+				if(j > 0)
+				{
+					if(plateau[i][j-1].isVide())
+						coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i, j-1), pion.getCouleur()));
+					if(plateau[i+1][j-1].isVide())
+						coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i+1, j-1), pion.getCouleur()));
+				}
+			}
+				
+		}
+		else if(first.x ==  4)
+		{
+			if(i > 0 && plateau[i-1][j].isVide())
+			{
+				coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i-1, j), pion.getCouleur()));
+			}
+			if(first.y == 0)
+			{
+				if(j < nbCol -1)
+				{
+					if(plateau[i][j+1].isVide())
+						coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i, j+1), pion.getCouleur()));
+					if(plateau[i-1][j+1].isVide())
+						coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i-1, j+1), pion.getCouleur()));
+				}
+			}
+			if(first.y == 4)
+			{
+				if(j > 0)
+				{
+					if(plateau[i][j-1].isVide())
+						coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i, j-1), pion.getCouleur()));
+					if(plateau[i-1][j-1].isVide())
+						coupPossible.add(new Coup(Coup.mvPion, new Point(i, j), new Point(i-1, j-1), pion.getCouleur()));
+				}
+			}
+				
+		}
+		return coupPossible;
+	}
+
 	public void reinit(){
 		plateau = new Pion[nbLigne][nbCol];
 		setNbPionBlancWin(0);
