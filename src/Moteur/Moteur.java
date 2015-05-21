@@ -112,7 +112,6 @@ public class Moteur{
 				}
 				plateau.add(tmp);
 			}
-			System.out.println(plateau);
 		}
 	}
 
@@ -235,7 +234,9 @@ public class Moteur{
 
 		return listeCase;
 	}
-
+	public void joue_coup(Point p1, Point p2){
+		
+	}
 	public void joue_coup(Coup m){
 		ArrayList<Case> tmp = new ArrayList<Case>();
 		if(m instanceof DepRang){
@@ -292,5 +293,62 @@ public class Moteur{
 		histo.ajouter(m);
 	}
 
+	public void annuler(){
+		Coup m = histo.annuler();
+		ArrayList<Case> tmp = new ArrayList<Case>();
+		if(m instanceof DepRang){
+			
+			DepRang d = new DepRang(((DepRang) m).dir, ((DepRang) m).i, ((DepRang) m).j);
+			if(d.dir == Direction.BAS){
+				for(int i = 0; i < N-1; i++){
+					tmp = plateau.get(i);
+					tmp.set(d.j,plateau.get(i+1).get(d.j));
+					plateau.set(i, tmp);
+					tmp = new ArrayList<Case>();
+				}
+				tmp = plateau.get(N-1);
+				tmp.set(d.j, Case.LIBRE);
+				plateau.set(N-1, tmp);
+			}
+			else if(d.dir == Direction.HAUT){
+				for(int i = N-1; i > 0; i--){
+					tmp = plateau.get(i);
+					tmp.set(d.j,plateau.get(i-1).get(d.j));
+					plateau.set(i, tmp);
+					tmp = new ArrayList<Case>();
+				}
+				tmp = plateau.get(0);
+				tmp.set(d.j, Case.LIBRE);
+				plateau.set(0, tmp);
+			}
+			else if(d.dir == Direction.DROITE){
+				tmp = plateau.get(d.i);
+				for(int i = 0; i < N-1; i++){
+					tmp.set(i, tmp.get(i+1));
+				}
+				tmp.set(N-1, Case.LIBRE);
+				plateau.set(d.i, tmp);
+			}
+			else if(d.dir == Direction.GAUCHE){
+				tmp = plateau.get(d.i);
+				for(int i = N-1; i > 0; i--){
+					tmp.set(i, tmp.get(i-1));
+				}
+				tmp.set(0, Case.LIBRE);
+				plateau.set(d.i, tmp);
+			}
+		}
+		else if(m instanceof DepPion){
+			DepPion pion = new DepPion(((DepPion) m).arrive,((DepPion) m).depart);
+			tmp = plateau.get(pion.depart.x);
+			tmp.set(pion.depart.y, plateau.get(pion.arrive.x).get(pion.arrive.y));
+			plateau.set(pion.depart.x, tmp);
+			tmp = plateau.get(pion.arrive.x);
+			tmp.set(pion.arrive.y, Case.LIBRE);
+			plateau.set(pion.arrive.x, tmp);
+		}
+	}
+	public void refaire(){
+	}
 }
 
