@@ -1,16 +1,7 @@
 package Modele;
-
-
-//import moteur.*;
 import java.awt.*;
-import java.*;
 import java.util.*;
-import java.lang.Math;
-//import package ihm
-
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
+//import Moteur.Coup;
 import Moteur.Moteur;
 
 
@@ -41,7 +32,7 @@ public class OrdiFacile extends Joueur {
 		return coup;
 	}
 
-	public int alphabeta(int p, int alpha, int beta, Plateau plateau){
+	/*public int alphabeta(int p, int alpha, int beta, Moteur m){
 		alpha = Integer.MIN_VALUE;
 		beta = Integer.MAX_VALUE;
 		if(plateau.getNbPionNoirWin() == 3 || plateau.getNbPionBlancWin() == 3 || p == 0){
@@ -64,7 +55,7 @@ public class OrdiFacile extends Joueur {
 			
 		return alpha;
 	}
-
+*/
 	
 
 	private int eval() {

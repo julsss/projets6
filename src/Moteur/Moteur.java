@@ -1,13 +1,11 @@
 package Moteur;
 
 import java.awt.Point;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.LinkedList;
+
 
 import Modele.Historique;
 import Modele.Joueur;
-import Modele.Plateau;
 
 //import package ihm
 
@@ -29,6 +27,7 @@ public class Moteur{
 	int nbBillej2;
 	Joueur j1;
 	Joueur j2;
+	Historique histo;
 	public static final int N=5;
 	ArrayList<ArrayList<Case>> plateau;
 	public Moteur ( Joueur j1, Joueur j2){
@@ -37,6 +36,7 @@ public class Moteur{
 		nbBillej2 = 5;
 		this.j1=j1;
 		this.j2=j2;
+		histo = new Historique();
 	}
 
 	public int getNbBillej1() {
@@ -166,7 +166,7 @@ public class Moteur{
 					return true;
 				}
 			}
-			
+
 		}
 		return false;
 	}
@@ -189,7 +189,7 @@ public class Moteur{
 		ArrayList<Coup> listeCoup = new ArrayList<Coup>();
 		ArrayList<Point> listeCase =  listeCaseJoueur(j1);
 		Point c;
-		
+
 		for(int i = 0; i < listeCase.size(); i++){
 			c = listeCase.get(i);
 			if(plateau.get(0).get(c.y) == Case.LIBRE){
@@ -220,11 +220,11 @@ public class Moteur{
 		}
 		return listeCoup;
 	}
-	
-	
+
+
 	public ArrayList<Point> listeCaseJoueur(Joueur j1){
 		ArrayList<Point> listeCase = new ArrayList<Point>();
-		
+
 		for(int i = 0; i < N; i++){
 			for(int j = 0; j < N; j++){
 				if(this.j1 == j1 && plateau.get(i).get(j) == Case.PJ1){
@@ -232,8 +232,65 @@ public class Moteur{
 				}
 			}
 		}
-		
+
 		return listeCase;
 	}
+
+	public void joue_coup(Coup m){
+		ArrayList<Case> tmp = new ArrayList<Case>();
+		if(m instanceof DepRang){
+			
+			DepRang d = new DepRang(((DepRang) m).dir, ((DepRang) m).i, ((DepRang) m).j);
+			if(d.dir == Direction.BAS){
+				for(int i = N-1; i > 0; i--){
+					tmp = plateau.get(i);
+					tmp.set(d.j,plateau.get(i-1).get(d.j));
+					plateau.set(i, tmp);
+					tmp = new ArrayList<Case>();
+				}
+				tmp = plateau.get(0);
+				tmp.set(d.j, Case.LIBRE);
+				plateau.set(0, tmp);
+			}
+			else if(d.dir == Direction.HAUT){
+				for(int i = 0; i < N-1; i++){
+					tmp = plateau.get(i);
+					tmp.set(d.j,plateau.get(i+1).get(d.j));
+					plateau.set(i, tmp);
+					tmp = new ArrayList<Case>();
+				}
+				tmp = plateau.get(N-1);
+				tmp.set(d.j, Case.LIBRE);
+				plateau.set(N-1, tmp);
+			}
+			else if(d.dir == Direction.DROITE){
+				tmp = plateau.get(d.i);
+				for(int i = N-1; i > 0; i--){
+					tmp.set(i, tmp.get(i-1));
+				}
+				tmp.set(0, Case.LIBRE);
+				plateau.set(d.i, tmp);
+			}
+			else if(d.dir == Direction.GAUCHE){
+				tmp = plateau.get(d.i);
+				for(int i = 0; i < N-1; i++){
+					tmp.set(i, tmp.get(i+1));
+				}
+				tmp.set(N-1, Case.LIBRE);
+				plateau.set(d.i, tmp);
+			}
+		}
+		else if(m instanceof DepPion){
+			DepPion pion = new DepPion(((DepPion) m).depart,((DepPion) m).arrive);
+			tmp = plateau.get(pion.arrive.x);
+			tmp.set(pion.arrive.y, plateau.get(pion.depart.x).get(pion.depart.y));
+			plateau.set(pion.arrive.x, tmp);
+			tmp = plateau.get(pion.depart.x);
+			tmp.set(pion.depart.y, Case.LIBRE);
+			plateau.set(pion.depart.x, tmp);
+		}
+		histo.ajouter(m);
+	}
+
 }
 

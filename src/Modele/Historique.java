@@ -4,20 +4,20 @@ import java.util.*;
 
 public class Historique{
 
-  private LinkedList<Coup> coup;
-  private Stack<Coup> annuler;
+  private LinkedList<Moteur.Coup> coup;
+  private Stack<Moteur.Coup> annuler;
   
   public Historique(){
-    coup = new LinkedList<Coup>();
-    annuler = new Stack<Coup>();
+    coup = new LinkedList<Moteur.Coup>();
+    annuler = new Stack<Moteur.Coup>();
   }
 
- public void ajouter(Coup p){
-	 annuler = new Stack<Coup>();
+ public void ajouter(Moteur.Coup p){
+	 annuler = new Stack<Moteur.Coup>();
 	 coup.addLast(p);
  }
 
- public Coup annuler()
+ public Moteur.Coup annuler()
  {
 	  if(!coup.isEmpty())
 	  {
@@ -28,11 +28,11 @@ public class Historique{
 	  return null;
 }	
 
-public Coup refaire()
+public Moteur.Coup refaire()
 {
 	if(!annuler.isEmpty())
 	{
-		Coup p = annuler.pop();
+		Moteur.Coup p = annuler.pop();
 		coup.addLast(p);
 		return p;
 	}		
