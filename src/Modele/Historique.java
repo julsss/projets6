@@ -13,7 +13,8 @@ public class Historique{
   }
 
  public void ajouter(Coup p){
-    coup.addLast(p);
+	 annuler = new Stack<Coup>();
+	 coup.addLast(p);
  }
 
  public Coup annuler()
@@ -32,7 +33,7 @@ public Coup refaire()
 	if(!annuler.isEmpty())
 	{
 		Coup p = annuler.pop();
-		ajouter(p);
+		coup.addLast(p);
 		return p;
 	}		
 	return null;
