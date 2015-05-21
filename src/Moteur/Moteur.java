@@ -349,6 +349,8 @@ public class Moteur{
 		}
 	}
 	public void refaire(){
+		Coup m = histo.refaire();
+		joue_coup(m);
 	}
 }
 

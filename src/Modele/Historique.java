@@ -17,8 +17,10 @@ public class Historique{
 
 	public void ajouter(Moteur.Coup p){
 		if(supprAnnuler)
+		{
 			annuler = new Stack<Moteur.Coup>();
-		coup.addLast(p);
+			coup.addLast(p);
+		}
 		supprAnnuler = false;
 	}
 
