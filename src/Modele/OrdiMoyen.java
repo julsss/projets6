@@ -7,14 +7,19 @@ import Moteur.Moteur.*;
 
 public class OrdiMoyen extends Joueur {
 
+	public Coup coupOrdiMoyen;
+	public int profondeurMoyen;
+	
 	public OrdiMoyen(){
 		super(true, false);
+		profondeurMoyen = 3;
 	}
 
 	public OrdiMoyen(int score){
 		super(score,true);
 	}
-
+	
+	//Fonction appeler avec profondeurMoyen en parametres
 	public double alphabeta(int p, double alpha, double beta, Moteur m){
 		alpha = Integer.MIN_VALUE;
 		beta = Integer.MAX_VALUE;
@@ -23,13 +28,14 @@ public class OrdiMoyen extends Joueur {
 		}
 		Coup meilleur_coup;	//A QUEL MOMENT RENVOYE LE COUP
 		
-		for(Coup c: m.listeCoupPossible(m.getJ1())){
+		for(Coup c: m.listeCoupPossible(this)){
 			m.joue_coup(c);
 			double score = - alphabeta(p-1,-beta,-alpha,m);
 			m.annuler();
 			if(score >= alpha){
 				alpha = score;
 				meilleur_coup = c;
+				this.coupOrdiMoyen = meilleur_coup;
 				if(alpha >= beta){
 					break;
 				}
@@ -39,18 +45,16 @@ public class OrdiMoyen extends Joueur {
 		return alpha;
 	}
 
-	
-
 	double [][] evalPlacementJ1 = {
 			{4,   3,   2,   1,   0},
 			{4.5, 3.5, 2.5, 1.5, 1},
 			{5,   4,   3,   2.5, 2},
 			{5.5, 4.5, 4,   3.5, 3},
-			{6,   5.5, 5,   4.5, 4}
+			{100, 5.5, 5,   4.5, 4}
 		};
 
 	double [][] evalPlacementJ2 = {
-			{4, 4.5, 5,   5.5,   6},
+			{4, 4.5, 5,   5.5, 100},
 			{3, 3.5, 4,   4.5, 5.5},
 			{2, 2.5, 3,   4,     5},
 			{1, 1.5, 2.5, 3.5, 4.5},
