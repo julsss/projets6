@@ -20,8 +20,9 @@ public class OrdiFacile extends Joueur {
 		ArrayList<Coup> liste = m.listeCoupPossible(this);
 		
 		int taille = liste.size();
-		int val = rand.nextInt(taille);
-		
+		System.out.println("taille : " + taille);
+		int val = rand.nextInt(taille-1);
+		System.out.println("val : " +val);
 		return liste.get(val);
 	}
 }

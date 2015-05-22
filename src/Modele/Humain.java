@@ -7,7 +7,7 @@ public class Humain extends Joueur{
 	}
 	
 	public Humain(boolean b, boolean t){
-		super(false, true);
+		super(b, t);
 	}
 	
 	public Humain(int score, boolean b) {
