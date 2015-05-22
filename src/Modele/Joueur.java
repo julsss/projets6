@@ -5,17 +5,20 @@ import java.*;
 import java.util.*;
 import java.lang.Math;
 
+import Moteur.Moteur;
+
 
 public class Joueur{
   
   int score;
   boolean estOrdi;
   boolean estMonTour;
-  
-  public Joueur(boolean b, boolean t){
+  Moteur m;
+  public Joueur(boolean b, boolean t, Moteur m){
 	this.estOrdi = b;
     this.score = 0;
     this.estMonTour = t;
+    this.m=m;
   }
   
   public Joueur(boolean b){

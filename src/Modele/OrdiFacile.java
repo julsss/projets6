@@ -7,8 +7,8 @@ import Moteur.Moteur;
 
 public class OrdiFacile extends Joueur {
 
-	public OrdiFacile(){
-		super(true, false);
+	public OrdiFacile(Moteur m){
+		super(true, false,m);
 	}
 
 	public OrdiFacile(int score){
