@@ -23,13 +23,18 @@ public class Moteur{
 		PJ1,
 		PJ2
 	}
+	
 	int nbBillej1;
 	int nbBillej2;
+	
 	Joueur j1;
 	Joueur j2;
+	
 	Historique histo;
 	public static final int N=5;
+
 	ArrayList<ArrayList<Case>> plateau;
+	
 	public Moteur ( Joueur j1, Joueur j2){
 		init_plateau();
 		nbBillej1 = 5;
@@ -37,6 +42,30 @@ public class Moteur{
 		this.j1=j1;
 		this.j2=j2;
 		histo = new Historique();
+	}
+
+	public Joueur getJ1() {
+		return j1;
+	}
+
+	public void setJ1(Joueur j1) {
+		this.j1 = j1;
+	}
+
+	public Joueur getJ2() {
+		return j2;
+	}
+
+	public void setJ2(Joueur j2) {
+		this.j2 = j2;
+	}
+	
+	public ArrayList<ArrayList<Case>> getPlateau() {
+		return plateau;
+	}
+
+	public void setPlateau(ArrayList<ArrayList<Case>> plateau) {
+		this.plateau = plateau;
 	}
 
 	public int getNbBillej1() {
@@ -150,7 +179,7 @@ public class Moteur{
 	public boolean estCoupPossible(Joueur j1, DepRang c){
 
 		if( c.i > 0 && c.i < N && c.j > 0 && c.j <N){
-			//ajout if avec fonction teste joueur + pion dans la rangé
+			//ajout if avec fonction teste joueur + pion dans la rangï¿½
 			if(billedansrange(j1,c)){
 				if(c.dir == Direction.BAS && plateau.get(N-1).get(c.j) == Case.LIBRE){
 					return true;
@@ -234,9 +263,11 @@ public class Moteur{
 
 		return listeCase;
 	}
+	
 	public void joue_coup(Point p1, Point p2){
 		
 	}
+	
 	public void joue_coup(Coup m){
 		ArrayList<Case> tmp = new ArrayList<Case>();
 		if(m instanceof DepRang){
@@ -348,6 +379,7 @@ public class Moteur{
 			plateau.set(pion.arrive.x, tmp);
 		}
 	}
+	
 	public void refaire(){
 		Coup m = histo.refaire();
 		joue_coup(m);

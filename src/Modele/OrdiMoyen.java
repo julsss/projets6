@@ -1,0 +1,96 @@
+package Modele;
+import java.awt.*;
+import java.util.*;
+
+import Moteur.*;
+import Moteur.Moteur.*;
+
+public class OrdiMoyen extends Joueur {
+
+	public OrdiMoyen(){
+		super(true, false);
+	}
+
+	public OrdiMoyen(int score){
+		super(score,true);
+	}
+
+	public double alphabeta(int p, double alpha, double beta, Moteur m){
+		alpha = Integer.MIN_VALUE;
+		beta = Integer.MAX_VALUE;
+		if(m.getNbBillej1() == 2 || m.getNbBillej2() == 2 || p == 0){
+			return eval(m);
+		}
+		Coup meilleur_coup;	//A QUEL MOMENT RENVOYE LE COUP
+		
+		for(Coup c: m.listeCoupPossible(m.getJ1())){
+			m.joue_coup(c);
+			double score = - alphabeta(p-1,-beta,-alpha,m);
+			m.annuler();
+			if(score >= alpha){
+				alpha = score;
+				meilleur_coup = c;
+				if(alpha >= beta){
+					break;
+				}
+			}
+		}
+			
+		return alpha;
+	}
+
+	
+
+	double [][] evalPlacementJ1 = {
+			{4,   3,   2,   1,   0},
+			{4.5, 3.5, 2.5, 1.5, 1},
+			{5,   4,   3,   2.5, 2},
+			{5.5, 4.5, 4,   3.5, 3},
+			{6,   5.5, 5,   4.5, 4}
+		};
+
+	double [][] evalPlacementJ2 = {
+			{4, 4.5, 5,   5.5,   6},
+			{3, 3.5, 4,   4.5, 5.5},
+			{2, 2.5, 3,   4,     5},
+			{1, 1.5, 2.5, 3.5, 4.5},
+			{0, 1,   2,   3,     4}
+		};
+		
+	//Passage d'un moteur en parametre : j1 -> m.j1, etc...
+	private double eval(Moteur m) {
+	
+		double score = 0;
+		
+		//Nombre de billes perso
+		score += 5 - m.getNbBillej1();
+		
+		//Nombre de billes adverses		
+		score -= 5 - m.getNbBillej2();
+		
+		
+		//Distance euclidienne des billes Joueur 1 et Joueur 2
+		for(int i=0;i<Moteur.N;i++){
+			for(int j=0;i<Moteur.N;j++){
+				if(this == m.getJ1()){
+					if(m.getPlateau().get(i).get(j) == Case.PJ1)
+						score += evalPlacementJ1[i][j];
+					
+					else if(m.getPlateau().get(i).get(j) == Case.PJ2)
+						score -= evalPlacementJ2[i][j];
+				}
+				else if(this == m.getJ2()){
+					if(m.getPlateau().get(i).get(j) == Case.PJ1)
+						score -= evalPlacementJ1[i][j];
+					
+					else if(m.getPlateau().get(i).get(j) == Case.PJ2)
+						score += evalPlacementJ2[i][j];
+				}
+			}
+		}
+		
+		
+		return score;
+	}
+
+}
