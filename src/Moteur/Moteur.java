@@ -60,6 +60,14 @@ public class Moteur{
 		this.j2 = j2;
 	}
 	
+	public ArrayList<ArrayList<Case>> getPlateau() {
+		return plateau;
+	}
+
+	public void setPlateau(ArrayList<ArrayList<Case>> plateau) {
+		this.plateau = plateau;
+	}
+
 	public int getNbBillej1() {
 		return nbBillej1;
 	}

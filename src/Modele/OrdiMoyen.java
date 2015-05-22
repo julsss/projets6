@@ -1,9 +1,9 @@
 package Modele;
 import java.awt.*;
 import java.util.*;
-//import Moteur.Coup;
-import Moteur.Moteur;
 
+import Moteur.*;
+import Moteur.Moteur.*;
 
 public class OrdiMoyen extends Joueur {
 
@@ -15,30 +15,30 @@ public class OrdiMoyen extends Joueur {
 		super(score,true);
 	}
 
-	/*public int alphabeta(int p, int alpha, int beta, Moteur m){
+	public double alphabeta(int p, double alpha, double beta, Moteur m){
 		alpha = Integer.MIN_VALUE;
 		beta = Integer.MAX_VALUE;
-		if(plateau.getNbPionNoirWin() == 3 || plateau.getNbPionBlancWin() == 3 || p == 0){
-			return eval();
+		if(m.getNbBillej1() == 2 || m.getNbBillej2() == 2 || p == 0){
+			return eval(m);
 		}
-		Coup meilleur_coup;
-		Coup m;
-		//for(){
-			plateau.joue_coup(m);
-			int score = - alphabeta(p-1,-beta,-alpha,plateau);
-			plateau.annuler_coup(m);
+		Coup meilleur_coup;	//A QUEL MOMENT RENVOYE LE COUP
+		
+		for(Coup c: m.listeCoupPossible(m.getJ1())){
+			m.joue_coup(c);
+			double score = - alphabeta(p-1,-beta,-alpha,m);
+			m.annuler();
 			if(score >= alpha){
 				alpha = score;
-				meilleur_coup = m;
+				meilleur_coup = c;
 				if(alpha >= beta){
 					break;
 				}
 			}
-		//}
+		}
 			
 		return alpha;
 	}
-*/
+
 	
 
 	double [][] evalPlacementJ1 = {
@@ -50,37 +50,47 @@ public class OrdiMoyen extends Joueur {
 		};
 
 	double [][] evalPlacementJ2 = {
-			{4,4,4,4,4},
-			{3,3,3,3,4},
-			{2,2,2,3,4},
-			{1,1,2,3,4},
-			{0,1,2,3,4}
+			{4, 4.5, 5,   5.5,   6},
+			{3, 3.5, 4,   4.5, 5.5},
+			{2, 2.5, 3,   4,     5},
+			{1, 1.5, 2.5, 3.5, 4.5},
+			{0, 1,   2,   3,     4}
 		};
 		
 	//Passage d'un moteur en parametre : j1 -> m.j1, etc...
-	private int eval(Moteur m) {
+	private double eval(Moteur m) {
 	
-		int score = 0;
+		double score = 0;
 		
 		//Nombre de billes perso
-		score += 5 - m.j1.getNbBilles();
+		score += 5 - m.getNbBillej1();
 		
 		//Nombre de billes adverses		
-		score -= 5 - j2.getNbBilles();
+		score -= 5 - m.getNbBillej2();
 		
 		
 		//Distance euclidienne des billes Joueur 1 et Joueur 2
-		for(int i=0;i<p.getNbCol();i++){
-			for(int j=0;i<p.getNbLigne();j++){
-				if(p.get(c.i).get(c.j) == Case.PJ1 && j1 == this.j1)
-					score += evalPlacementJ1[i][j];
-				else if(p.get(c.i).get(c.j) == Case.PJ2 && j1 == this.j2)
-					score -= evalPlacementJ2[i][j];
+		for(int i=0;i<Moteur.N;i++){
+			for(int j=0;i<Moteur.N;j++){
+				if(this == m.getJ1()){
+					if(m.getPlateau().get(i).get(j) == Case.PJ1)
+						score += evalPlacementJ1[i][j];
+					
+					else if(m.getPlateau().get(i).get(j) == Case.PJ2)
+						score -= evalPlacementJ2[i][j];
+				}
+				else if(this == m.getJ2()){
+					if(m.getPlateau().get(i).get(j) == Case.PJ1)
+						score -= evalPlacementJ1[i][j];
+					
+					else if(m.getPlateau().get(i).get(j) == Case.PJ2)
+						score += evalPlacementJ2[i][j];
+				}
 			}
 		}
 		
 		
-		return 0;
+		return score;
 	}
 
 }
