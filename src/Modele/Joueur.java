@@ -5,16 +5,13 @@ import java.*;
 import java.util.*;
 import java.lang.Math;
 
+import Moteur.Moteur;
 
 public class Joueur{
   
   int score;
   boolean estOrdi;
   boolean estMonTour;
-  public static enum numJoueur{
-	  J1,
-	  J2
-  }
   
   public Joueur(boolean b, boolean t){
 	this.estOrdi = b;
