@@ -24,13 +24,13 @@ public class OrdiMoyen extends Joueur {
 		if(m.getNbBillej1() == 2 || m.getNbBillej2() == 2 || p == 0){
 			return eval(m);
 		}
-		Coup meilleur_coup;	//A QUEL MOMENT RENVOYE LE COUP
+		Coup meilleur_coup;
 		int taille = m.listeCoupPossible(this).size();
-		System.out.println("taille : " + taille);
+		//System.out.println("taille : " + taille);
 		for(Coup c: m.listeCoupPossible(this)){
 			
 			m.joue_coup(c);
-			double score = - alphabeta(p-1,-beta,-alpha,m);
+			double score = - alphabeta(p-1,-beta,-alpha,new Moteur(m));
 			m.annuler();
 			if(score >= alpha){
 				alpha = score;
@@ -44,34 +44,42 @@ public class OrdiMoyen extends Joueur {
 			
 		return alpha;
 	}
-
+	
 	double [][] evalPlacementJ1 = {
-			{4,   3,   2,   1,   0},
-			{4.5, 3.5, 2.5, 1.5, 1},
-			{5,   4,   3,   2.5, 2},
-			{5.5, 4.5, 4,   3.5, 3},
-			{100, 5.5, 5,   4.5, 4}
-		};
-
-	double [][] evalPlacementJ2 = {
 			{4, 4.5, 5,   5.5, 100},
 			{3, 3.5, 4,   4.5, 5.5},
 			{2, 2.5, 3,   4,     5},
 			{1, 1.5, 2.5, 3.5, 4.5},
 			{0, 1,   2,   3,     4}
 		};
+	
+	double [][] evalPlacementJ2 = {
+			{4,   3,   2,   1,   0},
+			{4.5, 3.5, 2.5, 1.5, 1},
+			{5,   4,   3,   2.5, 2},
+			{5.5, 4.5, 4,   3.5, 3},
+			{100, 5.5, 5,   4.5, 4}
+		};
 		
 	//Passage d'un moteur en parametre : j1 -> m.j1, etc...
 	private double eval(Moteur m) {
-	
+		//System.out.println("Eval()");
 		double score = 0;
-		
-		//Nombre de billes perso
-		score += 5 - m.getNbBillej1();
-		
-		//Nombre de billes adverses		
-		score -= 5 - m.getNbBillej2();
-		
+		if(this == m.getJ1())
+		{
+			//Nombre de billes perso
+			score += 10*(5 - m.getNbBillej1());
+			
+			//Nombre de billes adverses		
+			score -= 8*(5 - m.getNbBillej2());
+		}
+		else if (this == m.getJ2()) {
+			//Nombre de billes perso
+			score += 10*(5 - m.getNbBillej2());
+			
+			//Nombre de billes adverses		
+			score -= 8*(5 - m.getNbBillej1());
+		}
 		
 		//Distance euclidienne des billes Joueur 1 et Joueur 2
 		for(int i=0;i<m.N;i++){

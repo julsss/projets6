@@ -473,7 +473,7 @@ public class Moteur{
 			//m.afficher();
 			System.out.println();
 
-			m.j2.alphabeta(100,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m));
+			m.j2.alphabeta(8,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m));
 			m.joue_coup(m.j2.coupOrdiMoyen);
 			m.afficher();
 
