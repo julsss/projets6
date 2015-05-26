@@ -2,25 +2,32 @@ package IHM;
 
 import java.awt.*;
 import java.awt.image.*;
+
 import javax.swing.*;
+
+import Modele.Humain;
+import Modele.OrdiFacile;
+import Moteur.Moteur;
+
 import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Fenetre implements Runnable,ActionListener {
 	int dimension;
-
+	Moteur mot;
 	public void run() {
 		// Creation d'une fenetre
 		int largeur = 800;
 		int hauteur = 400;
-		
+		mot = new Moteur(new Humain(), new OrdiFacile());
 		JFrame frame = new JFrame("Quits");
-        
+        frame.setPreferredSize(new Dimension(800, 600));
 
 		BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);
 		
-		AireDeDessin aireDessin = new AireDeDessin(image);
+		AireDeDessin aireDessin = new AireDeDessin(image, mot);
+		aireDessin.setPreferredSize(new Dimension(400, 400));
 		//aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
         // Ajout de notre composant de dessin dans la fenetre
 		frame.add(aireDessin);

@@ -5,6 +5,7 @@ import java.awt.image.*;
 
 import javax.swing.*;
 
+import Moteur.Moteur;
 import Moteur.Moteur.Direction;
 
 import java.util.*;
@@ -13,8 +14,10 @@ class AireDeDessin extends JComponent {
 	int N = 7;
     int[][] pl;
     BufferedImage image;
+    Moteur mot;
 	
-	public AireDeDessin(BufferedImage nouvelleImage) {
+	public AireDeDessin(BufferedImage nouvelleImage, Moteur mot) {
+		this.mot = mot;
 		image = nouvelleImage;
 		pl = new int[7][7];
         pl[1][4] = 1;
