@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import Modele.OrdiFacile;
 import Moteur.DepRang;
 import Moteur.Moteur.Direction;
 
@@ -24,53 +23,60 @@ class EcouteurDeSouris implements MouseListener {
 
 	public void mouseClicked(MouseEvent e)
 	{
+		boolean passe = false;
+		Point p = aire.calculPoint(new Point(e.getX(), e.getY()));
+		
+		System.out.println("X :" + p.x + " Y  " + p.y + "selection : " + pionSelected + "ok " + aire.mot.estCoupPossible(save, p));
 		if(!pionSelected)
 		{
-
-			if(e.getX() == 0){
-				if(aire.mot.estCoupPossible(new DepRang(Direction.DROITE, e.getX())))
+			
+			if(p.x == -1){
+				if(aire.mot.estCoupPossible(new DepRang(Direction.DROITE, p.y)))
 				{
-					aire.decaleLigne(e.getY(),Direction.DROITE);//faire dans IHM
+					aire.decaleLigne(p.y,Direction.DROITE);//faire dans IHM
 				}
 			}
-			else if(e.getX() ==  aire.N-1){
-				if(aire.mot.estCoupPossible(new DepRang( Direction.GAUCHE, e.getY()))){
-					aire.decaleLigne(e.getY(),Direction.GAUCHE);//faire dans IHM
+			else if(p.x ==  aire.N-2){
+				if(aire.mot.estCoupPossible(new DepRang( Direction.GAUCHE, p.y))){
+					aire.decaleLigne(p.y,Direction.GAUCHE);//faire dans IHM
 				}
 			}
-			else if(e.getY() == 0)
+			else if(p.y == -1)
 			{
 
-				if(aire.mot.estCoupPossible(new DepRang( Direction.BAS,e.getX())))
+				if(aire.mot.estCoupPossible(new DepRang( Direction.BAS,p.x)))
 				{
-					aire.decaleLigne(e.getX(),Direction.BAS);//faire dans IHM
+					aire.decaleLigne(p.x,Direction.BAS);//faire dans IHM
 				}
 			}
-			else if(e.getY() == aire.N-1)
+			else if(p.y == aire.N-2)
 			{
-				if(aire.mot.estCoupPossible(new DepRang( Direction.BAS,e.getX())))
+				if(aire.mot.estCoupPossible(new DepRang( Direction.BAS,p.x)))
 				{
-					aire.decaleLigne(e.getX(),Direction.BAS);//faire dans IHM
+					aire.decaleLigne(p.x,Direction.BAS);//faire dans IHM
 				}
 			}
 			else
 			{
-				ArrayList<Point> pt = aire.mot.listeCoupPossible(new Point(e.getX(),e.getY()));
-				if(!pt.isEmpty())
+				ArrayList<Point> pt = aire.mot.listeCoupPossible(new Point(p.y,p.x));
+				while(!pt.isEmpty())
 				{
-					save = new Point(e.getX(),e.getY());
+					save = new Point(p.y,p.x);
 					aire.afficherCoupPossible(pt);//IHM
 					pionSelected = true;
-
+					passe = true;
 				}
 			}
 		}
-		else if(aire.mot.estCoupPossible(save, new Point( e.getX(), e.getY())))
+		else if(aire.mot.estCoupPossible(save, p))
 		{
-			aire.mot.joue_coup(save , new Point(e.getX(), e.getY()));
-			aire.afficherCoup(save, e.getX(), e.getY());//IHM
+			aire.mot.joue_coup(save , new Point(p.y,p.x));
+			aire.afficherCoup(new Point(save.y+1, save.x+1), p.x+1, p.y+1);//IHM
 			pionSelected = false;
 		}
+		if (!passe && pionSelected)
+			pionSelected = false;
+		
 		aire.repaint();
 		/*if (p.x != 0 || p.y != 0) {		
 

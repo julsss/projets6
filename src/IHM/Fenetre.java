@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 public class Fenetre implements Runnable,ActionListener {
 	int dimension;
 	Moteur mot;
+	
 	public void run() {
 		// Creation d'une fenetre
 		int largeur = 800;
@@ -28,6 +29,7 @@ public class Fenetre implements Runnable,ActionListener {
 		
 		AireDeDessin aireDessin = new AireDeDessin(image, mot);
 		aireDessin.setPreferredSize(new Dimension(400, 400));
+		aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
 		//aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
         // Ajout de notre composant de dessin dans la fenetre
 		frame.add(aireDessin);

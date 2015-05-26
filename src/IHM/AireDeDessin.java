@@ -50,7 +50,9 @@ class AireDeDessin extends JComponent {
         x = (int) i * d.width/N;
         y = (int) j * d.height/N;
         temp.x = x/largeurCase;
+        temp.x--;
         temp.y = y/hauteurCase;
+        temp.y --;
         
         return temp;
     }
@@ -68,7 +70,8 @@ class AireDeDessin extends JComponent {
         while(!pt.isEmpty())
         {
             p = pt.remove(pt.size()-1);
-            pl[p.x][p.y] = -1;
+            System.out.println("bouh");
+            pl[p.y+1][p.x+1] = -1;
         }
     }
     
@@ -146,7 +149,8 @@ class AireDeDessin extends JComponent {
                 else if (pl[k][l] == -1)
                 {
                     drawable.setPaint(Color.blue);
-                    drawable.fillRect(k*largeurCase, l * hauteurCase, width, height);
+                    drawable.fillRect(k*largeurCase, l * hauteurCase, largeurCase, hauteurCase);
+                    pl[k][l] = 0;
                 }
 			}
 		}

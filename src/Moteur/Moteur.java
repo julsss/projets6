@@ -29,7 +29,7 @@ public class Moteur{
 
 	int nbBillej1;
 	int nbBillej2;
-
+	int [][] platIHM;
 	Humain j1;
 	OrdiFacile j2;
 
@@ -46,6 +46,7 @@ public class Moteur{
 		j2=j22;
 		histo = new Historique();
 		tourj1 = true;
+		init_platIHM();
 	}
 	public Moteur ( Moteur m){
 		for(int i=0; i<N; i++){
@@ -59,6 +60,7 @@ public class Moteur{
 		nbBillej2 = m.getNbBillej2();
 		j1=m.j1;
 		j2=m.j2;
+		this.platIHM = m.platIHM;
 		histo = m.histo;
 		tourj1 = m.tourj1;
 	}
@@ -102,7 +104,33 @@ public class Moteur{
 	public void setNbBillej2(int nbBillej) {
 		nbBillej2 = nbBillej;
 	}
-
+	
+	
+	private void init_platIHM(){
+		platIHM = new int[7][7];
+		for(int i = 0; i<7;i++){
+			platIHM[0][i] = -4;
+			platIHM[i][0] = -2;
+			platIHM[6][i] = -16;
+			platIHM[i][6] = -8;		
+		}
+		platIHM[0][0] = Integer.MIN_VALUE;
+		platIHM[0][6] = Integer.MIN_VALUE;
+		platIHM[6][0] = Integer.MIN_VALUE;
+		platIHM[6][6] = Integer.MIN_VALUE;
+		platIHM[3][1] = 1;
+		platIHM[4][1] = 1;
+		platIHM[4][2] = 1;
+		platIHM[5][2] = 1;
+		platIHM[5][3] = 1;
+		platIHM[1][3] = 2;
+		platIHM[1][4] = 2;
+		platIHM[2][4] = 2;
+		platIHM[2][5] = 2;
+		platIHM[3][5] = 2;
+		
+	}
+	
 	private void init_plateau() {
 
 		plateau = new ArrayList<ArrayList<Case>>();
@@ -336,7 +364,7 @@ public class Moteur{
 		
 	}
 
-	public void joue_coup(Coup m){
+	public int[][] joue_coup(Coup m){
 		ArrayList<Case> tmp = new ArrayList<Case>();
 		if(m instanceof DepRang){
 
@@ -347,7 +375,9 @@ public class Moteur{
 					tmp.set(d.rang,plateau.get(i-1).get(d.rang));
 					plateau.set(i, tmp);
 					tmp = new ArrayList<Case>();
+					platIHM[i+1][d.rang] = platIHM[i][d.rang];
 				}
+				platIHM[1][d.rang] = 0;
 				tmp = plateau.get(0);
 				tmp.set(d.rang, Case.LIBRE);
 				plateau.set(0, tmp);
@@ -358,7 +388,9 @@ public class Moteur{
 					tmp.set(d.rang,plateau.get(i+1).get(d.rang));
 					plateau.set(i, tmp);
 					tmp = new ArrayList<Case>();
+					platIHM[i][d.rang] = platIHM[i+1][d.rang];
 				}
+				platIHM[5][d.rang] = 0;
 				tmp = plateau.get(N-1);
 				tmp.set(d.rang, Case.LIBRE);
 				plateau.set(N-1, tmp);
@@ -367,7 +399,9 @@ public class Moteur{
 				tmp = plateau.get(d.rang);
 				for(int i = N-1; i > 0; i--){
 					tmp.set(i, tmp.get(i-1));
+					platIHM[d.rang][i+1] = platIHM[d.rang][i];
 				}
+				platIHM[d.rang][1] = 0;
 				tmp.set(0, Case.LIBRE);
 				plateau.set(d.rang, tmp);
 			}
@@ -375,7 +409,9 @@ public class Moteur{
 				tmp = plateau.get(d.rang);
 				for(int i = 0; i < N-1; i++){
 					tmp.set(i, tmp.get(i+1));
+					platIHM[d.rang][i] = platIHM[d.rang][i+1];
 				}
+				platIHM[d.rang][5] = 0;
 				tmp.set(N-1, Case.LIBRE);
 				plateau.set(d.rang, tmp);
 			}
@@ -388,12 +424,15 @@ public class Moteur{
 				tmp = plateau.get(pion.depart.x);
 				tmp.set(pion.depart.y, Case.LIBRE);
 				plateau.set(pion.depart.x, tmp);
+				platIHM[pion.depart.x+1][pion.depart.y+1] = 0;
+				
 			}
 			else if(pion.arrive.x == 0 && pion.arrive.y == 4){
 				setNbBillej1(getNbBillej1()-1);
 				tmp = plateau.get(pion.depart.x);
 				tmp.set(pion.depart.y, Case.LIBRE);
 				plateau.set(pion.depart.x, tmp);
+				platIHM[pion.depart.x+1][pion.depart.y+1] = 0;
 			}
 			else{
 				tmp = plateau.get(pion.arrive.x);
@@ -402,10 +441,13 @@ public class Moteur{
 				tmp = plateau.get(pion.depart.x);
 				tmp.set(pion.depart.y, Case.LIBRE);
 				plateau.set(pion.depart.x, tmp);
+				platIHM[pion.arrive.x+1][pion.arrive.y+1] = platIHM[pion.depart.x+1][pion.depart.y+1] ;
+				platIHM[pion.depart.x+1][pion.depart.y+1] = 0;
 			}
 		}
 		tourj1 = !tourj1;
 		histo.ajouter(m);
+		return platIHM;
 	}
 	//a modif-------------------------
 	public void annuler(){
