@@ -55,10 +55,10 @@ class AireDeDessin extends JComponent {
         return temp;
     }
     
-    public void afficherCoup(Point p, int x, int y,int joueur)
+    public void afficherCoup(Point p, int x, int y)
     {
+        pl[x][y] = pl[p.x][p.y];
         pl[p.x][p.y] = 0;
-        pl[x][y] = joueur;
         
     }
     
