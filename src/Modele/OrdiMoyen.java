@@ -20,19 +20,22 @@ public class OrdiMoyen extends Joueur {
 	}
 	
 	//Fonction appeler avec profondeurMoyen en parametres
-	public double alphabeta(int p, double alpha, double beta, Moteur m){
+	public double alphabeta(int p, double alpha, double beta, Moteur m, boolean tour){
+		//Moteur m2 = new Moteur(m);
 		if(m.getNbBillej1() == 2 || m.getNbBillej2() == 2 || p == 0){
-			return eval(m);
+			return eval(m,tour);
 		}
 		Coup meilleur_coup;
-		int taille = m.listeCoupPossible(this).size();
+		ArrayList<Coup> cl = m.listeCoupPossible(this);
+		Coup c;
+		int taille = cl.size();
 		//System.out.println("taille : " + taille);
-		for(Coup c: m.listeCoupPossible(this)){
-			
+		for(int i = 0; i < taille; i++){
+			c = cl.get(i);
 			m.joue_coup(c);
-			double score = - alphabeta(p-1,-beta,-alpha,new Moteur(m));
+			double score = - alphabeta(p-1,-beta,-alpha,new Moteur(m),!tour);
 			m.annuler();
-			if(score >= alpha){
+			if(score > alpha){
 				alpha = score;
 				meilleur_coup = c;
 				this.coupOrdiMoyen = meilleur_coup;
@@ -41,7 +44,6 @@ public class OrdiMoyen extends Joueur {
 				}
 			}
 		}
-			
 		return alpha;
 	}
 	
@@ -62,19 +64,26 @@ public class OrdiMoyen extends Joueur {
 		};
 		
 	//Passage d'un moteur en parametre : j1 -> m.j1, etc...
-	private double eval(Moteur m) {
+	private double eval(Moteur m, boolean tourJ1) {
 		//System.out.println("Eval()");
 		double score = 0;
-		if(this == m.getJ1())
+		if(tourJ1)
 		{
+			if(m.getNbBillej1() == 2){
+				return Integer.MIN_VALUE;	
+			}
 			//Nombre de billes perso
 			score += 10*(5 - m.getNbBillej1());
 			
 			//Nombre de billes adverses		
 			score -= 8*(5 - m.getNbBillej2());
 		}
-		else if (this == m.getJ2()) {
+		else if (!tourJ1) {
 			//Nombre de billes perso
+			if(m.getNbBillej2() == 2){
+				return Integer.MIN_VALUE;
+				
+			}
 			score += 10*(5 - m.getNbBillej2());
 			
 			//Nombre de billes adverses		
@@ -84,14 +93,14 @@ public class OrdiMoyen extends Joueur {
 		//Distance euclidienne des billes Joueur 1 et Joueur 2
 		for(int i=0;i<m.N;i++){
 			for(int j=0;j<m.N;j++){
-				if(this == m.getJ1()){
+				if(tourJ1){
 					if(m.getPlateau().get(i).get(j) == Case.PJ1)
 						score += evalPlacementJ1[i][j];
 					
 					else if(m.getPlateau().get(i).get(j) == Case.PJ2)
 						score -= evalPlacementJ2[i][j];
 				}
-				else if(this == m.getJ2()){
+				else if(!tourJ1){
 					if(m.getPlateau().get(i).get(j) == Case.PJ1)
 						score -= evalPlacementJ1[i][j];
 					

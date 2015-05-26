@@ -1,90 +1,76 @@
 package IHM;
+
+import java.awt.*;
 import java.awt.image.*;
-
 import javax.swing.*;
-
-import Modele.Plateau;
-
+import java.util.*;
 
 public class Fenetre implements Runnable {
-	private int nbLigne = 5, nbCol = 5;
-	private AireDeDessin aireDessin;
-	
-	
+	int dimension;
+
 	public void run() {
 		// Creation d'une fenetre
-		int largeur = 500;
-		int hauteur = 250;
+		int largeur = 550;
+		int hauteur = 300;
 		
-		JFrame frame = new JFrame("Gaufre empoisonnee");
+		JFrame frame = new JFrame("Quits");
 
+		BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);
 		
-		
-		/*Plateau g = new Plateau(nbLigne,nbCol);
-		
-		aireDessin = new AireDeDessin(largeur,hauteur,g);
-		aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
+		AireDeDessin aireDessin = new AireDeDessin(image);
+		//aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
 		
 		// Ajout de notre composant de dessin dans la fenetre
 		frame.add(aireDessin);
-
-		JMenu principal = new JMenu("Principal");
-		JMenuItem nouveau = new JMenuItem("Nouveau");
+		
+		
+		/*---------  MENU --------*/
+		
+		JMenu jeu = new JMenu("Jeu");
+		JMenuItem nouveau = new JMenuItem("Commencer une nouvelle partie");
+		JMenuItem rejouer = new JMenuItem("Rejouer");
 		JMenuItem svg = new JMenuItem("Sauvegarder");
         JMenuItem charger = new JMenuItem("Charger");
         JMenuItem quitter = new JMenuItem("Quitter");
         
-        
-        nouveau.addActionListener(new NouvelleApplication(aireDessin));
-        svg.addActionListener(new SauvegarderApplication(aireDessin));
-        charger.addActionListener(new ChargerApplication(aireDessin));
+        /*
+        partie.addActionListener(new NouvelleApplication(aireDessin));
+        chargerButton.addActionListener(new ChargerApplication(aireDessin));
         quitter.addActionListener(new QuitterApplication(aireDessin));
+        */
         
-        JMenu edition = new JMenu("Edition");
-        JMenuItem annuler = new JMenuItem("Annuler");
-        JMenuItem refaire = new JMenuItem("Refaire");
+        JMenu autres = new JMenu(" ? ");
+        JMenuItem reglages = new JMenuItem("Réglages");
+        JMenuItem scores = new JMenuItem("Scores");
+        JMenuItem regles = new JMenuItem("Règles du jeu");
+        JMenuItem apropos = new JMenuItem("A propos");
         
-        annuler.addActionListener(new AnnulerApplication(aireDessin));
-        refaire.addActionListener(new RefaireApplication(aireDessin));
+        jeu.add(nouveau);
+        jeu.add(rejouer);
+        jeu.add(svg);
+        jeu.add(charger);
+        jeu.add(quitter);
         
-        principal.add(nouveau);
-        principal.add(svg);
-        principal.add(charger);
-        principal.add(quitter);
+        autres.add(reglages);
+        autres.add(scores);
+        autres.add(regles);
+        autres.add(apropos);
         
-        edition.add(annuler);
-        edition.add(refaire);
-        
-        JMenuBar barre = new JMenuBar();
-        barre.add(principal);
-        barre.add(edition);
-        frame.setJMenuBar(barre);
+        JMenuBar barreMenu = new JMenuBar();
+        barreMenu.add(jeu);
+        barreMenu.add(autres);
+        frame.setJMenuBar(barreMenu);
         
 		// Un clic sur le bouton de fermeture clos l'application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// On fixe la taille et on demarre
-		frame.setSize(500, 250);
-		frame.setVisible(true);*/
+		frame.setSize(largeur, hauteur);
+        frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 	}
 
 	public static void main(String [] args) {
 		SwingUtilities.invokeLater(new Fenetre());
-	}
-
-	public int getNbLigne() {
-		return nbLigne;
-	}
-
-	public void setNbLigne(int nbLigne) {
-		this.nbLigne = nbLigne;
-	}
-	
-	public int getNbCol() {
-		return nbCol;
-	}
-
-	public void setNbCol(int nbCol) {
-		this.nbCol = nbCol;
 	}
 }

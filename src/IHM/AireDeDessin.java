@@ -1,89 +1,48 @@
 package IHM;
+
 import java.awt.*;
 import java.awt.image.*;
-
-import Modele.Historique;
-import Modele.Humain;
-import Modele.Joueur;
-import Modele.OrdiFacile;
-import Modele.Plateau;
-
 import javax.swing.*;
-
-import Moteur.Moteur;
-
+import java.util.*;
 
 class AireDeDessin extends JComponent {
-
-	private static final long serialVersionUID = 1L;
-	private Plateau gaufre;
-    private BufferedImage image;
-    private Moteur moteur;
-    private Historique histo;
-    private OrdiFacile ordiFacile;
-    private Humain humain;
+	int N = 5;
+	Plateau pl;
+    BufferedImage image;
 	
-	public AireDeDessin(int largeur, int hauteur, Plateau g) {
-		image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);;
-// a déplacer dans moteur		histo = new Historique(gaufre);
-		moteur = new Moteur(2,0,0);
-// moteur		ordiFacile = new OrdiFacile();
-// moteur		humain = new Humain(false, true);
+	public AireDeDessin(BufferedImage nouvelleImage) {
+		image = nouvelleImage;
+		pl = new Plateau(N);
     }
     
-	public Point calculPoint(Point p){
-		Point temp = new Point();
-		
+   public void afficherCroix(Point p) {
+		//Graphics2D drawable = image.createGraphics();
 		Dimension d = getSize();
         int x,y, i, j;
         int largeurCase, hauteurCase;
 		
-		
-		i = (int) p.getX() * gaufre.getNbLigne() / d.width;
-		j = (int) p.getY() * gaufre.getNbCol() / d.height;
+		i = (int) p.getX() * N / d.width;
+		j = (int) p.getY() * N / d.height;
         
-        largeurCase = d.width / gaufre.getNbLigne();
-        hauteurCase = d.height / gaufre.getNbCol();
+        largeurCase = d.width / N;
+        hauteurCase = d.height / N;
         
-        x = (int) i * d.width/gaufre.getNbLigne();
-        y = (int) j * d.height/gaufre.getNbCol();
-        temp.x = x/largeurCase;
-        temp.y = y/hauteurCase;
-				
-		return temp;
-	}
+        x = (int) i * largeurCase;
+        y = (int) j * hauteurCase;	
+        
+        System.out.println("Coordonnees : " + i + " " + j);
+    }
 
-/*
-	public OrdiFacile getOrdiFacile() {
-		return ordiFacile;
-	}
-
-
-	public void setOrdiFacile(OrdiFacile ordiFacile) {
-		this.ordiFacile = ordiFacile;
-	}
-
-
-	public Humain getHumain() {
-		return humain;
-	}
-
-
-	public void setHumain(Humain humain) {
-		this.humain = humain;
-	}
-
-*/
 	public void paintComponent(Graphics g) {
         // Graphics 2D est le vrai type de l'objet passe en parametre
         // Le cast permet d'avoir acces a un peu plus de primitives de dessin
-/*        int largeurCase, hauteurCase;
+        int largeurCase, hauteurCase;
         Graphics2D drawable = image.createGraphics();
 		g.drawImage(image, 0, 0, null);
 		
 		Dimension d = getSize();
-		largeurCase = d.width / gaufre.getNbLigne();
-        hauteurCase = d.height / gaufre.getNbCol();
+		largeurCase = d.width / N;
+        hauteurCase = d.height / N;
         
 		int width = getSize().width;
         int height = getSize().height;
@@ -93,71 +52,26 @@ class AireDeDessin extends JComponent {
         drawable.setPaint(Color.black);
 		
 		//affichage de la grille
-		for (int i=0; i<=gaufre.getNbLigne(); i++) {
-			drawable.drawLine(i*width/gaufre.getNbLigne(), 0, i*width/gaufre.getNbLigne(), height);
+		for (int i=0; i<=N; i++) {
+			drawable.drawLine(i*width/N, 0, i*width/N, height);
+			drawable.drawLine(0, i*height/N, width, i*height/N);
         }
 		
-		for (int i=0; i<=gaufre.getNbCol(); i++) {
-			drawable.drawLine(0, i*height/gaufre.getNbCol(), width, i*height/gaufre.getNbCol());
-        }
-                
-        //affichage de la case avec le poison
-        drawable.setPaint(Color.red);
-		drawable.drawOval(40, 10, 15, 15);
-		int[][] workspace = gaufre.getGaufre();
-		
-		for (int i = 0; i < gaufre.getNbLigne(); i++) {
-			for(int j = 0; j < gaufre.getNbCol(); j++){
-				if (workspace[i][j] == Moteur.CASEOCCUPEE) {
-					drawable.setPaint(Color.black);
-					drawable.drawLine(i*largeurCase, j*hauteurCase, i*largeurCase + largeurCase, j*hauteurCase+hauteurCase);
-					drawable.drawLine(i*largeurCase, j*hauteurCase+hauteurCase, i*largeurCase + largeurCase, j*hauteurCase);
+		for (int k = 0; k < N; k++) {
+			for(int l = 0; l < N; l++){
+				if (pl.plateau[k][l] == 1) {
+					//joueur 1
+					drawable.setPaint(Color.red);
+					drawable.fillOval((k*largeurCase) + largeurCase/2, (l*hauteurCase) + hauteurCase/2, 15, 15);
+				} else if (pl.plateau[k][l] == 2) {
+					//joueur 2
+					drawable.setPaint(Color.gray);
+					drawable.fillOval((k*largeurCase) + largeurCase/2, (l*hauteurCase) + hauteurCase/2, 15, 15);
 				}
 			}
 		}
-		
+
 		g.drawImage(image, 0, 0, null);
-*/		
+		
 	}
-/*
-	public Plateau getPateau() {
-		return gaufre;
-	}
-
-
-	public void setPlateau(Plateau gaufre) {
-		this.gaufre = gaufre;
-	}
-
-*/
-	public BufferedImage getImage() {
-		return image;
-	}
-
-
-	public void setImage(BufferedImage image) {
-		this.image = image;
-	}
-
-
-	public Moteur getMoteur() {
-		return moteur;
-	}
-
-
-	public void setMoteur(Moteur moteur) {
-		this.moteur = moteur;
-	}
-
-/*
-	public Historique getHisto() {
-		return histo;
-	}
-
-
-	public void setHisto(Historique histo) {
-		this.histo = histo;
-	}
-	
-	*/
 }

@@ -3,8 +3,6 @@ package IHM;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import Modele.Plateau;
-
 public class NouvelleApplication implements ActionListener {
 
 	private AireDeDessin aireDessin;

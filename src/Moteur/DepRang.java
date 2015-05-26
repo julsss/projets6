@@ -6,11 +6,10 @@ import Moteur.Moteur.Direction;
 public class DepRang extends Coup {
 	
 	Direction dir;
-	int i,j;
+	int rang;
 	
-	public DepRang(Direction dir,int i, int j ){
+	public DepRang(Direction dir,int rang ){
 		this.dir = dir;
-		this.i = i;
-		this.j = j;
+		this.rang = rang;
 	}
 }
