@@ -163,9 +163,9 @@ public class Moteur{
 		}
 	}
 
-	/*public static boolean estCoupPossible(Joueur j1, Coup c){
-		return estCoupPossible(j1,(DepPion)c) || estCoupPossible(j1,(DepRang)c);
-	}*/
+	public boolean estCoupPossible(Point p1 , Point p2){
+		return estCoupPossible(new DepPion(p1,p2));
+	}
 
 	public boolean estCoupPossible(DepPion c){
 
@@ -258,7 +258,7 @@ public class Moteur{
 		for(int i = 0; i < listeCase.size(); i++){
 			c = listeCase.get(i);
 			//Ajout Rang
-			
+
 			if(plateau.get(0).get(c.y) == Case.LIBRE && estCoupPossible(new DepRang(Direction.HAUT, c.y))){
 				listeCoup.add(new DepRang(Direction.HAUT, c.y));
 			}
@@ -292,6 +292,29 @@ public class Moteur{
 	}
 
 
+	public ArrayList<Point> listeCoupPossible(Point c){
+		ArrayList<Point> listeCoup = new ArrayList<Point>();
+
+		//Verif joueur1
+		if(c.y+1 < N && tourj1 && plateau.get(c.x).get(c.y+1) == Case.LIBRE) 
+			listeCoup.add(new Point(c.x,c.y +1));
+		if(c.x > 0 && c.y+1 < N  && tourj1 && plateau.get(c.x-1).get(c.y+1) == Case.LIBRE) 
+			listeCoup.add(new Point(c.x-1,c.y +1));
+		if(c.x > 0 && tourj1 && plateau.get(c.x-1).get(c.y) == Case.LIBRE) 
+			listeCoup.add(new Point(c.x-1,c.y));
+
+		//Verif coup pour joueur2
+		if(c.y > 0 && !tourj1 && plateau.get(c.x).get(c.y-1) == Case.LIBRE) 
+			listeCoup.add(new Point(c.x,c.y-1));
+		if(c.y > 0 && c.x+1 < N && !tourj1 && plateau.get(c.x+1).get(c.y-1) == Case.LIBRE) 
+			listeCoup.add(new Point(c.x+1,c.y -1));
+		if(c.x+1 < N && !tourj1 && plateau.get(c.x+1).get(c.y) == Case.LIBRE) 
+			listeCoup.add(new Point(c.x+1,c.y));
+
+		return listeCoup;
+	}
+
+
 	public ArrayList<Point> listeCaseJoueur(){
 		ArrayList<Point> listeCase = new ArrayList<Point>();
 
@@ -310,7 +333,7 @@ public class Moteur{
 	}
 
 	public void joue_coup(Point p1, Point p2){
-
+		
 	}
 
 	public void joue_coup(Coup m){
@@ -384,7 +407,7 @@ public class Moteur{
 		tourj1 = !tourj1;
 		histo.ajouter(m);
 	}
-//a modif-------------------------
+	//a modif-------------------------
 	public void annuler(){
 		Coup m = histo.annuler();
 		ArrayList<Case> tmp = new ArrayList<Case>();

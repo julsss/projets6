@@ -3,6 +3,7 @@ package IHM;
 
 import java.awt.Point;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import Modele.OrdiFacile;
 import Moteur.DepRang;
@@ -27,74 +28,67 @@ class EcouteurDeSouris implements MouseListener {
 		{
 
 			if(e.getX() == 0){
-				if(m.estCoupPossible(new DepRang(Direction.DROITE, e.getX())))
+				if(aire.mot.estCoupPossible(new DepRang(Direction.DROITE, e.getX())))
 				{
 					aire.decaleLigne(e.getY(),Direction.DROITE);//faire dans IHM
 				}
 			}
-			else(e.getX() == aire.N -1)
-			{
-				if(verif(e.getY(), Direction.GAUCHE))
-				{
+			else if(e.getX() ==  aire.N-1){
+				if(aire.mot.estCoupPossible(new DepRang( Direction.GAUCHE, e.getY()))){
 					aire.decaleLigne(e.getY(),Direction.GAUCHE);//faire dans IHM
 				}
 			}
-			else if(e.y = 0)
+			else if(e.getY() == 0)
 			{
 
-				if(verif(x,y, Direction.BAS))
+				if(aire.mot.estCoupPossible(new DepRang( Direction.BAS,e.getX())))
 				{
-					decaleLigne(x,Direction.BAS);//faire dans IHM
+					aire.decaleLigne(e.getX(),Direction.BAS);//faire dans IHM
 				}
 			}
-			else(e.x = N-1)
+			else if(e.getY() == aire.N-1)
 			{
-				if(verif(x,y, Direction.BAS))
+				if(aire.mot.estCoupPossible(new DepRang( Direction.BAS,e.getX())))
 				{
-					decaleLigne(x,Direction.BAS);//faire dans IHM
+					aire.decaleLigne(e.getX(),Direction.BAS);//faire dans IHM
 				}
 			}
 			else
 			{
-				liste<Point> pt = coupJoueur(e.getX(),e.getY());
-				if(pt != vide)
+				ArrayList<Point> pt = aire.mot.listeCoupPossible(new Point(e.getX(),e.getY()));
+				if(!pt.isEmpty())
 				{
 					save = new Point(e.getX(),e.getY());
-					afficherCoupPossible(pt);//IHM
+					aire.afficherCoupPossible(pt);//IHM
 					pionSelected = true;
 
 				}
 			}
-		aire.repaint();
 		}
-		else
+		else if(aire.mot.estCoupPossible(save, new Point( e.getX(), e.getY())))
 		{
-			int result = joue_Coup(save, e.getX(), e.getY());
-			if(result != 0)
-			{
-				afficherCoup(save, e.getX(), e.getY(), result);//IHM
-				pionSelected = false;
-			}
-		}
-	}
-
-	if (p.x != 0 || p.y != 0) {		
-
-		try {
-			Thread.sleep(2000);                 //1000 milliseconds is one second.
-		} catch(InterruptedException ex) {
-			Thread.currentThread().interrupt();
+			aire.mot.joue_coup(save , new Point(e.getX(), e.getY()));
+			aire.afficherCoup(save, e.getX(), e.getY());//IHM
+			pionSelected = false;
 		}
 		aire.repaint();
+		/*if (p.x != 0 || p.y != 0) {		
+
+			try {
+				Thread.sleep(2000);                 //1000 milliseconds is one second.
+			} catch(InterruptedException ex) {
+				Thread.currentThread().interrupt();
+			}
+			aire.repaint();
+		}*/
 	}
-}
 
-// Lors d'une pression de bouton, on change de message
-public void mousePressed(MouseEvent e) {}
+	// Lors d'une pression de bouton, on change de message
+	public void mousePressed(MouseEvent e) {}
 
-// Il faut aussi une implementation pour les autres methodes de l'interface
-public void mouseEntered(MouseEvent e) {}
-public void mouseExited(MouseEvent e) {}
+	// Il faut aussi une implementation pour les autres methodes de l'interface
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
 
-public void mouseReleased(MouseEvent e) {}
+	public void mouseReleased(MouseEvent e) {}
 }
