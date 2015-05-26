@@ -30,21 +30,22 @@ public class Moteur{
 	int nbBillej1;
 	int nbBillej2;
 
-	OrdiFacile j1;
-	OrdiMoyen j2;
+	Humain j1;
+	OrdiFacile j2;
 
 	Historique histo;
 	public final int N=5;
-
+	boolean tourj1;
 	ArrayList<ArrayList<Case>> plateau = new ArrayList<ArrayList<Case>>();
 
-	public Moteur ( OrdiFacile j11, OrdiMoyen j22){
+	public Moteur ( Humain j11, OrdiFacile j22){
 		init_plateau();
 		nbBillej1 = 5;
 		nbBillej2 = 5;
 		j1=j11;
 		j2=j22;
 		histo = new Historique();
+		tourj1 = true;
 	}
 	public Moteur ( Moteur m){
 		for(int i=0; i<N; i++){
@@ -59,6 +60,7 @@ public class Moteur{
 		j1=m.j1;
 		j2=m.j2;
 		histo = m.histo;
+		tourj1 = m.tourj1;
 	}
 
 	public Joueur getJ1() {
@@ -66,7 +68,7 @@ public class Moteur{
 	}
 
 	public void setJ1(Joueur j) {
-		j1 = (OrdiFacile) j;
+		j1 = (Humain) j;
 	}
 
 	public Joueur getJ2() {
@@ -74,7 +76,7 @@ public class Moteur{
 	}
 
 	public void setJ2(Joueur j) {
-		j2 = (OrdiMoyen) j;
+		j2 = (OrdiFacile) j;
 	}
 
 	public ArrayList<ArrayList<Case>> getPlateau() {
@@ -198,16 +200,36 @@ public class Moteur{
 
 		//ajout if avec fonction teste joueur + pion dans la rang�
 		if(this.billeDansRange(j1,c)){
-			if(c.dir == Direction.BAS && plateau.get(N-1).get(c.rang) == Case.LIBRE){
+			if(c.dir == Direction.BAS && plateau.get(N-1).get(c.rang) == Case.LIBRE ){
+				if(!histo.getAnnuler().isEmpty() && histo.getAnnuler().peek() instanceof DepRang ){
+					DepRang dr = (DepRang) histo.getAnnuler().peek();
+					if(dr.dir == Direction.HAUT && dr.rang == c.rang)
+						return false;
+				}
 				return true;
 			}
 			if(c.dir == Direction.HAUT && plateau.get(0).get(c.rang) == Case.LIBRE){
+				if(!histo.getAnnuler().isEmpty() && histo.getAnnuler().peek() instanceof DepRang ){
+					DepRang dr = (DepRang) histo.getAnnuler().peek();
+					if(dr.dir == Direction.BAS && dr.rang == c.rang)
+						return false;
+				}
 				return true;
 			}
 			if(c.dir == Direction.GAUCHE && plateau.get(c.rang).get(0) == Case.LIBRE){
+				if(!histo.getAnnuler().isEmpty() && histo.getAnnuler().peek() instanceof DepRang ){
+					DepRang dr = (DepRang) histo.getAnnuler().peek();
+					if(dr.dir == Direction.DROITE && dr.rang == c.rang)
+						return false;
+				}
 				return true;
 			}
 			if(c.dir == Direction.DROITE && plateau.get(c.rang).get(N-1) == Case.LIBRE){
+				if(!histo.getAnnuler().isEmpty() && histo.getAnnuler().peek() instanceof DepRang ){
+					DepRang dr = (DepRang) histo.getAnnuler().peek();
+					if(dr.dir == Direction.GAUCHE && dr.rang == c.rang)
+						return false;
+				}
 				return true;
 			}
 		}
@@ -236,16 +258,17 @@ public class Moteur{
 		for(int i = 0; i < listeCase.size(); i++){
 			c = listeCase.get(i);
 			//Ajout Rang
-			if(plateau.get(0).get(c.y) == Case.LIBRE ){
+			
+			if(plateau.get(0).get(c.y) == Case.LIBRE && estCoupPossible(j,new DepRang(Direction.HAUT, c.y))){
 				listeCoup.add(new DepRang(Direction.HAUT, c.y));
 			}
-			else if(plateau.get(N-1).get(c.y) == Case.LIBRE ){
+			else if(plateau.get(N-1).get(c.y) == Case.LIBRE && estCoupPossible(j,new DepRang(Direction.BAS, c.y))){
 				listeCoup.add(new DepRang(Direction.BAS, c.y));
 			}
-			else if(plateau.get(c.x).get(0) == Case.LIBRE ){
+			else if(plateau.get(c.x).get(0) == Case.LIBRE && estCoupPossible(j,new DepRang(Direction.GAUCHE, c.y))){
 				listeCoup.add(new DepRang(Direction.GAUCHE, c.x));
 			}
-			else if(plateau.get(c.x).get(N-1) == Case.LIBRE ){
+			else if(plateau.get(c.x).get(N-1) == Case.LIBRE && estCoupPossible(j,new DepRang(Direction.DROITE, c.y))){
 				listeCoup.add(new DepRang(Direction.DROITE, c.x));
 			}
 
@@ -305,6 +328,7 @@ public class Moteur{
 				tmp = plateau.get(0);
 				tmp.set(d.rang, Case.LIBRE);
 				plateau.set(0, tmp);
+				tourj1 = !tourj1;
 			}
 			else if(d.dir == Direction.HAUT){
 				for(int i = 0; i < N-1; i++){
@@ -360,7 +384,7 @@ public class Moteur{
 		}
 		histo.ajouter(m);
 	}
-
+//a modif-------------------------
 	public void annuler(){
 		Coup m = histo.annuler();
 		ArrayList<Case> tmp = new ArrayList<Case>();
@@ -436,10 +460,10 @@ public class Moteur{
 			System.out.println();
 		}
 	}
-	/
+
 	public static void main(String[] args){
-		OrdiFacile j11 = new OrdiFacile();
-		OrdiMoyen j22 = new OrdiMoyen();
+		Humain j11 = new Humain();
+		OrdiFacile j22 = new OrdiFacile();
 		Moteur m = new Moteur(j11,j22);
 		Coup c = new Coup();
 		boolean coup_valide = false;
@@ -449,18 +473,32 @@ public class Moteur{
 			Scanner sc = new Scanner(System.in);
 			coup_valide = false;
 			while(!coup_valide){
-				int typeDep;
-				while(typeDep != 1 || typeDep != 2) {
-					System.out.print("Saisir le type de coup, dep pion(1), dep rang(2)");
+				int typeDep = 0;
+				while(typeDep != 1 && typeDep != 2) {
+					System.out.print("Saisir le type de coup, dep pion(1), dep rang(2) : ");
 					typeDep = sc.nextInt();
 				}
-				
-				if(typeDep == 1){
-					System.out.println("Saisir rang : ");
-					int rand = sc.nextInt();
-					System.out.println("Saisir la direction, haut(1) bas(2) gauche(3) droite(4)");
+
+				if(typeDep == 2){
+					int dir = 0;
+					int rand = -1;
+					while(dir != 1 && dir != 2 && dir !=3 && dir !=4){
+						System.out.println("Saisir rang entre 0 et 4 : ");
+						rand = sc.nextInt();
+						System.out.println("Saisir la direction, haut(1) bas(2) gauche(3) droite(4) :");
+						dir = sc.nextInt();
+					}
+					Direction dire;
+					switch(dir){
+					case 1: dire = Direction.HAUT ; break;
+					case 2: dire = Direction.BAS ; break;
+					case 3: dire = Direction.GAUCHE ; break;
+					default: dire = Direction.DROITE ; break;
+					}
+					c = new DepRang(dire,rand);
+					coup_valide = m.estCoupPossible(m.j1,(DepRang) c);
 				}
-				else if(typeDep == 2){
+				else if(typeDep == 1){
 					System.out.print("Saisir ligne et colonne : ");
 					int ld = sc.nextInt();
 					int cd = sc.nextInt();
@@ -468,15 +506,16 @@ public class Moteur{
 					int la = sc.nextInt();
 					int ca = sc.nextInt();
 					c=new DepPion(new Point(ld,cd),new Point(la,ca));
+					coup_valide = m.estCoupPossible(m.j1,(DepPion)c);
 				}
-				
-				coup_valide = m.estCoupPossible(m.j1,(DepPion)c);
+
+
 				System.out.println(coup_valide);
 			}
 			m.joue_coup(c );
 			m.afficher();
 
-			c = m.j1.facile(new Moteur(m));
+			c = m.j2.facile(new Moteur(m));
 			m.joue_coup(c);
 			m.afficher();
 			try {
@@ -487,14 +526,14 @@ public class Moteur{
 			}
 			//m.annuler();
 			//m.afficher();
-			if(m.getNbBillej1() > 2){
+			/*if(m.getNbBillej1() > 2){
 				System.out.println();
 				m.j2.alphabeta(4,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m),false);
 				m.joue_coup(m.j2.coupOrdiMoyen);
 				m.afficher();
 				System.out.println("billej1 : " + m.getNbBillej1());
 				System.out.println("billej2 : " + m.getNbBillej2());
-			}
+			}*/
 		}
 
 	}

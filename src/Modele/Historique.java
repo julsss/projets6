@@ -19,9 +19,25 @@ public class Historique{
 		if(supprAnnuler)
 		{
 			annuler = new Stack<Moteur.Coup>();
-			coup.addLast(p);
 		}
+		coup.addLast(p);
 		supprAnnuler = false;
+	}
+
+	public LinkedList<Moteur.Coup> getCoup() {
+		return coup;
+	}
+
+	public void setCoup(LinkedList<Moteur.Coup> coup) {
+		this.coup = coup;
+	}
+
+	public Stack<Moteur.Coup> getAnnuler() {
+		return annuler;
+	}
+
+	public void setAnnuler(Stack<Moteur.Coup> annuler) {
+		this.annuler = annuler;
 	}
 
 	public Moteur.Coup annuler()

@@ -4,23 +4,25 @@ import java.awt.*;
 import java.awt.image.*;
 import javax.swing.*;
 import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Fenetre implements Runnable {
+public class Fenetre implements Runnable,ActionListener {
 	int dimension;
 
 	public void run() {
 		// Creation d'une fenetre
-		int largeur = 550;
-		int hauteur = 300;
+		int largeur = 800;
+		int hauteur = 400;
 		
 		JFrame frame = new JFrame("Quits");
+        
 
 		BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);
 		
 		AireDeDessin aireDessin = new AireDeDessin(image);
 		//aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
-		
-		// Ajout de notre composant de dessin dans la fenetre
+        // Ajout de notre composant de dessin dans la fenetre
 		frame.add(aireDessin);
 		
 		
@@ -44,7 +46,10 @@ public class Fenetre implements Runnable {
         JMenuItem scores = new JMenuItem("Scores");
         JMenuItem regles = new JMenuItem("Règles du jeu");
         JMenuItem apropos = new JMenuItem("A propos");
+        JButton Quitter = new JButton("Quitter");
         
+        
+        //frame.add(quitter);
         jeu.add(nouveau);
         jeu.add(rejouer);
         jeu.add(svg);
@@ -67,10 +72,17 @@ public class Fenetre implements Runnable {
 		// On fixe la taille et on demarre
 		frame.setSize(largeur, hauteur);
         frame.setLocationRelativeTo(null);
+        
 		frame.setVisible(true);
 	}
 
 	public static void main(String [] args) {
 		SwingUtilities.invokeLater(new Fenetre());
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
