@@ -34,7 +34,7 @@ public class Moteur{
 	OrdiFacile j2;
 
 	Historique histo;
-	public final int N=5;
+	public static final int N=5;
 	boolean tourj1;
 	ArrayList<ArrayList<Case>> plateau = new ArrayList<ArrayList<Case>>();
 
@@ -167,36 +167,36 @@ public class Moteur{
 		return estCoupPossible(j1,(DepPion)c) || estCoupPossible(j1,(DepRang)c);
 	}*/
 
-	public boolean estCoupPossible(Joueur j, DepPion c){
+	public boolean estCoupPossible(DepPion c){
 
 
 		if(c.getDepart().x< N && c.getDepart().y< N && c.getDepart().x>= 0 && c.getDepart().y>= 0
 				&& c.getArrive().x< N && c.getArrive().y< N && c.getArrive().x>= 0 && c.getArrive().y>= 0
-				&& (plateau.get(c.getDepart().x).get(c.getDepart().y) == Case.PJ1 && j == j1
-				|| plateau.get(c.getDepart().x).get(c.getDepart().y) == Case.PJ2 && j == j2)
+				&& (plateau.get(c.getDepart().x).get(c.getDepart().y) == Case.PJ1 && tourj1
+				|| plateau.get(c.getDepart().x).get(c.getDepart().y) == Case.PJ2 && !tourj1)
 				&& plateau.get(c.getArrive().x).get(c.getArrive().y) == Case.LIBRE)
 		{
 			//Verif coup pour joueur1
-			if(j == j1 && c.getDepart().y == c.getArrive().y && c.getDepart().x-1 == c.getArrive().x)
+			if(tourj1 && c.getDepart().y == c.getArrive().y && c.getDepart().x-1 == c.getArrive().x)
 				return true;
-			if(j == j1 && c.getDepart().x == c.getArrive().x && c.getDepart().y+1 == c.getArrive().y)
+			if(tourj1 && c.getDepart().x == c.getArrive().x && c.getDepart().y+1 == c.getArrive().y)
 				return true;
-			if(j == j1 && c.getDepart().x-1 == c.getArrive().x && c.getDepart().y+1 == c.getArrive().y)
+			if(tourj1 && c.getDepart().x-1 == c.getArrive().x && c.getDepart().y+1 == c.getArrive().y)
 				return true;
 
 			//Verif coup pour joueur2
-			if(j == j2 && c.getDepart().y == c.getArrive().y && c.getDepart().x+1 == c.getArrive().x)
+			if(!tourj1 && c.getDepart().y == c.getArrive().y && c.getDepart().x+1 == c.getArrive().x)
 				return true;
-			if(j == j2 && c.getDepart().x == c.getArrive().x && c.getDepart().y-1 == c.getArrive().y)
+			if(!tourj1 && c.getDepart().x == c.getArrive().x && c.getDepart().y-1 == c.getArrive().y)
 				return true;
-			if(j == j2 && c.getDepart().x+1 == c.getArrive().x && c.getDepart().y-1 == c.getArrive().y)
+			if(!tourj1 && c.getDepart().x+1 == c.getArrive().x && c.getDepart().y-1 == c.getArrive().y)
 				return true;
 
 		}
 		return false;
 	}
 
-	public boolean estCoupPossible(Joueur j1, DepRang c){
+	public boolean estCoupPossible(DepRang c){
 
 		//ajout if avec fonction teste joueur + pion dans la rang�
 		if(this.billeDansRange(j1,c)){
@@ -250,57 +250,57 @@ public class Moteur{
 		return false;
 	}
 
-	public ArrayList<Coup> listeCoupPossible(Joueur j){
+	public ArrayList<Coup> listeCoupPossible(){
 		ArrayList<Coup> listeCoup = new ArrayList<Coup>();
-		ArrayList<Point> listeCase =  listeCaseJoueur(j);
+		ArrayList<Point> listeCase =  listeCaseJoueur();
 		Point c;
 
 		for(int i = 0; i < listeCase.size(); i++){
 			c = listeCase.get(i);
 			//Ajout Rang
 			
-			if(plateau.get(0).get(c.y) == Case.LIBRE && estCoupPossible(j,new DepRang(Direction.HAUT, c.y))){
+			if(plateau.get(0).get(c.y) == Case.LIBRE && estCoupPossible(new DepRang(Direction.HAUT, c.y))){
 				listeCoup.add(new DepRang(Direction.HAUT, c.y));
 			}
-			else if(plateau.get(N-1).get(c.y) == Case.LIBRE && estCoupPossible(j,new DepRang(Direction.BAS, c.y))){
+			else if(plateau.get(N-1).get(c.y) == Case.LIBRE && estCoupPossible(new DepRang(Direction.BAS, c.y))){
 				listeCoup.add(new DepRang(Direction.BAS, c.y));
 			}
-			else if(plateau.get(c.x).get(0) == Case.LIBRE && estCoupPossible(j,new DepRang(Direction.GAUCHE, c.y))){
+			else if(plateau.get(c.x).get(0) == Case.LIBRE && estCoupPossible(new DepRang(Direction.GAUCHE, c.y))){
 				listeCoup.add(new DepRang(Direction.GAUCHE, c.x));
 			}
-			else if(plateau.get(c.x).get(N-1) == Case.LIBRE && estCoupPossible(j,new DepRang(Direction.DROITE, c.y))){
+			else if(plateau.get(c.x).get(N-1) == Case.LIBRE && estCoupPossible(new DepRang(Direction.DROITE, c.y))){
 				listeCoup.add(new DepRang(Direction.DROITE, c.x));
 			}
 
 			//Verif joueur1
-			if(c.y+1 < N && j == j1 && plateau.get(c.x).get(c.y+1) == Case.LIBRE) 
+			if(c.y+1 < N && tourj1 && plateau.get(c.x).get(c.y+1) == Case.LIBRE) 
 				listeCoup.add(new DepPion(c,new Point(c.x,c.y +1)));
-			if(c.x > 0 && c.y+1 < N  && j == j1 && plateau.get(c.x-1).get(c.y+1) == Case.LIBRE) 
+			if(c.x > 0 && c.y+1 < N  && tourj1 && plateau.get(c.x-1).get(c.y+1) == Case.LIBRE) 
 				listeCoup.add(new DepPion(c,new Point(c.x-1,c.y +1)));
-			if(c.x > 0 && j == j1 && plateau.get(c.x-1).get(c.y) == Case.LIBRE) 
+			if(c.x > 0 && tourj1 && plateau.get(c.x-1).get(c.y) == Case.LIBRE) 
 				listeCoup.add(new DepPion(c,new Point(c.x-1,c.y)));
 
 			//Verif coup pour joueur2
-			if(c.y > 0 && j == j2 && plateau.get(c.x).get(c.y-1) == Case.LIBRE) 
+			if(c.y > 0 && !tourj1 && plateau.get(c.x).get(c.y-1) == Case.LIBRE) 
 				listeCoup.add(new DepPion(c,new Point(c.x,c.y-1)));
-			if(c.y > 0 && c.x+1 < N && j == j2 && plateau.get(c.x+1).get(c.y-1) == Case.LIBRE) 
+			if(c.y > 0 && c.x+1 < N && !tourj1 && plateau.get(c.x+1).get(c.y-1) == Case.LIBRE) 
 				listeCoup.add(new DepPion(c,new Point(c.x+1,c.y -1)));
-			if(c.x+1 < N && j == j2 && plateau.get(c.x+1).get(c.y) == Case.LIBRE) 
+			if(c.x+1 < N && !tourj1 && plateau.get(c.x+1).get(c.y) == Case.LIBRE) 
 				listeCoup.add(new DepPion(c,new Point(c.x+1,c.y)));
 		}
 		return listeCoup;
 	}
 
 
-	public ArrayList<Point> listeCaseJoueur(Joueur j){
+	public ArrayList<Point> listeCaseJoueur(){
 		ArrayList<Point> listeCase = new ArrayList<Point>();
 
 		for(int i = 0; i < N; i++){
 			for(int l = 0; l < N; l++){
-				if(j == j1 && plateau.get(i).get(l) == Case.PJ1){
+				if(tourj1 && plateau.get(i).get(l) == Case.PJ1){
 					listeCase.add(new Point(i,l));
 				}
-				if(j == j2 && plateau.get(i).get(l) == Case.PJ2){
+				if(!tourj1 && plateau.get(i).get(l) == Case.PJ2){
 					listeCase.add(new Point(i,l));
 				}
 			}
@@ -328,7 +328,6 @@ public class Moteur{
 				tmp = plateau.get(0);
 				tmp.set(d.rang, Case.LIBRE);
 				plateau.set(0, tmp);
-				tourj1 = !tourj1;
 			}
 			else if(d.dir == Direction.HAUT){
 				for(int i = 0; i < N-1; i++){
@@ -382,6 +381,7 @@ public class Moteur{
 				plateau.set(pion.depart.x, tmp);
 			}
 		}
+		tourj1 = !tourj1;
 		histo.ajouter(m);
 	}
 //a modif-------------------------
@@ -496,7 +496,7 @@ public class Moteur{
 					default: dire = Direction.DROITE ; break;
 					}
 					c = new DepRang(dire,rand);
-					coup_valide = m.estCoupPossible(m.j1,(DepRang) c);
+					coup_valide = m.estCoupPossible((DepRang) c);
 				}
 				else if(typeDep == 1){
 					System.out.print("Saisir ligne et colonne : ");
@@ -506,7 +506,7 @@ public class Moteur{
 					int la = sc.nextInt();
 					int ca = sc.nextInt();
 					c=new DepPion(new Point(ld,cd),new Point(la,ca));
-					coup_valide = m.estCoupPossible(m.j1,(DepPion)c);
+					coup_valide = m.estCoupPossible((DepPion)c);
 				}
 
 

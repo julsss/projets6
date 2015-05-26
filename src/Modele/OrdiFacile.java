@@ -17,7 +17,7 @@ public class OrdiFacile extends Joueur {
 	private static Random rand = new Random();
 
 	public Coup facile(Moteur m){	
-		ArrayList<Coup> liste = m.listeCoupPossible(this);
+		ArrayList<Coup> liste = m.listeCoupPossible();
 		int val = 0;
 		int taille = liste.size();
 		System.out.println("taille : " + taille);

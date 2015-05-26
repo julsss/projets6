@@ -27,16 +27,16 @@ class EcouteurDeSouris implements MouseListener {
 		{
 
 			if(e.getX() == 0){
-				if(estCoupPossible(new DepRang(e.getX(), Direction.DROITE)))
+				if(m.estCoupPossible(new DepRang(Direction.DROITE, e.getX())))
 				{
-					decaleLigne(y,Direction.DROITE);//faire dans IHM
+					aire.decaleLigne(e.getY(),Direction.DROITE);//faire dans IHM
 				}
 			}
-			else(e.x = N-1)
+			else(e.getX() == aire.N -1)
 			{
-				if(verif(x,y, Direction.GAUCHE))
+				if(verif(e.getY(), Direction.GAUCHE))
 				{
-					decaleLigne(y,Direction.GAUCHE);//faire dans IHM
+					aire.decaleLigne(e.getY(),Direction.GAUCHE);//faire dans IHM
 				}
 			}
 			else if(e.y = 0)

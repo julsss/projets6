@@ -26,7 +26,7 @@ public class OrdiMoyen extends Joueur {
 			return eval(m,tour);
 		}
 		Coup meilleur_coup;
-		ArrayList<Coup> cl = m.listeCoupPossible(this);
+		ArrayList<Coup> cl = m.listeCoupPossible();
 		Coup c;
 		int taille = cl.size();
 		//System.out.println("taille : " + taille);
