@@ -30,6 +30,9 @@ public class Moteur{
 	int nbBillej1;
 	int nbBillej2;
 	int [][] platIHM;
+	Point savePtIHM;
+	boolean savePtIHMValide;
+
 	Humain j1;
 	OrdiFacile j2;
 
@@ -107,6 +110,7 @@ public class Moteur{
 	
 	
 	private void init_platIHM(){
+		savePtIHMValide = false;
 		platIHM = new int[7][7];
 		for(int i = 0; i<7;i++){
 			platIHM[0][i] = -4;
@@ -114,6 +118,7 @@ public class Moteur{
 			platIHM[6][i] = -16;
 			platIHM[i][6] = -8;		
 		}
+		
 		platIHM[0][0] = Integer.MIN_VALUE;
 		platIHM[0][6] = Integer.MIN_VALUE;
 		platIHM[6][0] = Integer.MIN_VALUE;
@@ -341,6 +346,26 @@ public class Moteur{
 
 		return listeCoup;
 	}
+	
+	public void coupPossible(Point c){
+
+		//Verif joueur1
+		if(c.y+1 < N && tourj1 && plateau.get(c.x).get(c.y+1) == Case.LIBRE) 
+			platIHM[c.x][c.y+1] = -1;
+		if(c.x > 0 && c.y+1 < N  && tourj1 && plateau.get(c.x-1).get(c.y+1) == Case.LIBRE) 
+			platIHM[c.x-1][c.y+1] = -1;
+		if(c.x > 0 && tourj1 && plateau.get(c.x-1).get(c.y) == Case.LIBRE) 
+			platIHM[c.x-1][c.y] = -1;
+
+		//Verif coup pour joueur2
+		if(c.y > 0 && !tourj1 && plateau.get(c.x).get(c.y-1) == Case.LIBRE) 
+			platIHM[c.x][c.y-1] = -1;
+		if(c.y > 0 && c.x+1 < N && !tourj1 && plateau.get(c.x+1).get(c.y-1) == Case.LIBRE) 
+			platIHM[c.x+1][c.y-1] = -1;
+		if(c.x+1 < N && !tourj1 && plateau.get(c.x+1).get(c.y) == Case.LIBRE) 
+			platIHM[c.x+1][c.y] = -1;
+
+	}
 
 
 	public ArrayList<Point> listeCaseJoueur(){
@@ -424,7 +449,7 @@ public class Moteur{
 				tmp = plateau.get(pion.depart.x);
 				tmp.set(pion.depart.y, Case.LIBRE);
 				plateau.set(pion.depart.x, tmp);
-				platIHM[pion.depart.x+1][pion.depart.y+1] = 0;
+				platIHM[pion.depart.x][pion.depart.y] = 0;
 				
 			}
 			else if(pion.arrive.x == 0 && pion.arrive.y == 4){
@@ -432,7 +457,7 @@ public class Moteur{
 				tmp = plateau.get(pion.depart.x);
 				tmp.set(pion.depart.y, Case.LIBRE);
 				plateau.set(pion.depart.x, tmp);
-				platIHM[pion.depart.x+1][pion.depart.y+1] = 0;
+				platIHM[pion.depart.x][pion.depart.y] = 0;
 			}
 			else{
 				tmp = plateau.get(pion.arrive.x);
@@ -441,13 +466,25 @@ public class Moteur{
 				tmp = plateau.get(pion.depart.x);
 				tmp.set(pion.depart.y, Case.LIBRE);
 				plateau.set(pion.depart.x, tmp);
-				platIHM[pion.arrive.x+1][pion.arrive.y+1] = platIHM[pion.depart.x+1][pion.depart.y+1] ;
-				platIHM[pion.depart.x+1][pion.depart.y+1] = 0;
+				platIHM[pion.arrive.x][pion.arrive.y] = platIHM[pion.depart.x][pion.depart.y] ;
+				platIHM[pion.depart.x][pion.depart.y] = 0;
 			}
 		}
 		tourj1 = !tourj1;
 		histo.ajouter(m);
+		//correctionPlatIHM();
 		return platIHM;
+	}
+	private void correctionPlatIHM() {
+		for (int i = 0; i < 7; i++)
+		{
+			for (int j = 0; j < 7; j++)
+			{
+				if(platIHM[i][j] == -1)
+					platIHM[i][j] = 0;
+			}
+		}
+		
 	}
 	//a modif-------------------------
 	public void annuler(){
@@ -586,7 +623,6 @@ public class Moteur{
 			try {
 				Thread.sleep(0);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			//m.annuler();
@@ -601,6 +637,58 @@ public class Moteur{
 			}*/
 		}
 
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////Gestion de l'IHM////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
+	 * utilisation pour l'IHM
+	 */
+	public int[][] getPlatIHM() {
+		return platIHM;
+	}
+	public int[][] ClickBlow(Point p) {
+		if(savePtIHMValide)
+		{
+			if(estCoupPossible(new DepPion(savePtIHM, p)))
+			{
+				joue_coup(new DepPion(savePtIHM, p));
+				return platIHM;
+			}
+			correctionPlatIHM();
+			savePtIHMValide = false;
+				
+		}
+		
+		if(platIHM[p.x][p.y] == 1 || platIHM[p.x][p.y] == 2 )
+		{
+			coupPossible(p);
+			savePtIHMValide = true;
+			savePtIHM = p;
+			if(savePtIHMValide)
+				System.out.println("point valide  = " + savePtIHM.x + "," + savePtIHM.y);
+			return platIHM;
+		}
+		else if (platIHM[p.x][p.y] == -2)
+		{
+			if(estCoupPossible(new DepRang(Direction.BAS,p.x)))
+					joue_coup(new DepRang(Direction.BAS,p.x) );
+		}
+		else if (platIHM[p.x][p.y] == -4)
+		{
+			if(estCoupPossible(new DepRang(Direction.GAUCHE,p.y)))
+				joue_coup(new DepRang(Direction.GAUCHE,p.y) );
+		}else if (platIHM[p.x][p.y] == -8)
+		{
+			if(estCoupPossible(new DepRang(Direction.HAUT,p.x)))
+				joue_coup(new DepRang(Direction.HAUT,p.x) );
+		}else if (platIHM[p.x][p.y] == -16)
+		{
+			if(estCoupPossible(new DepRang(Direction.DROITE,p.y)))
+				joue_coup(new DepRang(Direction.DROITE,p.y) );
+		}
+		return platIHM;
 	}
 
 }

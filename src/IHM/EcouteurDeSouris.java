@@ -25,57 +25,8 @@ class EcouteurDeSouris implements MouseListener {
 	{
 		boolean passe = false;
 		Point p = aire.calculPoint(new Point(e.getX(), e.getY()));
-		
-		System.out.println("X :" + p.x + " Y  " + p.y + "selection : " + pionSelected + "ok " + aire.mot.estCoupPossible(save, p));
-		if(!pionSelected)
-		{
-			
-			if(p.x == -1){
-				if(aire.mot.estCoupPossible(new DepRang(Direction.DROITE, p.y)))
-				{
-					aire.decaleLigne(p.y,Direction.DROITE);//faire dans IHM
-				}
-			}
-			else if(p.x ==  aire.N-2){
-				if(aire.mot.estCoupPossible(new DepRang( Direction.GAUCHE, p.y))){
-					aire.decaleLigne(p.y,Direction.GAUCHE);//faire dans IHM
-				}
-			}
-			else if(p.y == -1)
-			{
-
-				if(aire.mot.estCoupPossible(new DepRang( Direction.BAS,p.x)))
-				{
-					aire.decaleLigne(p.x,Direction.BAS);//faire dans IHM
-				}
-			}
-			else if(p.y == aire.N-2)
-			{
-				if(aire.mot.estCoupPossible(new DepRang( Direction.BAS,p.x)))
-				{
-					aire.decaleLigne(p.x,Direction.BAS);//faire dans IHM
-				}
-			}
-			else
-			{
-				ArrayList<Point> pt = aire.mot.listeCoupPossible(new Point(p.y,p.x));
-				while(!pt.isEmpty())
-				{
-					save = new Point(p.y,p.x);
-					aire.afficherCoupPossible(pt);//IHM
-					pionSelected = true;
-					passe = true;
-				}
-			}
-		}
-		else if(aire.mot.estCoupPossible(save, p))
-		{
-			aire.mot.joue_coup(save , new Point(p.y,p.x));
-			aire.afficherCoup(new Point(save.y+1, save.x+1), p.x+1, p.y+1);//IHM
-			pionSelected = false;
-		}
-		if (!passe && pionSelected)
-			pionSelected = false;
+		System.out.println("x = " + p.x + " y = " + p.y + " val = " + aire.getpl()[p.x][p.y]);
+		aire.setpl(aire.mot.ClickBlow(p));
 		
 		aire.repaint();
 		/*if (p.x != 0 || p.y != 0) {		

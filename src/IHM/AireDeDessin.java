@@ -19,17 +19,7 @@ class AireDeDessin extends JComponent {
 	public AireDeDessin(BufferedImage nouvelleImage, Moteur mot) {
 		this.mot = mot;
 		image = nouvelleImage;
-		pl = new int[7][7];
-        pl[1][4] = 1;
-        pl[1][3] = 1;
-        pl[2][4] = 1;
-        pl[2][5] = 1;
-        pl[3][5] = 1;
-        pl[3][1] = 2;
-        pl[4][1] = 2;
-        pl[4][2] = 2;
-        pl[5][2] = 2;
-        pl[5][3] = 2;
+		pl = mot.getPlatIHM();
         
     }
     
@@ -50,65 +40,9 @@ class AireDeDessin extends JComponent {
         x = (int) i * d.width/N;
         y = (int) j * d.height/N;
         temp.x = x/largeurCase;
-        temp.x--;
         temp.y = y/hauteurCase;
-        temp.y --;
         
         return temp;
-    }
-    
-    public void afficherCoup(Point p, int x, int y)
-    {
-        pl[x][y] = pl[p.x][p.y];
-        pl[p.x][p.y] = 0;
-        
-    }
-    
-    public void afficherCoupPossible(ArrayList<Point>pt)
-    {
-        Point p = new Point();
-        while(!pt.isEmpty())
-        {
-            p = pt.remove(pt.size()-1);
-            System.out.println("bouh");
-            pl[p.y+1][p.x+1] = -1;
-        }
-    }
-    
-    public void decaleLigne(int i,Direction d)
-    {
-        if(d == Direction.DROITE)
-        {
-            for(int j  = N-2; j > 1; j--)
-            {
-                pl[i][j] = pl[i][j-1];
-            }
-            pl[i][1] = 0 ;
-        }
-        else if(d == Direction.GAUCHE)
-        {
-            for(int j  = 1; j < N-3; j++)
-            {
-                pl[i][j] = pl[i][j+1];
-            }
-            pl[i][N-2] = 0 ;
-        }
-        else if(d == Direction.HAUT)
-        {
-            for(int j  = N-2; j > 1; j--)
-            {
-                pl[j][i] = pl[j-1][i];
-            }
-            pl[1][i] = 0 ;
-        }
-        else if(d == Direction.BAS)
-        {
-            for(int j  = 1; j < N-3; j++)
-            {
-                pl[j][i] = pl[j+1][i];
-            }
-            pl[N-2][i] = 0 ;
-        }
     }
 
 	public void paintComponent(Graphics g) {
@@ -152,10 +86,42 @@ class AireDeDessin extends JComponent {
                     drawable.fillRect(k*largeurCase, l * hauteurCase, largeurCase, hauteurCase);
                     pl[k][l] = 0;
                 }
+                else if (pl[k][l] == -2)
+                {
+                    drawable.setPaint(Color.yellow);
+                    drawable.fillRect(k*largeurCase, l * hauteurCase, largeurCase, hauteurCase);
+                    
+                }
+                else if (pl[k][l] == -4)
+                {
+                    drawable.setPaint(Color.green);
+                    drawable.fillRect(k*largeurCase, l * hauteurCase, largeurCase, hauteurCase);
+                    
+                }
+                else if (pl[k][l] == -8)
+                {
+                    drawable.setPaint(Color.CYAN);
+                    drawable.fillRect(k*largeurCase, l * hauteurCase, largeurCase, hauteurCase);
+                }
+                else if (pl[k][l] == -16)
+                {
+                    drawable.setPaint(Color.ORANGE);
+                    drawable.fillRect(k*largeurCase, l * hauteurCase, largeurCase, hauteurCase);
+                    
+                }
 			}
 		}
 
 		g.drawImage(image, 0, 0, null);
 		
+	}
+
+	public void setpl(int[][] clickBlow) {
+		pl = clickBlow; 
+		
+	}
+
+	public int[][] getpl() {
+		return pl;
 	}
 }

@@ -20,10 +20,10 @@ public class Fenetre implements Runnable,ActionListener {
 	public void run() {
 		// Creation d'une fenetre
 		int largeur = 800;
-		int hauteur = 400;
+		int hauteur = 800;
 		mot = new Moteur(new Humain(), new OrdiFacile());
 		JFrame frame = new JFrame("Quits");
-        frame.setPreferredSize(new Dimension(800, 600));
+        frame.setPreferredSize(new Dimension(800, 800));
 
 		BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);
 		
