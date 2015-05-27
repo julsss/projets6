@@ -21,7 +21,7 @@ public class OrdiFacile extends Joueur {
 		int val = 0;
 		int taille = liste.size();
 		System.out.println("taille : " + taille);
-		if(taille >= 1)
+		if(taille > 1)
 			val = rand.nextInt(taille-1);
 		else
 			val =0;
