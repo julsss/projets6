@@ -27,6 +27,15 @@ public class DepPion extends Coup{
 		this.arrive = arrive;
 	}
 	
-	
+	public String toString(){
+		String res = new String();
+		
+		res += "Deplacement Pion =";
+		res += " depart : "+ depart.x +":"+ depart.y;
+		res += " arrive : "+ arrive.x +":"+ arrive.y;
+		res += "\n";
+		
+		return res;
+	}
 	
 }
