@@ -31,7 +31,7 @@ public class ReglesQuits implements Runnable,ActionListener{
         GridLayout gl = new GridLayout(3,1);
         panel.setLayout(gl);
         
-        ImageIcon image = new ImageIcon("quits-titre.gif");
+        ImageIcon image = new ImageIcon("res/quits-titre.gif");
         
         JButton menu = new JButton("Menu");
         JLabel label = new JLabel("");
@@ -53,18 +53,7 @@ public class ReglesQuits implements Runnable,ActionListener{
         
     }
     
-        public void actionPerformed(ActionEvent e){
-        	
-        	SwingUtilities.invokeLater( new MenuDemarrage());
-        	frame.dispose();
-        }
-        
-        public static void main(String[] args){
-            
-            SwingUtilities.invokeLater( new ReglesQuits());
-            
-            
-        }
-
-
+    public void actionPerformed(ActionEvent e){
+        frame.dispose();
+    }
 }
