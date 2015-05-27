@@ -1,8 +1,11 @@
 package IHM;
 
 import Moteur.Coup;
+import Moteur.DepPion;
+import Moteur.DepRang;
 import Moteur.Moteur;
 import Moteur.Moteur.Case;
+import Moteur.Moteur.Direction;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -59,7 +62,7 @@ public class AireDeDessin extends JComponent {
         height = d.height / N;
         y = (p.x / width) - 1;
         x = (p.y / height) - 1;
-       // fen.reglesJeu.doMove(p1, new Point(x,y), b);
+        moteur.joue_coup(new DepPion(p1, new Point(x,y)));
         p1 = null;
         movable = false;
         lsurvols = new ArrayList<>();
@@ -67,7 +70,7 @@ public class AireDeDessin extends JComponent {
         repaint();
     }
 
-    public void setCase(Point p){
+    public void doMoveRanger(Point p){
         Dimension d = this.getSize();
         int x, y;
         int width, height;
@@ -76,17 +79,25 @@ public class AireDeDessin extends JComponent {
         height = d.height / N;
         y = (p.x / width) - 1;
         x = (p.y / height) - 1;
-        Point p2 = new Point(x,y);
-        if(p2.x < 0 || p2.x >= moteur.N || p2.y < 0 || p2.y >= moteur.N){
-            //fen.reglesJeu.doMoveRanger(p2,true);
+        Direction dir = null;
+        int ranger = 0;
+        if(x == -1){
+        	dir = Direction.BAS;
+        	ranger = y;
         }
-        else {
-//            if (fen.reglesJeu.estCasePossible(p2)) {
-//                p1 = p2;
-//                setSurvol(p);
-//                movable = true;
-//            }
+        else if(x == moteur.N){
+        	dir = Direction.HAUT;
+        	ranger = y;
         }
+        else if(y == -1){
+        	dir = Direction.DROITE;
+        	ranger = x;
+        }
+        else if(y == moteur.N){
+        	dir = Direction.GAUCHE;
+        	ranger = x;
+        }
+        moteur.joue_coup(new DepRang(dir,ranger,false));
         repaint();
     }
 
