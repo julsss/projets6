@@ -398,7 +398,7 @@ public class Moteur{
 			DepRang d = new DepRang(((DepRang) m).dir, ((DepRang) m).rang, false);
 			if(d.dir == Direction.BAS){
 
-				if(d.rang == 0 && plateau.get(N-2).get(d.rang) == Case.PJ2){
+				if(d.rang == 0 && plateau.get(N-2).get(d.rang) == Case.PJ2 && this.plateau.get(0).get(4) == Case.LIBRE){
 					this.nbBillej2--;
 					((DepRang) m).validant = true;
 					plateau.get(3).set(0, Case.LIBRE);
@@ -417,7 +417,7 @@ public class Moteur{
 				plateau.set(0, tmp);
 			}
 			else if(d.dir == Direction.HAUT){
-				if(d.rang == N-1 && plateau.get(1).get(d.rang) == Case.PJ1){
+				if(d.rang == N-1 && plateau.get(1).get(d.rang) == Case.PJ1 && this.plateau.get(0).get(4) == Case.LIBRE){
 					this.nbBillej1--;
 					((DepRang) m).validant = true;
 					plateau.get(1).set(4, Case.LIBRE);
@@ -473,7 +473,7 @@ public class Moteur{
 		else if(m instanceof DepPion){
 
 			DepPion pion = new DepPion(((DepPion) m).depart,((DepPion) m).arrive);
-			if(pion.arrive.x == 4 && pion.arrive.y == 0){
+			if(pion.arrive.x == 4 && pion.arrive.y == 0 && this.plateau.get(4).get(0) == Case.LIBRE){
 				setNbBillej2(getNbBillej2()-1);
 				tmp = plateau.get(pion.depart.x);
 				tmp.set(pion.depart.y, Case.LIBRE);
@@ -481,7 +481,7 @@ public class Moteur{
 				platIHM[pion.depart.x][pion.depart.y] = 0;
 
 			}
-			else if(pion.arrive.x == 0 && pion.arrive.y == 4){
+			else if(pion.arrive.x == 0 && pion.arrive.y == 4 && this.plateau.get(0).get(4) == Case.LIBRE){
 				setNbBillej1(getNbBillej1()-1);
 				tmp = plateau.get(pion.depart.x);
 				tmp.set(pion.depart.y, Case.LIBRE);
@@ -682,7 +682,7 @@ public class Moteur{
 			}
 */
 			//IA Facile
-			c = m.j1.facile(new Moteur(m));
+			c = m.j1.jouer(new Moteur(m));
 			m.joue_coup(c);
 			m.afficher();
 			//Fin IA Facile
@@ -696,10 +696,10 @@ public class Moteur{
 			//IA Moyen
 			if(m.getNbBillej1() > 2){
 				//System.out.println();
-				m.j2.alphabeta(2,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m));
+				Coup ordi =m.j2.jouer(new Moteur(m));
 				System.out.print("tourj1 : "+m.tourj1);
-				System.out.println(" "+m.j2.coupOrdiMoyen);
-				m.joue_coup(m.j2.coupOrdiMoyen);
+				System.out.println(" "+ordi);
+				m.joue_coup(ordi);
 				m.afficher();
 				System.out.println("billej1 : " + m.getNbBillej1());
 				System.out.println("billej2 : " + m.getNbBillej2());
