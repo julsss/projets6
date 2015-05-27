@@ -7,10 +7,12 @@ public class DepRang extends Coup {
 	
 	Direction dir;
 	int rang;
+	boolean validant;
 	
-	public DepRang(Direction dir,int rang ){
+	public DepRang(Direction dir,int rang, boolean v ){
 		this.dir = dir;
 		this.rang = rang;
+		this.validant = v;
 	}
 	
 	public String toString(){
@@ -19,6 +21,7 @@ public class DepRang extends Coup {
 		res += "Deplacement rang =";
 		res += " range : "+ rang;
 		res += " direction : "+ dir;
+		res += " validant : "+ validant;
 		res += "\n";
 		
 		return res;

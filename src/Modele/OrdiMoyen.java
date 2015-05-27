@@ -34,6 +34,7 @@ public class OrdiMoyen extends Joueur {
 			c = cl.get(i);
 			m.joue_coup(c);
 			double score = - alphabeta(p-1,-beta,-alpha,new Moteur(m),!tour);
+			//System.out.println("Retour score : "+score);
 			m.annuler();
 			if(score > alpha){
 				alpha = score;
