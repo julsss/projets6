@@ -10,15 +10,12 @@ import Moteur.Moteur.Direction;
 
 class EcouteurDeSouris implements MouseListener {
 	AireDeDessin aire;
-	Point save;
-	boolean pionSelected;
+	Point pion1;
 
 	// Ecouteur de souris a besoin de connaitre l'aire de dessin car elle doit
 	// changer le message que celle ci affiche
 	public EcouteurDeSouris(AireDeDessin a) {
 		aire = a;
-		pionSelected = false;
-		save = new Point();
 	}
 
 	public void mouseClicked(MouseEvent e)
@@ -26,18 +23,13 @@ class EcouteurDeSouris implements MouseListener {
 		boolean passe = false;
 		Point p = aire.calculPoint(new Point(e.getX(), e.getY()));
 		System.out.println("x = " + p.x + " y = " + p.y + " val = " + aire.moteur.plateau.get(p.x).get(p.y));
-		//aire.setpl(aire.mot.ClickBlow(p));
+		if(pion1 != null){
+			aire.doMove(pion1,);
+		}else{
+
+		}
 		
 		aire.repaint();
-		/*if (p.x != 0 || p.y != 0) {		
-
-			try {
-				Thread.sleep(2000);                 //1000 milliseconds is one second.
-			} catch(InterruptedException ex) {
-				Thread.currentThread().interrupt();
-			}
-			aire.repaint();
-		}*/
 	}
 
 	// Lors d'une pression de bouton, on change de message
