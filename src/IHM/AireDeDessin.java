@@ -99,6 +99,8 @@ public class AireDeDessin extends JComponent {
         lsurvols = new ArrayList<>();
         lsurvolsRanger = new ArrayList<>();
         ArrayList<Coup> l = moteur.listeCoupPossible();
+        // TODO
+        // System.out.println(p + " " + l);
         for(Coup c : l) {
             if(c instanceof DepPion) {
                 Point tmp = ((DepPion) c).getDepart();
@@ -109,6 +111,7 @@ public class AireDeDessin extends JComponent {
                 lsurvolsRanger.add(c);
             }
         }
+        // System.out.println(lsurvolsRanger);
         repaint();
     }
 
@@ -176,7 +179,7 @@ public class AireDeDessin extends JComponent {
         drawable.setColor(Color.BLACK);
     }
 
-    void dessinerSurvolRanger(Graphics2D drawable, Coup c){
+    void dessinerSurvolRanger(Graphics2D drawable, DepRang c){
         Dimension d = this.getSize();
         int x, y;
         int width, height;
@@ -184,35 +187,46 @@ public class AireDeDessin extends JComponent {
         width = d.width / N;
         height = d.height / N;
         int i = -1, j = -1;
-//        if(c.deplacement == Coup.Deplacement.BAS){
-//            j = c.ranger;
-//        }
-//        else if(c.deplacement == Coup.Deplacement.HAUT){
-//            i = Moteur.Regles.N;
-//            j = c.ranger;
-//        }
-//        else if(c.deplacement == Coup.Deplacement.DROITE){
-//            i = c.ranger;
-//        }
-//        else if(c.deplacement == Coup.Deplacement.GAUCHE){
-//            i = c.ranger;
-//            j = Moteur.Regles.N;
-//        }
+
+        if(c.dir == Direction.BAS){
+            j = c.rang;
+        }
+        else if(c.dir == Direction.HAUT){
+            i = moteur.N;
+            j = c.rang;
+        }
+        else if(c.dir == Direction.DROITE){
+            i = c.rang;
+        }
+        else if(c.dir == Direction.GAUCHE){
+            i = c.rang;
+            j = moteur.N;
+        }
         y = (i+1) * width;
         x = (j+1) * height;
 
-//        if(c.deplacement == Coup.Deplacement.BAS){
-//            drawable.drawImage(Fenetre.rotate(fleche, -90),x,y,width,height, null);
-//        }
-//        else if(c.deplacement == Coup.Deplacement.HAUT){
-//            drawable.drawImage(Fenetre.rotate(fleche, 90),x,y,width,height, null);
-//        }
-//        else if(c.deplacement == Coup.Deplacement.DROITE){
-//            drawable.drawImage(Fenetre.rotate(fleche, 180),x,y,width,height, null);
-//        }
-//        else if(c.deplacement == Coup.Deplacement.GAUCHE){
-//            drawable.drawImage(fleche,x,y,width,height, null);
-//        }
+        if(c.dir == Direction.BAS){
+            drawable.drawImage(rotate(fleche, -90),x,y,width,height, null);
+        }
+        else if(c.dir == Direction.HAUT){
+            drawable.drawImage(rotate(fleche, 90),x,y,width,height, null);
+        }
+        else if(c.dir == Direction.DROITE){
+            drawable.drawImage(rotate(fleche, 180),x,y,width,height, null);
+        }
+        else if(c.dir == Direction.GAUCHE){
+            drawable.drawImage(fleche,x,y,width,height, null);
+        }
+    }
+
+    public static BufferedImage rotate(BufferedImage bImage, int angle) {
+        int w = bImage.getWidth(null);
+        int h = bImage.getHeight(null);
+        AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(angle), w / 2, h / 2);
+        AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+        BufferedImage bImage2 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        op.filter(bImage, bImage2);
+        return bImage2;
     }
 
     public Point calculPoint(Point p){
@@ -250,7 +264,7 @@ public class AireDeDessin extends JComponent {
         }
 
         for(Coup c : lsurvolsRanger){
-            dessinerSurvolRanger(drawable, c);
+            dessinerSurvolRanger(drawable, (DepRang) c);
         }
 
         for(int i =0; i < moteur.N; i++){

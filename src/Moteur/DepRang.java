@@ -5,8 +5,8 @@ import Moteur.Moteur.Direction;
 
 public class DepRang extends Coup {
 	
-	Direction dir;
-	int rang;
+	public Direction dir;
+	public int rang;
 	boolean validant;
 	
 	public DepRang(Direction dir,int rang, boolean v ){
