@@ -20,7 +20,7 @@ public class Fenetre implements Runnable,ActionListener {
 	public void run() {
 		// Creation d'une fenetre
 
-		mot = new Moteur(new Humain(), new OrdiFacile());
+		mot = new Moteur(new Humain(), new Humain());
 		JFrame frame = new JFrame("Quits");
         frame.setPreferredSize(new Dimension(800, 600));
         SpringLayout alpha = new SpringLayout();
@@ -29,8 +29,10 @@ public class Fenetre implements Runnable,ActionListener {
         
 		AireDeDessin aireDessin = new AireDeDessin(this, mot);
 		aireDessin.setPreferredSize(new Dimension(500, 500));
-		aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
-		//aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
+            EcouteurDeSouris eds = new EcouteurDeSouris(aireDessin);
+		aireDessin.addMouseListener(eds);
+		aireDessin.addMouseMotionListener(eds);
+
         // Ajout de notre composant de dessin dans la fenetre
 		frame.add(aireDessin);
 		

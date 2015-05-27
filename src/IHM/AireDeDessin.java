@@ -53,20 +53,15 @@ public class AireDeDessin extends JComponent {
         lsurvolsRanger = new ArrayList<>();
     }
 
-    public void doMove(Point p, boolean b){
-        Dimension d = this.getSize();
-        int x, y;
-        int width, height;
-
-        width = d.width / N;
-        height = d.height / N;
-        y = (p.x / width) - 1;
-        x = (p.y / height) - 1;
-        moteur.joue_coup(new DepPion(p1, new Point(x,y)));
-        p1 = null;
-        movable = false;
-        lsurvols = new ArrayList<>();
-        lsurvolsRanger = new ArrayList<>();
+    public void doMove(Point p){
+        DepPion d = new DepPion(p1, p);
+        if(moteur.estCoupPossible(d)) {
+            moteur.joue_coup(d);
+            p1 = null;
+            movable = false;
+            lsurvols = new ArrayList<>();
+            lsurvolsRanger = new ArrayList<>();
+        }
         repaint();
     }
 
@@ -102,31 +97,20 @@ public class AireDeDessin extends JComponent {
     }
 
     public void setSurvol(Point p) {
-        if(p1 == null) {
-            Dimension d = this.getSize();
-            int x, y;
-            int width, height;
-
-            width = d.width / N;
-            height = d.height / N;
-            y = p.x / width;
-            x = p.y / height;
-            x--;
-            y--;
-            Point caseCurr = new Point(x, y);
-            lsurvols = new ArrayList<>();
-            lsurvolsRanger = new ArrayList<>();
-//            if (fen.reglesJeu.estCasePossible(caseCurr)) {
-//                for (Coup c : fen.reglesJeu.listCoupCaseSeul(fen.reglesJeu.jCurr, caseCurr)) {
-//                    if (c.estDepPoint) {
-//                        lsurvols.add(c.arr);
-//                    }
-//                }
-//            }
-
-//            lsurvolsRanger = fen.reglesJeu.listCoupRanger(fen.reglesJeu.jCurr, caseCurr);
-            repaint();
+        lsurvols = new ArrayList<>();
+        lsurvolsRanger = new ArrayList<>();
+        ArrayList<Coup> l = moteur.listeCoupPossible();
+        for(Coup c : l) {
+            if(c instanceof DepPion) {
+                Point tmp = ((DepPion) c).getDepart();
+                if(tmp.x == p.x && tmp.y == p.y)
+                    lsurvols.add(((DepPion) c).getArrive());
+            }
+            else {
+                lsurvolsRanger.add(c);
+            }
         }
+        repaint();
     }
 
     public void dessinerCase(Point p, Case caseCurr, Graphics2D drawable){
