@@ -1,16 +1,17 @@
 package Modele;
 
-import java.util.*;
+import java.util.ArrayList;
 
-import Moteur.*;
-import Moteur.Moteur.*;
+import Moteur.Coup;
+import Moteur.Moteur;
+import Moteur.Moteur.Case;
 
-public class OrdiMoyen extends Joueur {
+public class OrdiDifficile extends Joueur{
 
-	public Coup coupOrdiMoyen;
-	public int profondeurMoyen;
+	public Coup coupOrdiDiff;
+	public int profondeurDiff;
 	
-	double [][] evalPlacementJ1 = {
+	private double [][] evalPlacementJ1 = {
 			{4, 4.5, 5,   5.5, 100},
 			{3, 3.5, 4,   4.5, 5.5},
 			{2, 2.5, 3,   4,     5},
@@ -18,7 +19,7 @@ public class OrdiMoyen extends Joueur {
 			{0, 1,   2,   3,     4}
 	};
 
-	double [][] evalPlacementJ2 = {
+	private double [][] evalPlacementJ2 = {
 			{4,   3,   2,   1,   0},
 			{4.5, 3.5, 2.5, 1.5, 1},
 			{5,   4,   3,   2.5, 2},
@@ -26,22 +27,21 @@ public class OrdiMoyen extends Joueur {
 			{100, 5.5, 5,   4.5, 4}
 	};
 
-	public OrdiMoyen(){
-		super(true, false);
-		profondeurMoyen = 3;
+	public OrdiDifficile(){
+		super(true,false);
+		profondeurDiff = 6;
+	}
+	
+	public OrdiDifficile(boolean b) {
+		super(b);
 	}
 
-	public OrdiMoyen(int score){
-		super(score,true);
+	@Override
+	public Coup jouer(Moteur m) {
+		alphabeta(profondeurDiff,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m));
+		return coupOrdiDiff;
 	}
-
-	public Coup jouer(Moteur m){
-
-		alphabeta(profondeurMoyen,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m));
-		return coupOrdiMoyen;
-	}
-
-	//Fonction appeler avec profondeurMoyen en parametres
+	
 	public double alphabeta(int p, double alpha, double beta, Moteur m){
 		//Moteur m2 = new Moteur(m);
 		if(m.getNbBillej1() == 2 || m.getNbBillej2() == 2 || p == 0){
@@ -60,8 +60,8 @@ public class OrdiMoyen extends Joueur {
 			if(score > alpha){
 				//System.out.println(m.tourj1);
 				alpha = score;
-				if(p==profondeurMoyen)
-					this.coupOrdiMoyen = c;
+				if(p==profondeurDiff)
+					this.coupOrdiDiff = c;
 				if(alpha >= beta){
 					break;
 				}

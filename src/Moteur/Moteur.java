@@ -4,11 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Modele.Historique;
-import Modele.Humain;
-import Modele.Joueur;
-import Modele.OrdiFacile;
-import Modele.OrdiMoyen;
+import Modele.*;
 
 //import package ihm
 
@@ -504,6 +500,7 @@ public class Moteur{
 		//correctionPlatIHM();
 		return platIHM;
 	}
+
 	private void correctionPlatIHM() {
 		for (int i = 0; i < 7; i++)
 		{
@@ -621,7 +618,7 @@ public class Moteur{
 	}
 
 	public static void main(String[] args){
-		Moteur m = new Moteur(new OrdiFacile(),new OrdiMoyen());
+		Moteur m = new Moteur(new OrdiFacile(),new OrdiDifficile());
 		Coup c = new Coup();
 		boolean coup_valide = false;
 		m.afficher();
@@ -687,14 +684,27 @@ public class Moteur{
 			m.afficher();
 			//Fin IA Facile
 
-			/*try {
+			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-*/
+
 			//IA Moyen
-			if(m.getNbBillej1() > 2){
+//			if(m.getNbBillej1() > 2){
+//				//System.out.println();
+//				Coup ordi =m.j2.jouer(new Moteur(m));
+//				System.out.print("tourj1 : "+m.tourj1);
+//				System.out.println(" "+ordi);
+//				m.joue_coup(ordi);
+//				m.afficher();
+//				System.out.println("billej1 : " + m.getNbBillej1());
+//				System.out.println("billej2 : " + m.getNbBillej2());
+//			}
+			//Fin IAMoyen
+			
+			//IA Difficile
+			if(m.getNbBillej2() > 2){
 				//System.out.println();
 				Coup ordi =m.j2.jouer(new Moteur(m));
 				System.out.print("tourj1 : "+m.tourj1);
@@ -704,7 +714,7 @@ public class Moteur{
 				System.out.println("billej1 : " + m.getNbBillej1());
 				System.out.println("billej2 : " + m.getNbBillej2());
 			}
-			//Fin IAMoyen
+			//Fin IA Difficile
 		}
 		
 		System.out.println("nbbillej1 : " + (5-m.nbBillej1) + "nbbillej2 : " + (5-m.nbBillej2));
