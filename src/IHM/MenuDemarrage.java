@@ -41,7 +41,7 @@ public class MenuDemarrage implements Runnable{
         //Creation d'espace entre les bouton (Verticale)
         gl.setVgap(8);
         
-        ImageIcon image = new ImageIcon("quits-titre.gif");
+        ImageIcon image = new ImageIcon("res/quits-titre.gif");
         
         JMenu jeu = new JMenu("Jeu");
         JMenuItem demarrer = new JMenuItem("Demarrer");

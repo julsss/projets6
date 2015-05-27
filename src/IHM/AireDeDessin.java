@@ -22,8 +22,7 @@ import java.util.ArrayList;
 public class AireDeDessin extends JComponent {
     private static final long serialVersionUID = 1L;
     Graphics2D drawable;
-    Fenetre fen;
-    public boolean movable;
+    Fenetre f;
     Point p1;
     ArrayList<Point> lsurvols;
     ArrayList<Coup> lsurvolsRanger;
@@ -32,7 +31,7 @@ public class AireDeDessin extends JComponent {
     public Moteur moteur;
 
     public AireDeDessin(Fenetre f, Moteur m) {
-        fen = f;
+        this.f = f;
         moteur = m;
         N = moteur.N + 2;
         p1 = null;
@@ -51,20 +50,15 @@ public class AireDeDessin extends JComponent {
     public void initSurvols(){
         lsurvols = new ArrayList<>();
         lsurvolsRanger = new ArrayList<>();
+        repaint();
     }
 
-    public void doMove(Point p, boolean b){
-        Dimension d = this.getSize();
-        int x, y;
-        int width, height;
-
-        width = d.width / N;
-        height = d.height / N;
-        y = (p.x / width) - 1;
-        x = (p.y / height) - 1;
-        moteur.joue_coup(new DepPion(p1, new Point(x,y)));
+    public void doMove(Point p){
+        DepPion d = new DepPion(p1, p);
+        if(moteur.estCoupPossible(d)) {
+            moteur.joue_coup(d);
+        }
         p1 = null;
-        movable = false;
         lsurvols = new ArrayList<>();
         lsurvolsRanger = new ArrayList<>();
         repaint();
@@ -82,51 +76,40 @@ public class AireDeDessin extends JComponent {
         Direction dir = null;
         int ranger = 0;
         if(x == -1){
-        	dir = Direction.BAS;
-        	ranger = y;
+            dir = Direction.BAS;
+            ranger = y;
         }
         else if(x == moteur.N){
-        	dir = Direction.HAUT;
-        	ranger = y;
+            dir = Direction.HAUT;
+            ranger = y;
         }
         else if(y == -1){
-        	dir = Direction.DROITE;
-        	ranger = x;
+            dir = Direction.DROITE;
+            ranger = x;
         }
         else if(y == moteur.N){
-        	dir = Direction.GAUCHE;
-        	ranger = x;
+            dir = Direction.GAUCHE;
+            ranger = x;
         }
         moteur.joue_coup(new DepRang(dir,ranger,false));
         repaint();
     }
 
     public void setSurvol(Point p) {
-        if(p1 == null) {
-            Dimension d = this.getSize();
-            int x, y;
-            int width, height;
-
-            width = d.width / N;
-            height = d.height / N;
-            y = p.x / width;
-            x = p.y / height;
-            x--;
-            y--;
-            Point caseCurr = new Point(x, y);
-            lsurvols = new ArrayList<>();
-            lsurvolsRanger = new ArrayList<>();
-//            if (fen.reglesJeu.estCasePossible(caseCurr)) {
-//                for (Coup c : fen.reglesJeu.listCoupCaseSeul(fen.reglesJeu.jCurr, caseCurr)) {
-//                    if (c.estDepPoint) {
-//                        lsurvols.add(c.arr);
-//                    }
-//                }
-//            }
-
-//            lsurvolsRanger = fen.reglesJeu.listCoupRanger(fen.reglesJeu.jCurr, caseCurr);
-            repaint();
+        lsurvols = new ArrayList<>();
+        lsurvolsRanger = new ArrayList<>();
+        ArrayList<Coup> l = moteur.listeCoupPossible();
+        for(Coup c : l) {
+            if(c instanceof DepPion) {
+                Point tmp = ((DepPion) c).getDepart();
+                if(tmp.x == p.x && tmp.y == p.y)
+                    lsurvols.add(((DepPion) c).getArrive());
+            }
+            else {
+                lsurvolsRanger.add(c);
+            }
         }
+        repaint();
     }
 
     public void dessinerCase(Point p, Case caseCurr, Graphics2D drawable){
@@ -233,7 +216,7 @@ public class AireDeDessin extends JComponent {
     }
 
     public Point calculPoint(Point p){
-    	Dimension d = this.getSize();
+        Dimension d = this.getSize();
         int x, y;
         int width, height;
 
@@ -243,7 +226,7 @@ public class AireDeDessin extends JComponent {
         x = (p.y / height) - 1;
         return new Point(x,y);
     }
-    
+
     public void paintComponent(Graphics g) {
         // Graphics 2D est le vrai type de l'objet passe en parametre
         // Le cast permet d'avoir acces a un peu plus de primitives de dessin
@@ -271,10 +254,10 @@ public class AireDeDessin extends JComponent {
         }
 
         for(int i =0; i < moteur.N; i++){
-           for(int j =0; j < moteur.N; j++){
-               dessinerCase(new Point(i,j),moteur.plateau.get(i).get(j), drawable);
-           }
-       }
+            for(int j =0; j < moteur.N; j++){
+                dessinerCase(new Point(i,j),moteur.plateau.get(i).get(j), drawable);
+            }
+        }
     }
 
 }
