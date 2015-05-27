@@ -15,14 +15,14 @@ import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuDemarrage implements Runnable,ActionListener {
+public class MenuDemarrage implements Runnable{
 	JFrame frame = new JFrame("Quits");
     JButton nvpartie = new JButton("Nouvelle Partie");
-				JButton prapide = new JButton("Partie Rapide");
-				JButton charger = new JButton("Charger");
-				JButton rjeu = new JButton("Regles du jeu");
-				JButton scores = new JButton("Scores");
-				JButton quitter = new JButton("Quitter");
+	JButton prapide = new JButton("Partie Rapide");
+	JButton charger = new JButton("Charger");
+	JButton rjeu = new JButton("Regles du jeu");
+	JButton scores = new JButton("Scores");
+	JButton quitter = new JButton("Quitter");
     JLabel Bienvenue = new JLabel("Bienvenue !");
     
 	public void run(){
@@ -102,19 +102,15 @@ public class MenuDemarrage implements Runnable,ActionListener {
 				panel.add(rjeu);
 				panel.add(scores);
 				panel.add(quitter);
-        
-
-
-
 
                 frame.add(panel);
-        
-                nvpartie.addActionListener(this);
-                prapide.addActionListener(this);
-                charger.addActionListener(this);
-                rjeu.addActionListener(this);
-                scores.addActionListener(this);
-                quitter.addActionListener(this);
+                EcouteurDemarrage ed = new EcouteurDemarrage(this);
+                nvpartie.addActionListener(ed);
+                prapide.addActionListener(ed);
+                charger.addActionListener(ed);
+                rjeu.addActionListener(ed);
+                scores.addActionListener(ed);
+                quitter.addActionListener(ed);
         
                 //Fermeture de la fenetre en un clic
 		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,25 +120,6 @@ public class MenuDemarrage implements Runnable,ActionListener {
 		
 		 
 	}
-
-    public void actionPerformed(ActionEvent e) {
-        Object  source=e.getSource();
-        
-        if  (source==quitter){
-            System.exit(0);}
-        else if (source==nvpartie){
-            }
-        else if (source==rjeu){
-            SwingUtilities.invokeLater( new ReglesQuits());}
-        else if (source==prapide){
-        SwingUtilities.invokeLater(new Fenetre());
-            frame.setVisible(false);}
-        
-        else if (source==charger){}
-                        //
-        else if (source==scores){}
-                            //
-    }
     
 	public static void main(String[] args){
         

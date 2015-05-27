@@ -25,8 +25,8 @@ class EcouteurDeSouris implements MouseListener {
 	{
 		boolean passe = false;
 		Point p = aire.calculPoint(new Point(e.getX(), e.getY()));
-		System.out.println("x = " + p.x + " y = " + p.y + " val = " + aire.getpl()[p.x][p.y]);
-		aire.setpl(aire.mot.ClickBlow(p));
+		System.out.println("x = " + p.x + " y = " + p.y + " val = " + aire.moteur.plateau.get(p.x).get(p.y));
+		//aire.setpl(aire.mot.ClickBlow(p));
 		
 		aire.repaint();
 		/*if (p.x != 0 || p.y != 0) {		

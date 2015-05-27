@@ -40,7 +40,7 @@ public class Moteur{
 	public static final int N=5;
 	public boolean tourj1;
 
-	ArrayList<ArrayList<Case>> plateau = new ArrayList<ArrayList<Case>>();
+	public ArrayList<ArrayList<Case>> plateau = new ArrayList<ArrayList<Case>>();
 
 	public Moteur ( Joueur j11, Joueur j22){
 		init_plateau();

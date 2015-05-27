@@ -19,21 +19,23 @@ public class Fenetre implements Runnable,ActionListener {
 	
 	public void run() {
 		// Creation d'une fenetre
-		int largeur = 800;
-		int hauteur = 800;
+
 		mot = new Moteur(new Humain(), new OrdiFacile());
 		JFrame frame = new JFrame("Quits");
-        frame.setPreferredSize(new Dimension(800, 800));
-
-		BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_RGB);
-		
-		AireDeDessin aireDessin = new AireDeDessin(image, mot);
-		aireDessin.setPreferredSize(new Dimension(400, 400));
+        frame.setPreferredSize(new Dimension(800, 600));
+        SpringLayout alpha = new SpringLayout();
+        
+        frame.setLayout(alpha);
+        
+		AireDeDessin aireDessin = new AireDeDessin(this, mot);
+		aireDessin.setPreferredSize(new Dimension(500, 500));
 		aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
 		//aireDessin.addMouseListener(new EcouteurDeSouris(aireDessin));
         // Ajout de notre composant de dessin dans la fenetre
 		frame.add(aireDessin);
 		
+		alpha.putConstraint(SpringLayout.VERTICAL_CENTER, aireDessin, 0, SpringLayout.VERTICAL_CENTER, frame);
+		alpha.putConstraint(SpringLayout.HORIZONTAL_CENTER, aireDessin, 0, SpringLayout.HORIZONTAL_CENTER, frame);
 		
 		/*---------  MENU --------*/
 		
@@ -54,8 +56,8 @@ public class Fenetre implements Runnable,ActionListener {
         JMenuItem reglages = new JMenuItem("Réglages");
         JMenuItem scores = new JMenuItem("Scores");
         JMenuItem regles = new JMenuItem("Règles du jeu");
-        JMenuItem apropos = new JMenuItem("A propos");
-        JButton Quitter = new JButton("Quitter");
+        JMenuItem aPropos = new JMenuItem("A propos");
+        JMenuItem quitterM = new JMenuItem("Quitter");
         
         
         //frame.add(quitter);
@@ -63,12 +65,12 @@ public class Fenetre implements Runnable,ActionListener {
         jeu.add(rejouer);
         jeu.add(svg);
         jeu.add(charger);
-        jeu.add(quitter);
+        jeu.add(quitterM);
         
         autres.add(reglages);
         autres.add(scores);
         autres.add(regles);
-        autres.add(apropos);
+        autres.add(aPropos);
         
         JMenuBar barreMenu = new JMenuBar();
         barreMenu.add(jeu);
@@ -77,16 +79,13 @@ public class Fenetre implements Runnable,ActionListener {
         
 		// Un clic sur le bouton de fermeture clos l'application
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
 
 		// On fixe la taille et on demarre
-		frame.setSize(largeur, hauteur);
+		frame.setSize(frame.getPreferredSize());
         frame.setLocationRelativeTo(null);
         
 		frame.setVisible(true);
-	}
-
-	public static void main(String [] args) {
-		SwingUtilities.invokeLater(new Fenetre());
 	}
 
 	@Override
