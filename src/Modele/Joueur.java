@@ -5,9 +5,10 @@ import java.*;
 import java.util.*;
 import java.lang.Math;
 
+import Moteur.Coup;
 import Moteur.Moteur;
 
-public class Joueur{
+public abstract class Joueur{
   
   int score;
   boolean estOrdi;
@@ -41,4 +42,6 @@ public class Joueur{
   public boolean getTour(){
     return this.estMonTour;
   }
+  public abstract Coup jouer(Moteur m);
+
 }

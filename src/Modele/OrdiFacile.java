@@ -29,4 +29,11 @@ public class OrdiFacile extends Joueur {
 		
 		return liste.get(val);
 	}
+
+	@Override
+	public Coup jouer(Moteur m) {
+		
+		// TODO Auto-generated method stub
+		return facile(m);
+	}
 }

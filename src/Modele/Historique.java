@@ -20,7 +20,7 @@ public class Historique{
 		{
 			annuler = new Stack<Moteur.Coup>();
 		}
-		coup.addLast(p);
+		coup.addFirst(p);
 		supprAnnuler = false;
 	}
 
@@ -44,8 +44,8 @@ public class Historique{
 	{
 		if(!coup.isEmpty())
 		{
-			annuler.push(coup.getLast());
-			return coup.removeLast();
+			annuler.push(coup.getFirst());
+			return coup.removeFirst();
 
 		}
 		return null;
@@ -56,7 +56,7 @@ public class Historique{
 		if(!annuler.isEmpty())
 		{
 			Moteur.Coup p = annuler.pop();
-			coup.addLast(p);
+			coup.addFirst(p);
 			supprAnnuler = true;
 			return p;
 		}		

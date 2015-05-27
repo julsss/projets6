@@ -33,16 +33,16 @@ public class Moteur{
 	Point savePtIHM;
 	boolean savePtIHMValide;
 
-	OrdiFacile j1;
-	OrdiMoyen j2;
+	Joueur j1;
+	Joueur j2;
 
 	Historique histo;
 	public static final int N=5;
-	boolean tourj1;
+	public boolean tourj1;
 
 	ArrayList<ArrayList<Case>> plateau = new ArrayList<ArrayList<Case>>();
 
-	public Moteur ( OrdiFacile j11, OrdiMoyen j22){
+	public Moteur ( Joueur j11, Joueur j22){
 		init_plateau();
 		nbBillej1 = 5;
 		nbBillej2 = 5;
@@ -74,7 +74,7 @@ public class Moteur{
 	}
 
 	public void setJ1(Joueur j) {
-		j1 = (OrdiFacile) j;
+		j1 = j;
 	}
 
 	public Joueur getJ2() {
@@ -82,7 +82,7 @@ public class Moteur{
 	}
 
 	public void setJ2(Joueur j) {
-		j2 = (OrdiMoyen) j;
+		j2 =  j;
 	}
 
 	public ArrayList<ArrayList<Case>> getPlateau() {
@@ -235,32 +235,33 @@ public class Moteur{
 		//ajout if avec fonction teste joueur + pion dans la range
 		if( this.billeDansRange(c) ){
 			if(c.dir == Direction.BAS && plateau.get(N-1).get(c.rang) == Case.LIBRE ){
-				if(!histo.getAnnuler().isEmpty() && histo.getAnnuler().peek() instanceof DepRang ){
-					DepRang dr = (DepRang) histo.getAnnuler().peek();
+
+				if(!histo.getCoup().isEmpty() && histo.getCoup().peek() instanceof DepRang ){
+					DepRang dr = (DepRang) histo.getCoup().peek();
 					if(dr.dir == Direction.HAUT && dr.rang == c.rang)
 						return false;
 				}
 				return true;
 			}
 			if(c.dir == Direction.HAUT && plateau.get(0).get(c.rang) == Case.LIBRE){
-				if(!histo.getAnnuler().isEmpty() && histo.getAnnuler().peek() instanceof DepRang ){
-					DepRang dr = (DepRang) histo.getAnnuler().peek();
+				if(!histo.getCoup().isEmpty() && histo.getCoup().peek() instanceof DepRang ){
+					DepRang dr = (DepRang) histo.getCoup().peek();
 					if(dr.dir == Direction.BAS && dr.rang == c.rang)
 						return false;
 				}
 				return true;
 			}
 			if(c.dir == Direction.GAUCHE && plateau.get(c.rang).get(0) == Case.LIBRE){
-				if(!histo.getAnnuler().isEmpty() && histo.getAnnuler().peek() instanceof DepRang ){
-					DepRang dr = (DepRang) histo.getAnnuler().peek();
+				if(!histo.getCoup().isEmpty() && histo.getCoup().peek() instanceof DepRang ){
+					DepRang dr = (DepRang) histo.getCoup().peek();
 					if(dr.dir == Direction.DROITE && dr.rang == c.rang)
 						return false;
 				}
 				return true;
 			}
 			if(c.dir == Direction.DROITE && plateau.get(c.rang).get(N-1) == Case.LIBRE){
-				if(!histo.getAnnuler().isEmpty() && histo.getAnnuler().peek() instanceof DepRang ){
-					DepRang dr = (DepRang) histo.getAnnuler().peek();
+				if(!histo.getCoup().isEmpty() && histo.getCoup().peek() instanceof DepRang ){
+					DepRang dr = (DepRang) histo.getCoup().peek();
 					if(dr.dir == Direction.GAUCHE && dr.rang == c.rang)
 						return false;
 				}
@@ -623,13 +624,13 @@ public class Moteur{
 		Moteur m = new Moteur(new OrdiFacile(),new OrdiMoyen());
 		Coup c = new Coup();
 		boolean coup_valide = false;
-		//m.afficher();
+		m.afficher();
+
 		while(m.nbBillej1 > 2 && m.nbBillej2 >2){
-			//Recuperation coup humain
-			/*Scanner sc = new Scanner(System.in);
+			/*Recuperation coup humain
+			Scanner sc = new Scanner(System.in);
 			coup_valide = false;
 			while(!coup_valide){
-				m.afficher();
 				int typeDep = 0;
 				while(typeDep != 1 && typeDep != 2) {
 					System.out.print("Saisir le type de coup, dep pion(1), dep rang(2) : ");
@@ -673,29 +674,29 @@ public class Moteur{
 			m.joue_coup(c );
 			m.afficher();
 			 */
-			
-			/*try {
+/*
+			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}*/
-			
+			}
+*/
 			//IA Facile
 			c = m.j1.facile(new Moteur(m));
 			m.joue_coup(c);
 			m.afficher();
 			//Fin IA Facile
-			
+
 			/*try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}*/
-
+			}
+*/
 			//IA Moyen
 			if(m.getNbBillej1() > 2){
 				//System.out.println();
-				m.j2.alphabeta(1,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m),false);
+				m.j2.alphabeta(2,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m));
 				System.out.print("tourj1 : "+m.tourj1);
 				System.out.println(" "+m.j2.coupOrdiMoyen);
 				m.joue_coup(m.j2.coupOrdiMoyen);
@@ -703,8 +704,10 @@ public class Moteur{
 				System.out.println("billej1 : " + m.getNbBillej1());
 				System.out.println("billej2 : " + m.getNbBillej2());
 			}
-			//Fin IA Moyen
+			//Fin IAMoyen
 		}
+		
+		System.out.println("nbbillej1 : " + (5-m.nbBillej1) + "nbbillej2 : " + (5-m.nbBillej2));
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -761,4 +764,3 @@ public class Moteur{
 	}*/
 
 }
-

@@ -19,11 +19,17 @@ public class OrdiMoyen extends Joueur {
 		super(score,true);
 	}
 	
+	public Coup jouer(Moteur m){
+		
+		alphabeta(3,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m));
+		return coupOrdiMoyen;
+	}
+	
 	//Fonction appeler avec profondeurMoyen en parametres
-	public double alphabeta(int p, double alpha, double beta, Moteur m, boolean tour){
+	public double alphabeta(int p, double alpha, double beta, Moteur m){
 		//Moteur m2 = new Moteur(m);
 		if(m.getNbBillej1() == 2 || m.getNbBillej2() == 2 || p == 0){
-			return eval(m,tour);
+			return eval(m);
 		}
 		Coup meilleur_coup;
 		ArrayList<Coup> cl = m.listeCoupPossible();
@@ -33,7 +39,7 @@ public class OrdiMoyen extends Joueur {
 		for(int i = 0; i < taille; i++){
 			c = cl.get(i);
 			m.joue_coup(c);
-			double score = - alphabeta(p-1,-beta,-alpha,new Moteur(m),!tour);
+			double score = - alphabeta(p-1,-beta,-alpha,new Moteur(m));
 			m.annuler();
 			if(score > alpha){
 				alpha = score;
@@ -64,10 +70,10 @@ public class OrdiMoyen extends Joueur {
 		};
 		
 	//Passage d'un moteur en parametre : j1 -> m.j1, etc...
-	private double eval(Moteur m, boolean tourJ1) {
+	private double eval(Moteur m) {
 		//System.out.println("Eval()");
 		double score = 0;
-		if(tourJ1)
+		if(m.tourj1)
 		{
 			if(m.getNbBillej1() == 2){
 				return Integer.MIN_VALUE;	
@@ -78,7 +84,7 @@ public class OrdiMoyen extends Joueur {
 			//Nombre de billes adverses		
 			score -= 8*(5 - m.getNbBillej2());
 		}
-		else if (!tourJ1) {
+		else if (!m.tourj1) {
 			//Nombre de billes perso
 			if(m.getNbBillej2() == 2){
 				return Integer.MIN_VALUE;
@@ -93,14 +99,14 @@ public class OrdiMoyen extends Joueur {
 		//Distance euclidienne des billes Joueur 1 et Joueur 2
 		for(int i=0;i<m.N;i++){
 			for(int j=0;j<m.N;j++){
-				if(tourJ1){
+				if(m.tourj1){
 					if(m.getPlateau().get(i).get(j) == Case.PJ1)
 						score += evalPlacementJ1[i][j];
 					
 					else if(m.getPlateau().get(i).get(j) == Case.PJ2)
 						score -= evalPlacementJ2[i][j];
 				}
-				else if(!tourJ1){
+				else if(m.tourj1){
 					if(m.getPlateau().get(i).get(j) == Case.PJ1)
 						score -= evalPlacementJ1[i][j];
 					
