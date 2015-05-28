@@ -22,9 +22,16 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 		if(aire.p1 != null){
 			aire.doMove(p2);
 		}else{
-			ArrayList<Point> l = aire.moteur.listeCaseJoueur();
-			if(l.contains(p2))
-				aire.p1 = p2;
+			if(p2.x == -1 || p2.x == Moteur.Moteur.getN()  || p2.x == -1 || p2.y == Moteur.Moteur.getN()){
+				aire.doMoveRanger(p2);
+			}
+
+			else{
+				ArrayList<Point> l = aire.moteur.listeCaseJoueur();
+				if (l.contains(p2))
+					aire.p1 = p2;
+			}
+
 		}
 		aire.repaint();
 	}

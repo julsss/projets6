@@ -242,6 +242,13 @@ public class Moteur{
 		return estCoupPossible(new DepPion(p1,p2));
 	}
 
+    public boolean estCoupPossible(Coup m){
+        if(m instanceof DepPion)
+            return  estCoupPossible((DepPion) m);
+        else
+            return estCoupPossible((DepRang) m);
+    }
+
 	public boolean estCoupPossible(DepPion c){
 
 
@@ -354,11 +361,11 @@ public class Moteur{
 				listeCoup.add(new DepRang(Direction.BAS, c.y, false));
                 deja_jouer[1][c.y] = true;
 			}
-			if(plateau.get(c.x).get(0) == Case.LIBRE && estCoupPossible(new DepRang(Direction.GAUCHE, c.y, false))){
+			if(plateau.get(c.x).get(0) == Case.LIBRE && estCoupPossible(new DepRang(Direction.GAUCHE, c.x, false))){
 				listeCoup.add(new DepRang(Direction.GAUCHE, c.x, false));
                 deja_jouer[2][c.y] = true;
 			}
-			if(plateau.get(c.x).get(N-1) == Case.LIBRE && estCoupPossible(new DepRang(Direction.DROITE, c.y, false))){
+			if(plateau.get(c.x).get(N-1) == Case.LIBRE && estCoupPossible(new DepRang(Direction.DROITE, c.x, false))){
 				listeCoup.add(new DepRang(Direction.DROITE, c.x, false));
                 deja_jouer[3][c.y] = true;
 			}
@@ -448,116 +455,112 @@ public class Moteur{
 	}
 
 	public int[][] joue_coup(Coup m){
-		ArrayList<Case> tmp = new ArrayList<Case>();
-		if(m instanceof DepRang){
+        if(estCoupPossible(m)) {
+            ArrayList<Case> tmp = new ArrayList<Case>();
+            if (m instanceof DepRang) {
 
-			DepRang d = new DepRang(((DepRang) m).getDir(), ((DepRang) m).getRang(), false);
-			if(d.getDir() == Direction.BAS){
+                DepRang d = new DepRang(((DepRang) m).getDir(), ((DepRang) m).getRang(), false);
+                if (d.getDir() == Direction.BAS) {
 
-				if(d.getRang() == 0 && plateau.get(N-2).get(d.getRang()) == Case.PJ2 && this.plateau.get(0).get(4) == Case.LIBRE){
-					this.nbBillej2--;
-					((DepRang) m).setValidant(true) ;
-					plateau.get(3).set(0, Case.LIBRE);
-				}
+                    if (d.getRang() == 0 && plateau.get(N - 2).get(d.getRang()) == Case.PJ2 && this.plateau.get(0).get(4) == Case.LIBRE) {
+                        this.nbBillej2--;
+                        ((DepRang) m).setValidant(true);
+                        plateau.get(3).set(0, Case.LIBRE);
+                    }
 
-				for(int i = N-1; i > 0; i--){
-					tmp = plateau.get(i);
-					tmp.set(d.getRang(),plateau.get(i-1).get(d.getRang()));
-					plateau.set(i, tmp);
-					tmp = new ArrayList<Case>();
-					platIHM[i+1][d.getRang()] = platIHM[i][d.getRang()];
-				}
-				platIHM[1][d.getRang()] = 0;
-				tmp = plateau.get(0);
-				tmp.set(d.getRang(), Case.LIBRE);
-				plateau.set(0, tmp);
-			}
-			else if(d.getDir() == Direction.HAUT){
-				if(d.getRang() == N-1 && plateau.get(1).get(d.getRang()) == Case.PJ1 && this.plateau.get(0).get(4) == Case.LIBRE){
-					this.nbBillej1--;
-					((DepRang) m).setValidant(true);
-					plateau.get(1).set(4, Case.LIBRE);
-				}	
-				for(int i = 0; i < N-1; i++){
-					tmp = plateau.get(i);
-					tmp.set(d.getRang(),plateau.get(i+1).get(d.getRang()));
-					plateau.set(i, tmp);
-					tmp = new ArrayList<Case>();
-					platIHM[i][d.getRang()] = platIHM[i+1][d.getRang()];
-				}
-				platIHM[5][d.getRang()] = 0;
-				tmp = plateau.get(N-1);
-				tmp.set(d.getRang(), Case.LIBRE);
-				plateau.set(N-1, tmp);
-			}
-			else if(d.getDir() == Direction.DROITE){
-				tmp = plateau.get(d.getRang());
+                    for (int i = N - 1; i > 0; i--) {
+                        tmp = plateau.get(i);
+                        tmp.set(d.getRang(), plateau.get(i - 1).get(d.getRang()));
+                        plateau.set(i, tmp);
+                        tmp = new ArrayList<Case>();
+                        platIHM[i + 1][d.getRang()] = platIHM[i][d.getRang()];
+                    }
+                    platIHM[1][d.getRang()] = 0;
+                    tmp = plateau.get(0);
+                    tmp.set(d.getRang(), Case.LIBRE);
+                    plateau.set(0, tmp);
+                } else if (d.getDir() == Direction.HAUT) {
+                    if (d.getRang() == N - 1 && plateau.get(1).get(d.getRang()) == Case.PJ1 && this.plateau.get(0).get(4) == Case.LIBRE) {
+                        this.nbBillej1--;
+                        ((DepRang) m).setValidant(true);
+                        plateau.get(1).set(4, Case.LIBRE);
+                    }
+                    for (int i = 0; i < N - 1; i++) {
+                        tmp = plateau.get(i);
+                        tmp.set(d.getRang(), plateau.get(i + 1).get(d.getRang()));
+                        plateau.set(i, tmp);
+                        tmp = new ArrayList<Case>();
+                        platIHM[i][d.getRang()] = platIHM[i + 1][d.getRang()];
+                    }
+                    platIHM[5][d.getRang()] = 0;
+                    tmp = plateau.get(N - 1);
+                    tmp.set(d.getRang(), Case.LIBRE);
+                    plateau.set(N - 1, tmp);
+                } else if (d.getDir() == Direction.DROITE) {
+                    tmp = plateau.get(d.getRang());
 
-				if(d.getRang() == 0 && plateau.get(d.getRang()).get(3) == Case.PJ1){
-					this.nbBillej1--;
-					((DepRang) m).setValidant(true);
-					tmp.set(3, Case.LIBRE);
-				}	
+                    if (d.getRang() == 0 && plateau.get(d.getRang()).get(3) == Case.PJ1) {
+                        this.nbBillej1--;
+                        ((DepRang) m).setValidant(true);
+                        tmp.set(3, Case.LIBRE);
+                    }
 
-				for(int i = N-1; i > 0; i--){
-					tmp.set(i, tmp.get(i-1));
-					platIHM[d.getRang()][i+1] = platIHM[d.getRang()][i];
-				}
-				platIHM[d.getRang()][1] = 0;
-				tmp.set(0, Case.LIBRE);
-				plateau.set(d.getRang(), tmp);
-			}
-			else if(d.getDir() == Direction.GAUCHE){
-				tmp = plateau.get(d.getRang());
+                    for (int i = N - 1; i > 0; i--) {
+                        tmp.set(i, tmp.get(i - 1));
+                        platIHM[d.getRang()][i + 1] = platIHM[d.getRang()][i];
+                    }
+                    platIHM[d.getRang()][1] = 0;
+                    tmp.set(0, Case.LIBRE);
+                    plateau.set(d.getRang(), tmp);
+                } else if (d.getDir() == Direction.GAUCHE) {
+                    tmp = plateau.get(d.getRang());
 
-				if(d.getRang() == 4 && plateau.get(4).get(1) == Case.PJ2){
-					this.nbBillej2--;
-					((DepRang) m).setValidant(true);
-					tmp.set(1, Case.LIBRE);
-				}	
+                    if (d.getRang() == 4 && plateau.get(4).get(1) == Case.PJ2) {
+                        this.nbBillej2--;
+                        ((DepRang) m).setValidant(true);
+                        tmp.set(1, Case.LIBRE);
+                    }
 
-				for(int i = 0; i < N-1; i++){
-					tmp.set(i, tmp.get(i+1));
-					platIHM[d.getRang()][i] = platIHM[d.getRang()][i+1];
-				}
-				platIHM[d.getRang()][5] = 0;
-				tmp.set(N-1, Case.LIBRE);
-				plateau.set(d.getRang(), tmp);
-			}
-			histo.ajouter(d);
-		}
-		else if(m instanceof DepPion){
+                    for (int i = 0; i < N - 1; i++) {
+                        tmp.set(i, tmp.get(i + 1));
+                        platIHM[d.getRang()][i] = platIHM[d.getRang()][i + 1];
+                    }
+                    platIHM[d.getRang()][5] = 0;
+                    tmp.set(N - 1, Case.LIBRE);
+                    plateau.set(d.getRang(), tmp);
+                }
+                histo.ajouter(d);
+            } else if (m instanceof DepPion) {
 
-			DepPion pion = new DepPion(((DepPion) m).getDepart(),((DepPion) m).getArrive());
-			if(pion.getArrive().x == 4 && pion.getArrive().y == 0 && this.plateau.get(4).get(0) == Case.LIBRE){
-				setNbBillej2(getNbBillej2()-1);
-				tmp = plateau.get(pion.getDepart().x);
-				tmp.set(pion.getDepart().y, Case.LIBRE);
-				plateau.set(pion.getDepart().x, tmp);
-				platIHM[pion.getDepart().x][pion.getDepart().y] = 0;
+                DepPion pion = new DepPion(((DepPion) m).getDepart(), ((DepPion) m).getArrive());
+                if (pion.getArrive().x == 4 && pion.getArrive().y == 0 && this.plateau.get(4).get(0) == Case.LIBRE) {
+                    setNbBillej2(getNbBillej2() - 1);
+                    tmp = plateau.get(pion.getDepart().x);
+                    tmp.set(pion.getDepart().y, Case.LIBRE);
+                    plateau.set(pion.getDepart().x, tmp);
+                    platIHM[pion.getDepart().x][pion.getDepart().y] = 0;
 
-			}
-			else if(pion.getArrive().x == 0 && pion.getArrive().y == 4 && this.plateau.get(0).get(4) == Case.LIBRE){
-				setNbBillej1(getNbBillej1()-1);
-				tmp = plateau.get(pion.getDepart().x);
-				tmp.set(pion.getDepart().y, Case.LIBRE);
-				plateau.set(pion.getDepart().x, tmp);
-				platIHM[pion.getDepart().x][pion.getDepart().y] = 0;
-			}
-			else{
-				tmp = plateau.get(pion.getArrive().x);
-				tmp.set(pion.getArrive().y, plateau.get(pion.getDepart().x).get(pion.getDepart().y));
-				plateau.set(pion.getArrive().x, tmp);
-				tmp = plateau.get(pion.getDepart().x);
-				tmp.set(pion.getDepart().y, Case.LIBRE);
-				plateau.set(pion.getDepart().x, tmp);
-				platIHM[pion.getArrive().x][pion.getArrive().y] = platIHM[pion.getDepart().x][pion.getDepart().y] ;
-				platIHM[pion.getDepart().x][pion.getDepart().y] = 0;
-			}
-			histo.ajouter(pion);
-		}
-		tourj1 = !tourj1;
-		//correctionPlatIHM();
+                } else if (pion.getArrive().x == 0 && pion.getArrive().y == 4 && this.plateau.get(0).get(4) == Case.LIBRE) {
+                    setNbBillej1(getNbBillej1() - 1);
+                    tmp = plateau.get(pion.getDepart().x);
+                    tmp.set(pion.getDepart().y, Case.LIBRE);
+                    plateau.set(pion.getDepart().x, tmp);
+                    platIHM[pion.getDepart().x][pion.getDepart().y] = 0;
+                } else {
+                    tmp = plateau.get(pion.getArrive().x);
+                    tmp.set(pion.getArrive().y, plateau.get(pion.getDepart().x).get(pion.getDepart().y));
+                    plateau.set(pion.getArrive().x, tmp);
+                    tmp = plateau.get(pion.getDepart().x);
+                    tmp.set(pion.getDepart().y, Case.LIBRE);
+                    plateau.set(pion.getDepart().x, tmp);
+                    platIHM[pion.getArrive().x][pion.getArrive().y] = platIHM[pion.getDepart().x][pion.getDepart().y];
+                    platIHM[pion.getDepart().x][pion.getDepart().y] = 0;
+                }
+                histo.ajouter(pion);
+            }
+            tourj1 = !tourj1;
+            //correctionPlatIHM();
+        }
 		return platIHM;
 	}
 

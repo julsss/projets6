@@ -67,31 +67,25 @@ public class AireDeDessin extends JComponent {
     }
 
     public void doMoveRanger(Point p){
-        Dimension d = this.getSize();
-        int x, y;
-        int width, height;
 
-        width = d.width / N;
-        height = d.height / N;
-        y = (p.x / width) - 1;
-        x = (p.y / height) - 1;
         Direction dir = null;
+        System.out.println("point :" +p);
         int ranger = 0;
-        if(x == -1){
+        if(p.x == -1){
             dir = Direction.BAS;
-            ranger = y;
+            ranger = p.y;
         }
-        else if(x == moteur.N){
+        else if(p.x == moteur.N){
             dir = Direction.HAUT;
-            ranger = y;
+            ranger = p.y;
         }
-        else if(y == -1){
+        else if(p.y == -1){
             dir = Direction.DROITE;
-            ranger = x;
+            ranger = p.x;
         }
-        else if(y == moteur.N){
+        else if(p.y == moteur.N){
             dir = Direction.GAUCHE;
-            ranger = x;
+            ranger = p.x;
         }
         moteur.joue_coup(new DepRang(dir,ranger,false));
         repaint();
@@ -102,7 +96,7 @@ public class AireDeDessin extends JComponent {
         lsurvolsRanger = new ArrayList<>();
         ArrayList<Coup> l = moteur.listeCoupPossible();
         // TODO
-        // System.out.println(p + " " + l);
+        //System.out.println(p + " " + l);
         for(Coup c : l) {
             if(c instanceof DepPion) {
                 Point tmp = ((DepPion) c).getDepart();
@@ -110,10 +104,11 @@ public class AireDeDessin extends JComponent {
                     lsurvols.add(((DepPion) c).getArrive());
             }
             else {
-                lsurvolsRanger.add(c);
+                if( ((DepRang) c).getRang() == p.x || ((DepRang) c).getRang() == p.y )
+                    lsurvolsRanger.add(c);
             }
         }
-        // System.out.println(lsurvolsRanger);
+        //System.out.println(lsurvolsRanger);
         repaint();
     }
 
