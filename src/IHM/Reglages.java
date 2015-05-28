@@ -17,28 +17,28 @@ public class Reglages implements Runnable {
 	@SuppressWarnings("unused")
 	public Reglages(){
 
-		int FPS_MIN = 0;
-		int FPS_MAX = 2;
-		int FPS_INIT = 1;
+		FPS_MIN = 0;
+		FPS_MAX = 2;
+		FPS_INIT = 1;
 		
-		JFrame frame = new JFrame("Reglages");
-		JButton HvsIA = new JButton("Joueur vs IA");
-		JButton HvsH = new JButton("Joueur vs Joueur");
-		JButton IAvsIA = new JButton("IA vs IA");
-		JButton Menu = new JButton("Revenir au menu");
-		JButton Demarrer = new JButton("Demarrer la partie !");
-		JTextField j3 = new JTextField("Nom Joueur");
-		JTextField j1 = new JTextField("Nom Joueur 1");
-		JTextField j2 = new JTextField("Nom Joueur 2");
-		JSlider slider = new JSlider(JSlider.HORIZONTAL,FPS_MIN, FPS_MAX, FPS_INIT );
-		JSlider slider2 = new JSlider(JSlider.HORIZONTAL,FPS_MIN, FPS_MAX, FPS_INIT );
-		JSlider slider3 = new JSlider(JSlider.HORIZONTAL,FPS_MIN, FPS_MAX, FPS_INIT );
-		JLabel facile = new JLabel("Facile");
-		JLabel moyen = new JLabel("Moyen");
-		JLabel dificile = new JLabel("Dificile");
-		JLabel A = new JLabel("");
-		JLabel B = new  JLabel("");
-		EcouteurReglage rg = new EcouteurReglage(this);
+		frame = new JFrame("Reglages");
+		HvsIA = new JButton("Joueur vs IA");
+		HvsH = new JButton("Joueur vs Joueur");
+		IAvsIA = new JButton("IA vs IA");
+		Menu = new JButton("Revenir au menu");
+		Demarrer = new JButton("Demarrer la partie !");
+		j3 = new JTextField("Nom Joueur");
+		j1 = new JTextField("Nom Joueur 1");
+		j2 = new JTextField("Nom Joueur 2");
+		slider = new JSlider(JSlider.HORIZONTAL,FPS_MIN, FPS_MAX, FPS_INIT );
+		slider2 = new JSlider(JSlider.HORIZONTAL,FPS_MIN, FPS_MAX, FPS_INIT );
+		slider3 = new JSlider(JSlider.HORIZONTAL,FPS_MIN, FPS_MAX, FPS_INIT );
+		facile = new JLabel("Facile");
+		moyen = new JLabel("Moyen");
+		dificile = new JLabel("Dificile");
+		A = new JLabel("");
+		B = new  JLabel("");
+		rg = new EcouteurReglage(this);
 	}
 
 	public void run() {
@@ -52,7 +52,7 @@ public class Reglages implements Runnable {
 		panel.setBackground(Color.BLACK);
 		panel2.setBackground(Color.BLACK);
 		panel3.setBackground(Color.BLACK);
-		//frame.setLocationRelativeTo(null);
+		frame.setLocationRelativeTo(null);
 
 		ImageIcon reglages = new ImageIcon("reglages.png");
 

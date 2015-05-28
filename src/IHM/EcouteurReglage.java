@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 public class EcouteurReglage implements ActionListener{
@@ -15,12 +17,10 @@ public class EcouteurReglage implements ActionListener{
 	    this.f = f;
 	}
 	/*
-	JButton HvsIA = new JButton("Joueur vs IA");
-	JButton HvsH = new JButton("Joueur vs Joueur");
-	JButton IAvsIA = new JButton("IA vs IA");
-	JButton Menu = new JButton("Revenir au menu");
-	JButton Demarrer = new JButton("Demarrer la partie !");
-	*/
+	JButton HvsIA, HvsH, IAvsIA, Menu, Demarrer;
+	JTextField j3, j1, j2;
+	JSlider slider, slider2, slider3;(non-Javadoc)
+	 */
 	public void actionPerformed(ActionEvent e) {
         Object  source=e.getSource();
         
@@ -31,8 +31,7 @@ public class EcouteurReglage implements ActionListener{
         } 
         else if(source==f.HvsIA) 
         {
-            SwingUtilities.invokeLater( new Fenetre());
-            f.frame.dispose();
+            f.j3.setVisible(true);
         } 
         else if(source==f.Demarrer) 
         {
