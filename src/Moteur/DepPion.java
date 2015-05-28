@@ -3,8 +3,8 @@ package Moteur;
 import java.awt.Point;
 
 public class DepPion extends Coup{
-	Point depart;
-	Point arrive;
+	private Point depart;
+	private Point arrive;
 	
 	public DepPion(Point dep, Point arr){
 		depart = dep;

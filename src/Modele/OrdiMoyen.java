@@ -7,8 +7,41 @@ import Moteur.Moteur.*;
 
 public class OrdiMoyen extends Joueur {
 
-	public Coup coupOrdiMoyen;
-	public int profondeurMoyen;
+	private Coup coupOrdiMoyen;
+
+	public int getProfondeurMoyen() {
+		return profondeurMoyen;
+	}
+
+	public void setProfondeurMoyen(int profondeurMoyen) {
+		this.profondeurMoyen = profondeurMoyen;
+	}
+
+	public Coup getCoupOrdiMoyen() {
+		return coupOrdiMoyen;
+	}
+
+	public void setCoupOrdiMoyen(Coup coupOrdiMoyen) {
+		this.coupOrdiMoyen = coupOrdiMoyen;
+	}
+
+	public double[][] getEvalPlacementJ1() {
+		return evalPlacementJ1;
+	}
+
+	public void setEvalPlacementJ1(double[][] evalPlacementJ1) {
+		this.evalPlacementJ1 = evalPlacementJ1;
+	}
+
+	public double[][] getEvalPlacementJ2() {
+		return evalPlacementJ2;
+	}
+
+	public void setEvalPlacementJ2(double[][] evalPlacementJ2) {
+		this.evalPlacementJ2 = evalPlacementJ2;
+	}
+
+	private int profondeurMoyen;
 	
 	double [][] evalPlacementJ1 = {
 			{4, 4.5, 5,   5.5, 100},

@@ -186,33 +186,33 @@ public class AireDeDessin extends JComponent {
         height = d.height / N;
         int i = -1, j = -1;
 
-        if(c.dir == Direction.BAS){
-            j = c.rang;
+        if(c.getDir() == Direction.BAS){
+            j = c.getRang();
         }
-        else if(c.dir == Direction.HAUT){
+        else if(c.getDir() == Direction.HAUT){
             i = moteur.N;
-            j = c.rang;
+            j = c.getRang();
         }
-        else if(c.dir == Direction.DROITE){
-            i = c.rang;
+        else if(c.getDir() == Direction.DROITE){
+            i = c.getRang();
         }
-        else if(c.dir == Direction.GAUCHE){
-            i = c.rang;
+        else if(c.getDir() == Direction.GAUCHE){
+            i = c.getRang();
             j = moteur.N;
         }
         y = (i+1) * width;
         x = (j+1) * height;
 
-        if(c.dir == Direction.BAS){
+        if(c.getDir() == Direction.BAS){
             drawable.drawImage(rotate(fleche, -90),x,y,width,height, null);
         }
-        else if(c.dir == Direction.HAUT){
+        else if(c.getDir() == Direction.HAUT){
             drawable.drawImage(rotate(fleche, 90),x,y,width,height, null);
         }
-        else if(c.dir == Direction.DROITE){
+        else if(c.getDir() == Direction.DROITE){
             drawable.drawImage(rotate(fleche, 180),x,y,width,height, null);
         }
-        else if(c.dir == Direction.GAUCHE){
+        else if(c.getDir() == Direction.GAUCHE){
             drawable.drawImage(fleche,x,y,width,height, null);
         }
     }

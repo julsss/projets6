@@ -8,8 +8,41 @@ import Moteur.Moteur.Case;
 
 public class OrdiDifficile extends Joueur{
 
-	public Coup coupOrdiDiff;
-	public int profondeurDiff;
+	private Coup coupOrdiDiff;
+
+	public int getProfondeurDiff() {
+		return profondeurDiff;
+	}
+
+	public void setProfondeurDiff(int profondeurDiff) {
+		this.profondeurDiff = profondeurDiff;
+	}
+
+	public Coup getCoupOrdiDiff() {
+		return coupOrdiDiff;
+	}
+
+	public void setCoupOrdiDiff(Coup coupOrdiDiff) {
+		this.coupOrdiDiff = coupOrdiDiff;
+	}
+
+	public double[][] getEvalPlacementJ2() {
+		return evalPlacementJ2;
+	}
+
+	public void setEvalPlacementJ2(double[][] evalPlacementJ2) {
+		this.evalPlacementJ2 = evalPlacementJ2;
+	}
+
+	public double[][] getEvalPlacementJ1() {
+		return evalPlacementJ1;
+	}
+
+	public void setEvalPlacementJ1(double[][] evalPlacementJ1) {
+		this.evalPlacementJ1 = evalPlacementJ1;
+	}
+
+	private int profondeurDiff;
 	
 	private double [][] evalPlacementJ1 = {
 			{4, 4.5, 5,   5.5, 100},
