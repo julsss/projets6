@@ -285,22 +285,37 @@ public class Moteur{
 		ArrayList<Coup> listeCoup = new ArrayList<Coup>();
 		ArrayList<Point> listeCase =  listeCaseJoueur();
 		Point c;
-
+		boolean deja_jouer[][] = new boolean[N][N];
+        //Tableaux[i][j] répertoriant les coups rangs déjà possible;
+        //i = 0 -> Direction haut
+        //i=1 -> direction bas
+        //i=2 -> direction gauche
+        //i=3 -> direction droite
+        //j représente le rang
+        for(int i = 0; i<N ; i++){
+            for(int j = 0; j<N; j++){
+                deja_jouer[i][j] = false;
+            }
+        }
 		for(int i = 0; i < listeCase.size(); i++){
 			c = listeCase.get(i);
 			//Ajout Rang
 
 			if(plateau.get(0).get(c.y) == Case.LIBRE && estCoupPossible(new DepRang(Direction.HAUT, c.y, false))){
 				listeCoup.add(new DepRang(Direction.HAUT, c.y, false));
+                deja_jouer[0][c.y] = true;
 			}
-			else if(plateau.get(N-1).get(c.y) == Case.LIBRE && estCoupPossible(new DepRang(Direction.BAS, c.y, false))){
+			if(plateau.get(N-1).get(c.y) == Case.LIBRE && estCoupPossible(new DepRang(Direction.BAS, c.y, false))){
 				listeCoup.add(new DepRang(Direction.BAS, c.y, false));
+                deja_jouer[1][c.y] = true;
 			}
-			else if(plateau.get(c.x).get(0) == Case.LIBRE && estCoupPossible(new DepRang(Direction.GAUCHE, c.y, false))){
+			if(plateau.get(c.x).get(0) == Case.LIBRE && estCoupPossible(new DepRang(Direction.GAUCHE, c.y, false))){
 				listeCoup.add(new DepRang(Direction.GAUCHE, c.x, false));
+                deja_jouer[2][c.y] = true;
 			}
-			else if(plateau.get(c.x).get(N-1) == Case.LIBRE && estCoupPossible(new DepRang(Direction.DROITE, c.y, false))){
+			if(plateau.get(c.x).get(N-1) == Case.LIBRE && estCoupPossible(new DepRang(Direction.DROITE, c.y, false))){
 				listeCoup.add(new DepRang(Direction.DROITE, c.x, false));
+                deja_jouer[3][c.y] = true;
 			}
 
 			//Verif joueur1
