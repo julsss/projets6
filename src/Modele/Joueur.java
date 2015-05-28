@@ -32,10 +32,13 @@ public abstract class Joueur{
     this.estOrdi = b;
   }
   
+  public void setScore(int s){
+    score = s;
+  }
   public int getScore(){
     return this.score;
   }
-  
+
   public boolean getOrdi(){
     return this.estOrdi;
   }

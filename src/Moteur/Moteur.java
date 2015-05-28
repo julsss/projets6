@@ -338,12 +338,12 @@ public class Moteur{
 		ArrayList<Point> listeCase =  listeCaseJoueur();
 		Point c;
 		boolean deja_jouer[][] = new boolean[N][N];
-        //Tableaux[i][j] répertoriant les coups rangs déjà possible;
+        //Tableaux[i][j] rï¿½pertoriant les coups rangs dï¿½jï¿½ possible;
         //i = 0 -> Direction haut
         //i=1 -> direction bas
         //i=2 -> direction gauche
         //i=3 -> direction droite
-        //j représente le rang
+        //j reprï¿½sente le rang
         for(int i = 0; i<N ; i++){
             for(int j = 0; j<N; j++){
                 deja_jouer[i][j] = false;
@@ -560,6 +560,21 @@ public class Moteur{
             }
             tourj1 = !tourj1;
             //correctionPlatIHM();
+			int scoreJ1 = N, scoreJ2 = N;
+			for(int i = 0; i < N; i++)
+				for(int j = 0; j < N; j++){
+					switch (plateau.get(i).get(j)){
+						case PJ1:
+							scoreJ1--;
+							break;
+						case PJ2:
+							scoreJ2--;
+							break;
+					}
+				}
+			j1.setScore(scoreJ1);
+			j2.setScore(scoreJ2);
+
         }
 		return platIHM;
 	}

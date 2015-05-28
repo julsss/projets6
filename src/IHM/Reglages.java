@@ -151,14 +151,4 @@ public class Reglages implements Runnable {
 
 	}
 
-	public static void main (String[] args){
-		
-		SwingUtilities.invokeLater( new Reglages());
-
-
-	}
-
-
-
-
 }

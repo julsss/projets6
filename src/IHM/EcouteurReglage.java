@@ -29,10 +29,10 @@ public class EcouteurReglage implements ActionListener{
             SwingUtilities.invokeLater(new MenuDemarrage());
             f.frame.dispose();
         } 
-        else if(source==f.HvsIA) 
+        else if(source==f.HvsIA)
         {
             f.j3.setVisible(true);
-        } 
+        }
         else if(source==f.Demarrer) 
         {
             SwingUtilities.invokeLater( new Fenetre());

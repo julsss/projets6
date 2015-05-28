@@ -23,7 +23,7 @@ public class EcouteurDemarrage implements ActionListener{
             System.exit(0);
         }
         else if (source == f.nvpartie) {
-        	 SwingUtilities.invokeLater(new Reglages());
+            SwingUtilities.invokeLater(new Reglages());
         }
         else if (source == f.rjeu || source == f.regles) {
             SwingUtilities.invokeLater(new ReglesQuits());

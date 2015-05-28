@@ -67,9 +67,7 @@ public class AireDeDessin extends JComponent {
     }
 
     public void doMoveRanger(Point p){
-
         Direction dir = null;
-        System.out.println("point :" +p);
         int ranger = 0;
         if(p.x == -1){
             dir = Direction.BAS;
