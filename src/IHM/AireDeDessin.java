@@ -27,7 +27,7 @@ public class AireDeDessin extends JComponent {
     ArrayList<Point> lsurvols;
     ArrayList<Coup> lsurvolsRanger;
     int N;
-    BufferedImage pion1, pion2, imgBackground, fleche;
+    BufferedImage pion1, pion2, imgBackground, fleche, survol, caseselect;
     public Moteur moteur;
 
     public AireDeDessin(Fenetre f, Moteur m) {
@@ -42,6 +42,8 @@ public class AireDeDessin extends JComponent {
             pion2 = ImageIO.read(new File("res/pion2.png"));
             imgBackground = ImageIO.read(new File("res/plateau.png"));
             fleche = ImageIO.read(new File("res/fleche.png"));
+            survol = ImageIO.read(new File("res/survol.png"));
+            caseselect = ImageIO.read(new File("res/CaseSelect.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -158,9 +160,7 @@ public class AireDeDessin extends JComponent {
         x = p1.y * height;
         x = x + width;
         y = y + height;
-        drawable.setColor(Color.BLUE);
-        drawable.fillRect(x, y, width, height);
-        drawable.setColor(Color.BLACK);
+        drawable.drawImage(caseselect, x, y, width, height, null);
     }
 
     void dessinerSurvol(Graphics2D drawable, Point p){
@@ -174,9 +174,7 @@ public class AireDeDessin extends JComponent {
         x = p.y * height;
         x = x + width;
         y = y + height;
-        drawable.setColor(Color.GREEN);
-        drawable.fillRect(x, y, width, height);
-        drawable.setColor(Color.BLACK);
+        drawable.drawImage(survol, x, y, width, height, null);
     }
 
     void dessinerSurvolRanger(Graphics2D drawable, DepRang c){

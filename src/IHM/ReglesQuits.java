@@ -31,7 +31,7 @@ public class ReglesQuits implements Runnable,ActionListener{
         GridLayout gl = new GridLayout(3,1);
         panel.setLayout(gl);
         
-        ImageIcon image = new ImageIcon("res/quits-titre.gif");
+        ImageIcon image = new ImageIcon("res/Quits.png");
         
         JButton menu = new JButton("Menu");
         JLabel label = new JLabel("");

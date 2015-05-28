@@ -48,8 +48,5 @@ class EcouteurDeSouris implements MouseListener, MouseMotionListener {
 		if(l.contains(p2)){
 			aire.setSurvol(p2);
 		}
-		else{
-			aire.initSurvols();
-		}
 	}
 }
