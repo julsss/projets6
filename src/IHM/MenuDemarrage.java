@@ -1,4 +1,5 @@
 package IHM;
+
 import javax.swing.BoxLayout;
 import java.awt.Color;
 import java.awt.Font;
