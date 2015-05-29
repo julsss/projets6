@@ -12,6 +12,8 @@ import Moteur.Moteur;
 import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import static java.awt.event.ActionEvent.CTRL_MASK;
 
 public class Fenetre implements Runnable{
         int dimension;
@@ -77,8 +79,7 @@ public class Fenetre implements Runnable{
                 JMenuItem svg = new JMenuItem("Sauvegarder");
                 JMenuItem charger = new JMenuItem("Charger");
                 JMenuItem quitter = new JMenuItem("Quitter l'application");
-        
-               
+          
         /*
         partie.addActionListener(new NouvelleApplication(aireDessin));
         chargerButton.addActionListener(new ChargerApplication(aireDessin));
@@ -90,16 +91,19 @@ public class Fenetre implements Runnable{
                 JMenuItem scores = new JMenuItem("Scores");
                 JMenuItem regles = new JMenuItem("Règles du jeu");
                 JMenuItem aPropos = new JMenuItem("A propos");
-                JMenuItem quitterM = new JMenuItem("Quitter");
 
-
-                //frame.add(quitter);
                 jeu.add(nouveau);
                 jeu.add(rejouer);
                 jeu.add(svg);
                 jeu.add(charger);
-                jeu.add(quitterM);
-
+                jeu.add(quitter);
+                
+                nouveau.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, CTRL_MASK));
+                rejouer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, CTRL_MASK));
+                svg.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, CTRL_MASK));
+                charger.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, CTRL_MASK));
+                quitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, CTRL_MASK));
+                
                 autres.add(reglages);
                 autres.add(scores);
                 autres.add(regles);
