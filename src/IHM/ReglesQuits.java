@@ -24,7 +24,7 @@ public class ReglesQuits implements Runnable,ActionListener{
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.setSize(350,700);
         frame.setVisible(true);
-        
+        frame.setLocationRelativeTo(null);
         
         JPanel panel = new JPanel();
         panel.setBackground(Color.BLACK);
@@ -34,18 +34,21 @@ public class ReglesQuits implements Runnable,ActionListener{
         ImageIcon image = new ImageIcon("res/Quits.png");
         
         JButton menu = new JButton("Menu");
-        JLabel label = new JLabel("");
-        label.setText("<html>->Le premier joueur qui parvient à faire sortir 3 de ses billes de la case opposée à son camp de départ gagne immédiatement.<br>->Déplacer une de ses billes d'une case, à gauche, à droite ou en diagonale vers l'avant. Il est donc interdit de reculer.Ou faire glisser une rangée ou une colonne en prenant une case à une extrémité, puis en l'insérant de l'autre côté. Cela a pour effet de décaler les cases (donc les billes qui s'y trouvent). C'est de cette manière que l'on peut éjecter une bille du plateau.</html>");
-        Font font = new Font("Arial",Font.BOLD,15);
-        label.setFont(font);
-        label.setOpaque(true);
-        label.setBackground(Color.GREEN);
+        //JLabel label = new JLabel("");
+        //label.setText("<html>->Le premier joueur qui parvient à faire sortir 3 de ses billes de la case opposée à son camp de départ gagne immédiatement.<br>->Déplacer une de ses billes d'une case, à gauche, à droite ou en diagonale vers l'avant. Il est donc interdit de reculer.Ou faire glisser une rangée ou une colonne en prenant une case à une extrémité, puis en l'insérant de l'autre côté. Cela a pour effet de décaler les cases (donc les billes qui s'y trouvent). C'est de cette manière que l'on peut éjecter une bille du plateau.</html>");
+        Font font = new Font("Arial",Font.PLAIN, 15);
+        //label.setFont(font);
+        //label.setOpaque(true);
+        //label.setBackground(Color.GREEN);
         panel.add(new JLabel(image));
+        JTextArea textArea = new JTextArea(30, 20);
+        textArea.setText("-> Le premier joueur qui parvient à faire sortir 3 de ses billes de la case opposée à son camp de départ remporte la partie. \n -> Déplacer une de ses billes d'une case, à gauche, à droite ou en diagonale vers l'avant. Il est donc interdit de reculer.Ou faire glisser une rangée ou une colonne en prenant une case à une extrémité, puis en l'insérant de l'autre côté. Cela a pour effet de décaler les cases (donc les billes qui s'y trouvent). C'est de cette manière que l'on peut éjecter une bille du plateau.");
+        textArea.setFont(font);
+        textArea.setLineWrap(true);
         
-        frame.setLocationRelativeTo(null);
-    
         menu.addActionListener(this);
-        panel.add(label);
+        //panel.add(label);
+        panel.add(textArea);
         panel.add(menu);
         
         frame.add(panel);
