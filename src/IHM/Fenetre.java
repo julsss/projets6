@@ -13,19 +13,24 @@ import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Fenetre implements Runnable,ActionListener {
+public class Fenetre implements Runnable{
         int dimension;
         Moteur mot;
         PanelJoueur panelJ1, panelJ2;
         public JFrame frame;
         public JButton annuler, refaire;
+        JMenuItem nouveau, rejouer, svg, quitter, charger;
+        JMenuItem reglages, scores, regles, aPropos, quitterM;
+        EcouteurFenetre f;
 
         public Fenetre(Moteur m) {
 			mot = m;
+			
 		}
 
 		public void run() {
                 // Creation d'une fenetre
+			f = new EcouteurFenetre(this);
                 frame = new JFrame("Quits");
                 frame.setPreferredSize(new Dimension(1000, 600));
                 SpringLayout alpha = new SpringLayout();
@@ -44,6 +49,8 @@ public class Fenetre implements Runnable,ActionListener {
                 annuler = new JButton("Annuler");
                 refaire = new JButton("Refaire");
 
+                annuler.addActionListener(f);
+                refaire.addActionListener(f);
                 // Ajout de notre composant de dessin dans la fenetre
                 frame.add(panelJ1);
                 frame.add(panelJ2);
@@ -69,8 +76,9 @@ public class Fenetre implements Runnable,ActionListener {
                 JMenuItem rejouer = new JMenuItem("Rejouer");
                 JMenuItem svg = new JMenuItem("Sauvegarder");
                 JMenuItem charger = new JMenuItem("Charger");
-                JMenuItem quitter = new JMenuItem("Quitter");
+                JMenuItem quitter = new JMenuItem("Quitter l'application");
         
+               
         /*
         partie.addActionListener(new NouvelleApplication(aireDessin));
         chargerButton.addActionListener(new ChargerApplication(aireDessin));
@@ -111,11 +119,16 @@ public class Fenetre implements Runnable,ActionListener {
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
                 frame.repaint(1000,0,0,frame.getWidth(),frame.getHeight());
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-
+                
+                
+                nouveau.addActionListener(f);
+                rejouer.addActionListener(f);
+                svg.addActionListener(f);
+                charger.addActionListener(f);
+                quitter.addActionListener(f);
+                reglages.addActionListener(f);
+                scores.addActionListener(f);
+                aPropos.addActionListener(f);
+                quitterM.addActionListener(f);
         }
 }
