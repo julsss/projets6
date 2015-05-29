@@ -35,7 +35,7 @@ public class OrdiDifficile extends Joueur{
 
 	@Override
 	public Coup jouer(Moteur m) {
-		alphabeta(profondeurDiff,Integer.MIN_VALUE,Integer.MAX_VALUE,new Moteur(m));
+		alphabeta(profondeurDiff,Integer.MIN_VALUE,Integer.MAX_VALUE,m);
 		return coupOrdiDiff;
 	}
 	
@@ -52,7 +52,7 @@ public class OrdiDifficile extends Joueur{
 		for(int i = 0; i < taille; i++){
 			c = cl.get(i);
 			m.joue_coup(c);
-			double score = - alphabeta(p-1,-beta,-alpha,new Moteur(m));
+			double score = - alphabeta(p-1,-beta,-alpha,m);
 			m.annuler();
 			if(score > alpha){
 				//System.out.println(m.tourj1);
@@ -99,17 +99,17 @@ public class OrdiDifficile extends Joueur{
 		for(int i=0;i<m.N;i++){
 			for(int j=0;j<m.N;j++){
 				if(m.tourj1){
-					if(m.getPlateau().get(i).get(j) == Case.PJ1)
+					if(m.getCase(i,j) == Case.PJ1)
 						score += evalPlacementJ1[i][j];
 
-					else if(m.getPlateau().get(i).get(j) == Case.PJ2)
+					else if(m.getCase(i,j) == Case.PJ2)
 						score -= evalPlacementJ2[i][j];
 				}
 				else if(!m.tourj1){
-					if(m.getPlateau().get(i).get(j) == Case.PJ1)
+					if(m.getCase(i,j) == Case.PJ1)
 						score -= evalPlacementJ1[i][j];
 
-					else if(m.getPlateau().get(i).get(j) == Case.PJ2)
+					else if(m.getCase(i,j) == Case.PJ2)
 						score += evalPlacementJ2[i][j];
 				}
 			}

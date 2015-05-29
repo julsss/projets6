@@ -260,7 +260,7 @@ public class AireDeDessin extends JComponent {
 
         for(int i =0; i < Moteur.N; i++){
             for(int j =0; j < Moteur.N; j++){
-                dessinerCase(new Point(i,j),moteur.plateau.get(i).get(j), drawable);
+                dessinerCase(new Point(i,j),moteur.getCase(i,j), drawable);
             }
         }
     }

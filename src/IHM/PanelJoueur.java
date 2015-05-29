@@ -95,8 +95,10 @@ public class PanelJoueur extends JPanel {
         // Graphics 2D est le vrai type de l'objet passe en parametre
         // Le cast permet d'avoir acces a un peu plus de primitives de dessin
         drawable = (Graphics2D) g;
-
-        dessinerPion(drawable,0); // tous
+        Dimension d = getPreferredSize();
+        drawable.setColor(Color.white);
+        drawable.fillRect(0,0, (int)d.getWidth(),(int)d.getHeight());
+        dessinerPion(drawable, 0); // tous
         Joueur jscore = f.mot.getJ1();
         if(jNum == 2) {
             jscore = f.mot.getJ2();
