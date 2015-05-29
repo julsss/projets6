@@ -10,11 +10,7 @@ public class Humain extends Joueur{
 		this.pseudo = pseudo;
 	}
 	
-	public Humain(int score,String pseudo){
-		super(score);
-	}
-	
-	public Humain(int score) {
+	public Humain(int score,String pseudo) {
 		super(score);
 		this.pseudo = pseudo;
 	}
