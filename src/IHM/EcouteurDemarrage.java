@@ -9,6 +9,9 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import Modele.Humain;
+import Moteur.Moteur;
+
 public class EcouteurDemarrage implements ActionListener{
 	MenuDemarrage f;
 	
@@ -29,7 +32,7 @@ public class EcouteurDemarrage implements ActionListener{
             SwingUtilities.invokeLater(new ReglesQuits());
         }
         else if (source == f.prapide || source == f.demarrer) {
-            SwingUtilities.invokeLater(new Fenetre());
+            SwingUtilities.invokeLater(new Fenetre(new Moteur(new Humain("joueur1"), new Humain("joueur2"))));
             f.frame.setVisible(false);
         }
         else if (source == f.charger || source == f.Charger) {
