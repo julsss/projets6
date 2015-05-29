@@ -138,7 +138,12 @@ public class Reglages implements Runnable {
 
 		Menu.addActionListener(rg);
 		Demarrer.addActionListener(rg);
-
+		HvsIA.addActionListener(rg);
+		HvsH.addActionListener(rg);
+		IAvsIA.addActionListener(rg);
+		
+		
+		
 		frame.add(panel3,BorderLayout.EAST);
 		frame.add(panel2,BorderLayout.WEST);
 		frame.add(panel,BorderLayout.CENTER);
