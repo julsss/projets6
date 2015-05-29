@@ -6,15 +6,12 @@ import Moteur.Moteur;
 public class Humain extends Joueur{
 	
 	public Humain(){
-		super(false);	
+		super();
 	}
+
 	
-	public Humain(boolean b, boolean t){
-		super(b, t);
-	}
-	
-	public Humain(int score, boolean b) {
-		super(score, b);
+	public Humain(int score) {
+		super(score);
 	}
 
 	@Override

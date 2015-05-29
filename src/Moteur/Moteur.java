@@ -36,46 +36,7 @@ public class Moteur{
 	public static final int N=5;
 	public boolean tourj1;
 
-    public boolean isTourj1() {
-        return tourj1;
-    }
 
-    public void setTourj1(boolean tourj1) {
-        this.tourj1 = tourj1;
-    }
-
-    public int[][] getPlatIHM() {
-
-        return platIHM;
-    }
-
-    public void setPlatIHM(int[][] platIHM) {
-        this.platIHM = platIHM;
-    }
-
-    public Point getSavePtIHM() {
-        return savePtIHM;
-    }
-
-    public void setSavePtIHM(Point savePtIHM) {
-        this.savePtIHM = savePtIHM;
-    }
-
-    public boolean isSavePtIHMValide() {
-        return savePtIHMValide;
-    }
-
-    public void setSavePtIHMValide(boolean savePtIHMValide) {
-        this.savePtIHMValide = savePtIHMValide;
-    }
-
-    public Historique getHisto() {
-        return histo;
-    }
-
-    public void setHisto(Historique histo) {
-        this.histo = histo;
-    }
 
     public static int getN() {
         return N;
@@ -694,7 +655,46 @@ public class Moteur{
 			System.out.println();
 		}
 	}
+	public boolean isTourj1() {
+		return tourj1;
+	}
 
+	public void setTourj1(boolean tourj1) {
+		this.tourj1 = tourj1;
+	}
+
+	public int[][] getPlatIHM() {
+
+		return platIHM;
+	}
+
+	public void setPlatIHM(int[][] platIHM) {
+		this.platIHM = platIHM;
+	}
+
+	public Point getSavePtIHM() {
+		return savePtIHM;
+	}
+
+	public void setSavePtIHM(Point savePtIHM) {
+		this.savePtIHM = savePtIHM;
+	}
+
+	public boolean isSavePtIHMValide() {
+		return savePtIHMValide;
+	}
+
+	public void setSavePtIHMValide(boolean savePtIHMValide) {
+		this.savePtIHMValide = savePtIHMValide;
+	}
+
+	public Historique getHisto() {
+		return histo;
+	}
+
+	public void setHisto(Historique histo) {
+		this.histo = histo;
+	}
 	public static void main(String[] args){
 		Moteur m = new Moteur(new OrdiFacile(),new OrdiDifficile());
 		Coup c = new Coup();

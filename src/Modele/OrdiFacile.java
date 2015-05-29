@@ -7,11 +7,7 @@ import Moteur.*;
 public class OrdiFacile extends Joueur {
 
 	public OrdiFacile(){
-		super(true, false);
-	}
-
-	public OrdiFacile(int score){
-		super(score,true);
+		super();
 	}
 
 	private static Random rand = new Random();

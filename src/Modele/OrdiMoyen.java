@@ -9,37 +9,6 @@ public class OrdiMoyen extends Joueur {
 
 	private Coup coupOrdiMoyen;
 
-	public int getProfondeurMoyen() {
-		return profondeurMoyen;
-	}
-
-	public void setProfondeurMoyen(int profondeurMoyen) {
-		this.profondeurMoyen = profondeurMoyen;
-	}
-
-	public Coup getCoupOrdiMoyen() {
-		return coupOrdiMoyen;
-	}
-
-	public void setCoupOrdiMoyen(Coup coupOrdiMoyen) {
-		this.coupOrdiMoyen = coupOrdiMoyen;
-	}
-
-	public double[][] getEvalPlacementJ1() {
-		return evalPlacementJ1;
-	}
-
-	public void setEvalPlacementJ1(double[][] evalPlacementJ1) {
-		this.evalPlacementJ1 = evalPlacementJ1;
-	}
-
-	public double[][] getEvalPlacementJ2() {
-		return evalPlacementJ2;
-	}
-
-	public void setEvalPlacementJ2(double[][] evalPlacementJ2) {
-		this.evalPlacementJ2 = evalPlacementJ2;
-	}
 
 	private int profondeurMoyen;
 	
@@ -60,12 +29,8 @@ public class OrdiMoyen extends Joueur {
 	};
 
 	public OrdiMoyen(){
-		super(true, false);
+		super();
 		profondeurMoyen = 3;
-	}
-
-	public OrdiMoyen(int score){
-		super(score,true);
 	}
 
 	public Coup jouer(Moteur m){
@@ -155,4 +120,35 @@ public class OrdiMoyen extends Joueur {
 		return score;
 	}
 
+	public int getProfondeurMoyen() {
+		return profondeurMoyen;
+	}
+
+	public void setProfondeurMoyen(int profondeurMoyen) {
+		this.profondeurMoyen = profondeurMoyen;
+	}
+
+	public Coup getCoupOrdiMoyen() {
+		return coupOrdiMoyen;
+	}
+
+	public void setCoupOrdiMoyen(Coup coupOrdiMoyen) {
+		this.coupOrdiMoyen = coupOrdiMoyen;
+	}
+
+	public double[][] getEvalPlacementJ1() {
+		return evalPlacementJ1;
+	}
+
+	public void setEvalPlacementJ1(double[][] evalPlacementJ1) {
+		this.evalPlacementJ1 = evalPlacementJ1;
+	}
+
+	public double[][] getEvalPlacementJ2() {
+		return evalPlacementJ2;
+	}
+
+	public void setEvalPlacementJ2(double[][] evalPlacementJ2) {
+		this.evalPlacementJ2 = evalPlacementJ2;
+	}
 }
