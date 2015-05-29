@@ -12,20 +12,27 @@ import Moteur.Moteur;
 import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import static java.awt.event.ActionEvent.CTRL_MASK;
 
-public class Fenetre implements Runnable,ActionListener {
+public class Fenetre implements Runnable{
         int dimension;
         Moteur mot;
         PanelJoueur panelJ1, panelJ2;
         public JFrame frame;
         public JButton annuler, refaire;
+        JMenuItem nouveau, rejouer, svg, quitter, charger;
+        JMenuItem reglages, scores, regles, aPropos, quitterM;
+        EcouteurFenetre f;
 
         public Fenetre(Moteur m) {
 			mot = m;
+			
 		}
 
 		public void run() {
                 // Creation d'une fenetre
+			f = new EcouteurFenetre(this);
                 frame = new JFrame("Quits");
                 frame.setPreferredSize(new Dimension(1000, 600));
                 SpringLayout alpha = new SpringLayout();
@@ -44,6 +51,8 @@ public class Fenetre implements Runnable,ActionListener {
                 annuler = new JButton("Annuler");
                 refaire = new JButton("Refaire");
 
+                annuler.addActionListener(f);
+                refaire.addActionListener(f);
                 // Ajout de notre composant de dessin dans la fenetre
                 frame.add(panelJ1);
                 frame.add(panelJ2);
@@ -69,8 +78,8 @@ public class Fenetre implements Runnable,ActionListener {
                 JMenuItem rejouer = new JMenuItem("Rejouer");
                 JMenuItem svg = new JMenuItem("Sauvegarder");
                 JMenuItem charger = new JMenuItem("Charger");
-                JMenuItem quitter = new JMenuItem("Quitter");
-        
+                JMenuItem quitter = new JMenuItem("Quitter l'application");
+          
         /*
         partie.addActionListener(new NouvelleApplication(aireDessin));
         chargerButton.addActionListener(new ChargerApplication(aireDessin));
@@ -82,16 +91,19 @@ public class Fenetre implements Runnable,ActionListener {
                 JMenuItem scores = new JMenuItem("Scores");
                 JMenuItem regles = new JMenuItem("Règles du jeu");
                 JMenuItem aPropos = new JMenuItem("A propos");
-                JMenuItem quitterM = new JMenuItem("Quitter");
 
-
-                //frame.add(quitter);
                 jeu.add(nouveau);
                 jeu.add(rejouer);
                 jeu.add(svg);
                 jeu.add(charger);
-                jeu.add(quitterM);
-
+                jeu.add(quitter);
+                
+                nouveau.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, CTRL_MASK));
+                rejouer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, CTRL_MASK));
+                svg.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, CTRL_MASK));
+                charger.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, CTRL_MASK));
+                quitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, CTRL_MASK));
+                
                 autres.add(reglages);
                 autres.add(scores);
                 autres.add(regles);
@@ -111,11 +123,16 @@ public class Fenetre implements Runnable,ActionListener {
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
                 frame.repaint(1000,0,0,frame.getWidth(),frame.getHeight());
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-
+                
+                
+                nouveau.addActionListener(f);
+                rejouer.addActionListener(f);
+                svg.addActionListener(f);
+                charger.addActionListener(f);
+                quitter.addActionListener(f);
+                reglages.addActionListener(f);
+                scores.addActionListener(f);
+                aPropos.addActionListener(f);
+                quitterM.addActionListener(f);
         }
 }
