@@ -293,13 +293,13 @@ public class Moteur{
 			if(plateau.get(0).get(c.y) == Case.LIBRE && estCoupPossible(new DepRang(Direction.HAUT, c.y, false))){
 				listeCoup.add(new DepRang(Direction.HAUT, c.y, false));
 			}
-			else if(plateau.get(N-1).get(c.y) == Case.LIBRE && estCoupPossible(new DepRang(Direction.BAS, c.y, false))){
+			if(plateau.get(N-1).get(c.y) == Case.LIBRE && estCoupPossible(new DepRang(Direction.BAS, c.y, false))){
 				listeCoup.add(new DepRang(Direction.BAS, c.y, false));
 			}
-			else if(plateau.get(c.x).get(0) == Case.LIBRE && estCoupPossible(new DepRang(Direction.GAUCHE, c.y, false))){
+			if(plateau.get(c.x).get(0) == Case.LIBRE && estCoupPossible(new DepRang(Direction.GAUCHE, c.y, false))){
 				listeCoup.add(new DepRang(Direction.GAUCHE, c.x, false));
 			}
-			else if(plateau.get(c.x).get(N-1) == Case.LIBRE && estCoupPossible(new DepRang(Direction.DROITE, c.y, false))){
+			if(plateau.get(c.x).get(N-1) == Case.LIBRE && estCoupPossible(new DepRang(Direction.DROITE, c.y, false))){
 				listeCoup.add(new DepRang(Direction.DROITE, c.x, false));
 			}
 

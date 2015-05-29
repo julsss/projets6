@@ -102,7 +102,7 @@ public class AireDeDessin extends JComponent {
         lsurvolsRanger = new ArrayList<>();
         ArrayList<Coup> l = moteur.listeCoupPossible();
         // TODO
-        // System.out.println(p + " " + l);
+         System.out.println(p + " " + l);
         for(Coup c : l) {
             if(c instanceof DepPion) {
                 Point tmp = ((DepPion) c).getDepart();
@@ -113,7 +113,7 @@ public class AireDeDessin extends JComponent {
                 lsurvolsRanger.add(c);
             }
         }
-        // System.out.println(lsurvolsRanger);
+         System.out.println(lsurvolsRanger);
         repaint();
     }
 
