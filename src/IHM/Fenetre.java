@@ -20,10 +20,12 @@ public class Fenetre implements Runnable,ActionListener {
         public JFrame frame;
         public JButton annuler, refaire;
 
-        public void run() {
-                // Creation d'une fenetre
+        public Fenetre(Moteur m) {
+			mot = m;
+		}
 
-                mot = new Moteur(new Humain(), new Humain());
+		public void run() {
+                // Creation d'une fenetre
                 frame = new JFrame("Quits");
                 frame.setPreferredSize(new Dimension(1000, 600));
                 SpringLayout alpha = new SpringLayout();

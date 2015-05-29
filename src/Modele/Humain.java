@@ -4,17 +4,22 @@ import Moteur.Coup;
 import Moteur.Moteur;
 
 public class Humain extends Joueur{
-	
-	public Humain(){
+	String pseudo;
+	public Humain(String pseudo){
+		
 		super(false);	
+		this.pseudo = pseudo;
+		
 	}
 	
-	public Humain(boolean b, boolean t){
+	public Humain(boolean b, boolean t, String pseudo){
 		super(b, t);
+		this.pseudo = pseudo;
 	}
 	
-	public Humain(int score, boolean b) {
+	public Humain(int score, boolean b, String pseudo) {
 		super(score, b);
+		this.pseudo = pseudo;
 	}
 
 	@Override
