@@ -21,10 +21,12 @@ public class EcouteurFenetre implements ActionListener{
 		if (source ==  fe.annuler)
 		{
 			fe.mot.annuler();
+			fe.frame.repaint();
 		}
 		else if(source == fe.refaire)
 		{
 			fe.mot.refaire();
+			fe.frame.repaint();
 		}
 		else if(source == fe.nouveau || source == fe.reglages)
 		{

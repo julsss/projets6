@@ -362,81 +362,80 @@ public class Moteur{
 		return listeCase;
 	}
 
-	public void joue_coup(Coup m){
-        if(estCoupPossible(m)) {
-            if (m instanceof DepRang) {
+	public void joue_coup(Coup m) {
+		if (estCoupPossible(m)) {
+			if (m instanceof DepRang) {
 
-                DepRang d = new DepRang(((DepRang) m).getDir(), ((DepRang) m).getRang(), false);
-                if (d.getDir() == Direction.BAS) {
+				DepRang d = new DepRang(((DepRang) m).getDir(), ((DepRang) m).getRang(), false);
+				if (d.getDir() == Direction.BAS) {
 
-                    if (d.getRang() == 0 && plateau[N - 2][d.getRang()] == Case.PJ2) {
-                        this.nbBillej2--;
-                        ((DepRang) m).setValidant(true);
-                        plateau[3][0] = Case.LIBRE;
-                    }
+					if (d.getRang() == 0 && plateau[N - 2][d.getRang()] == Case.PJ2) {
+						this.nbBillej2--;
+						((DepRang) m).setValidant(true);
+						plateau[3][0] = Case.LIBRE;
+					}
 
-                    for (int i = N - 1; i > 0; i--) {
-                        plateau[i][d.getRang()] = plateau[i-1][d.getRang()];
-                    }
+					for (int i = N - 1; i > 0; i--) {
+						plateau[i][d.getRang()] = plateau[i - 1][d.getRang()];
+					}
 					plateau[0][d.getRang()] = Case.LIBRE;
-                } else if (d.getDir() == Direction.HAUT) {
-                    if (d.getRang() == N - 1 && plateau[1][d.getRang()] == Case.PJ1) {
-                        this.nbBillej1--;
-                        ((DepRang) m).setValidant(true);
-                        plateau[1][4]= Case.LIBRE;
-                    }
-                    for (int i = 0; i < N - 1; i++) {
-						plateau[i][d.getRang()] = plateau[i+1][d.getRang()];
-                    }
-                    plateau[N-1][d.getRang()] = Case.LIBRE;
-                } else if (d.getDir() == Direction.DROITE) {
+				} else if (d.getDir() == Direction.HAUT) {
+					if (d.getRang() == N - 1 && plateau[1][d.getRang()] == Case.PJ1) {
+						this.nbBillej1--;
+						((DepRang) m).setValidant(true);
+						plateau[1][4] = Case.LIBRE;
+					}
+					for (int i = 0; i < N - 1; i++) {
+						plateau[i][d.getRang()] = plateau[i + 1][d.getRang()];
+					}
+					plateau[N - 1][d.getRang()] = Case.LIBRE;
+				} else if (d.getDir() == Direction.DROITE) {
 
-                    if (d.getRang() == 0 && plateau[d.getRang()][3] == Case.PJ1) {
-                        this.nbBillej1--;
-                        ((DepRang) m).setValidant(true);
+					if (d.getRang() == 0 && plateau[d.getRang()][3] == Case.PJ1) {
+						this.nbBillej1--;
+						((DepRang) m).setValidant(true);
 						plateau[d.getRang()][3] = Case.LIBRE;
-                    }
+					}
 
-                    for (int i = N - 1; i > 0; i--) {
-						plateau[d.getRang()][i] = plateau[d.getRang()][i-1];
-                    }
+					for (int i = N - 1; i > 0; i--) {
+						plateau[d.getRang()][i] = plateau[d.getRang()][i - 1];
+					}
 					plateau[d.getRang()][0] = Case.LIBRE;
-                } else if (d.getDir() == Direction.GAUCHE) {
+				} else if (d.getDir() == Direction.GAUCHE) {
 
-                    if (d.getRang() == 4 && plateau[4][1] == Case.PJ2) {
-                        this.nbBillej2--;
-                        ((DepRang) m).setValidant(true);
+					if (d.getRang() == 4 && plateau[4][1] == Case.PJ2) {
+						this.nbBillej2--;
+						((DepRang) m).setValidant(true);
 						plateau[d.getRang()][1] = Case.LIBRE;
-                    }
+					}
 
-                    for (int i = 0; i < N - 1; i++) {
-						plateau[d.getRang()][i] = plateau[d.getRang()][i+1];
-                    }
-					plateau[d.getRang()][N-1] = Case.LIBRE;
-                }
-                histo.ajouter(d);
-            } else if (m instanceof DepPion) {
+					for (int i = 0; i < N - 1; i++) {
+						plateau[d.getRang()][i] = plateau[d.getRang()][i + 1];
+					}
+					plateau[d.getRang()][N - 1] = Case.LIBRE;
+				}
+				histo.ajouter(d);
+			} else if (m instanceof DepPion) {
 
-                DepPion pion = new DepPion(((DepPion) m).getDepart(), ((DepPion) m).getArrive());
-                if (pion.getArrive().x == 4 && pion.getArrive().y == 0 && this.plateau[4][0] == Case.LIBRE) {
-                    setNbBillej2(getNbBillej2() - 1);
+				DepPion pion = new DepPion(((DepPion) m).getDepart(), ((DepPion) m).getArrive());
+				if (pion.getArrive().x == 4 && pion.getArrive().y == 0 && this.plateau[4][0] == Case.LIBRE) {
+					setNbBillej2(getNbBillej2() - 1);
 					plateau[pion.getDepart().x][pion.getDepart().y] = Case.LIBRE;
 
-                } else if (pion.getArrive().x == 0 && pion.getArrive().y == 4 ) {
-                    setNbBillej1(getNbBillej1() - 1);
+				} else if (pion.getArrive().x == 0 && pion.getArrive().y == 4) {
+					setNbBillej1(getNbBillej1() - 1);
 					plateau[pion.getDepart().x][pion.getDepart().y] = Case.LIBRE;
-                } else {
+				} else {
 					plateau[pion.getArrive().x][pion.getArrive().y] = plateau[pion.getDepart().x][pion.getDepart().y];
-                    plateau[pion.getDepart().x][pion.getDepart().y] = Case.LIBRE;
-                }
-                histo.ajouter(pion);
-            }
-            tourj1 = !tourj1;
-            //correctionPlatIHM();
+					plateau[pion.getDepart().x][pion.getDepart().y] = Case.LIBRE;
+				}
+				histo.ajouter(pion);
+			}
+			tourj1 = !tourj1;
 			int scoreJ1 = N, scoreJ2 = N;
-			for(int i = 0; i < N; i++)
-				for(int j = 0; j < N; j++){
-					switch (plateau[i][j]){
+			for (int i = 0; i < N; i++)
+				for (int j = 0; j < N; j++) {
+					switch (plateau[i][j]) {
 						case PJ1:
 							scoreJ1--;
 							break;
@@ -448,79 +447,77 @@ public class Moteur{
 			j1.setScore(scoreJ1);
 			j2.setScore(scoreJ2);
 
-        }
+		}
 	}
-
 	//a modif-------------------------
 	public void annuler(){
 		Coup m = histo.annuler();
-		if(m instanceof DepRang){
+		if(m != null) {
+			if (m instanceof DepRang) {
 
-			DepRang d = new DepRang(((DepRang) m).getDir(), ((DepRang) m).getRang(), ((DepRang) m).isValidant());
-			if(d.getDir() == Direction.BAS){
-				for(int i = 0; i < N-1; i++){
-					plateau[i][d.getRang()] = plateau[i+1][d.getRang()];
+				DepRang d = new DepRang(((DepRang) m).getDir(), ((DepRang) m).getRang(), ((DepRang) m).isValidant());
+				if (d.getDir() == Direction.BAS) {
+					for (int i = 0; i < N - 1; i++) {
+						plateau[i][d.getRang()] = plateau[i + 1][d.getRang()];
+					}
+					if (d.isValidant()) {
+						this.nbBillej2++;
+						((DepRang) m).setValidant(false);
+						plateau[3][0] = Case.PJ2;
+					}
+					plateau[N - 1][d.getRang()] = Case.LIBRE;
+				} else if (d.getDir() == Direction.HAUT) {
+					for (int i = N - 1; i > 0; i--) {
+						plateau[i][d.getRang()] = plateau[i - 1][d.getRang()];
+					}
+					if (d.isValidant()) {
+						this.nbBillej1++;
+						((DepRang) m).setValidant(false);
+						plateau[1][N - 1] = Case.PJ1;
+					}
+					plateau[0][d.getRang()] = Case.LIBRE;
+				} else if (d.getDir() == Direction.DROITE) {
+
+					for (int i = 0; i < N - 1; i++) {
+						plateau[d.getRang()][i] = plateau[d.getRang()][i + 1];
+					}
+					if (d.isValidant()) {
+						this.nbBillej1++;
+						((DepRang) m).setValidant(false);
+						plateau[d.getRang()][N - 2] = Case.PJ1;
+					}
+					plateau[d.getRang()][N - 1] = Case.LIBRE;
+				} else if (d.getDir() == Direction.GAUCHE) {
+					for (int i = N - 1; i > 0; i--) {
+						plateau[d.getRang()][i] = plateau[d.getRang()][i - 1];
+					}
+					if (d.isValidant()) {
+						this.nbBillej2++;
+						((DepRang) m).setValidant(false);
+						plateau[d.getRang()][1] = Case.PJ2;
+					}
+					plateau[d.getRang()][0] = Case.LIBRE;
 				}
-				if(d.isValidant()){
+			} else if (m instanceof DepPion) {
+				DepPion pion = new DepPion(((DepPion) m).getArrive(), ((DepPion) m).getDepart());
+
+				Case c = plateau[pion.getDepart().x][pion.getDepart().y];
+				plateau[pion.getDepart().x][pion.getDepart().y] = Case.LIBRE;
+				plateau[pion.getArrive().x][pion.getArrive().y] = c;
+				if (pion.getDepart().x == 4 && pion.getDepart().y == 0) {
 					this.nbBillej2++;
-					((DepRang) m).setValidant(false);
-					plateau[3][0] = Case.PJ2;
-				}
-				plateau[N-1][d.getRang()] = Case.LIBRE;
-			}
-			else if(d.getDir() == Direction.HAUT){
-				for(int i = N-1; i > 0; i--){
-					plateau[i][d.getRang()] = plateau[i-1][d.getRang()];
-				}
-				if(d.isValidant()){
+				} else if (pion.getDepart().x == 0 && pion.getDepart().y == 4) {
 					this.nbBillej1++;
-					((DepRang) m).setValidant(false);
-					plateau[1][N-1] = Case.PJ1;
 				}
-				plateau[0][d.getRang()] = Case.LIBRE;
 			}
-			else if(d.getDir() == Direction.DROITE){
-
-				for(int i = 0; i < N-1; i++){
-					plateau[d.getRang()][i] = plateau[d.getRang()][i+1];
-				}
-				if(d.isValidant()){
-					this.nbBillej1++;
-					((DepRang) m).setValidant(false);
-					plateau[d.getRang()][N-2] = Case.PJ1;
-				}
-				plateau[d.getRang()][N-1] = Case.LIBRE;
-			}
-			else if(d.getDir() == Direction.GAUCHE){
-				for(int i = N-1; i > 0; i--){
-					plateau[d.getRang()][i] = plateau[d.getRang()][i-1];
-				}
-				if(d.isValidant()){
-					this.nbBillej2++;
-					((DepRang) m).setValidant(false);
-					plateau[d.getRang()][1] = Case.PJ2;
-				}
-				plateau[d.getRang()][0] = Case.LIBRE;
-			}
+			tourj1 = !tourj1;
 		}
-		else if(m instanceof DepPion){
-			DepPion pion = new DepPion(((DepPion) m).getArrive(),((DepPion) m).getDepart());
-
-			Case c = plateau[pion.getDepart().x][pion.getDepart().y];
-			plateau[pion.getDepart().x][pion.getDepart().y] = Case.LIBRE;
-			plateau[pion.getArrive().x][pion.getArrive().y] = c;
-			if(pion.getDepart().x == 4 && pion.getDepart().y == 0){
-				this.nbBillej2++;
-			} else if(pion.getDepart().x == 0 && pion.getDepart().y == 4){
-				this.nbBillej1++;
-			}
-		}
-		tourj1 = !tourj1;
 	}
 
 	public void refaire(){
 		Coup m = histo.refaire();
-		joue_coup(m);
+		if(m!=null)
+			joue_coup(m);
 	}
 
 	public void afficher(){

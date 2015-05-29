@@ -28,7 +28,6 @@ public class OrdiFacile extends Joueur {
 
 	@Override
 	public Coup jouer(Moteur m) {
-		
 		// TODO Auto-generated method stub
 		return facile(m);
 	}

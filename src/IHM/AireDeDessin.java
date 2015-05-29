@@ -60,10 +60,12 @@ public class AireDeDessin extends JComponent {
         if(moteur.estCoupPossible(d)) {
             moteur.joue_coup(d);
         }
+
         p1 = null;
         lsurvols = new ArrayList<>();
         lsurvolsRanger = new ArrayList<>();
         repaint();
+        System.out.println("toto");
     }
 
     public void doMoveRanger(Point p){
@@ -106,7 +108,7 @@ public class AireDeDessin extends JComponent {
                     lsurvolsRanger.add(c);
             }
         }
-        //System.out.println(lsurvolsRanger);
+        //system.out.println(lsurvolsRanger);
         repaint();
     }
 

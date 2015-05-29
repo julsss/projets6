@@ -36,6 +36,7 @@ public class OrdiMoyen extends Joueur {
 	public Coup jouer(Moteur m){
 
 		alphabeta(profondeurMoyen,Integer.MIN_VALUE,Integer.MAX_VALUE,m);
+		System.out.println(coupOrdiMoyen);
 		return coupOrdiMoyen;
 	}
 

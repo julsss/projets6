@@ -55,8 +55,8 @@ public class Historique{
 	{
 		if(!annuler.isEmpty())
 		{
+
 			Moteur.Coup p = annuler.pop();
-			coup.addFirst(p);
 			supprAnnuler = true;
 			return p;
 		}		
