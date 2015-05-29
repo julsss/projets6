@@ -33,7 +33,7 @@ public class AireDeDessin extends JComponent {
     public AireDeDessin(Fenetre f, Moteur m) {
         this.f = f;
         moteur = m;
-        N = moteur.N + 2;
+        N = Moteur.N + 2;
         p1 = null;
         initSurvols();
 
@@ -67,31 +67,23 @@ public class AireDeDessin extends JComponent {
     }
 
     public void doMoveRanger(Point p){
-        Dimension d = this.getSize();
-        int x, y;
-        int width, height;
-
-        width = d.width / N;
-        height = d.height / N;
-        y = (p.x / width) - 1;
-        x = (p.y / height) - 1;
         Direction dir = null;
         int ranger = 0;
-        if(x == -1){
+        if(p.x == -1){
             dir = Direction.BAS;
-            ranger = y;
+            ranger = p.y;
         }
-        else if(x == moteur.N){
+        else if(p.x == Moteur.N){
             dir = Direction.HAUT;
-            ranger = y;
+            ranger = p.y;
         }
-        else if(y == -1){
+        else if(p.y == -1){
             dir = Direction.DROITE;
-            ranger = x;
+            ranger = p.x;
         }
-        else if(y == moteur.N){
+        else if(p.y == Moteur.N){
             dir = Direction.GAUCHE;
-            ranger = x;
+            ranger = p.x;
         }
         moteur.joue_coup(new DepRang(dir,ranger,false));
         repaint();
@@ -101,8 +93,8 @@ public class AireDeDessin extends JComponent {
         lsurvols = new ArrayList<>();
         lsurvolsRanger = new ArrayList<>();
         ArrayList<Coup> l = moteur.listeCoupPossible();
-        // TODO
-         System.out.println(p + " " + l);
+
+        //System.out.println(p + " " + l);
         for(Coup c : l) {
             if(c instanceof DepPion) {
                 Point tmp = ((DepPion) c).getDepart();
@@ -110,10 +102,11 @@ public class AireDeDessin extends JComponent {
                     lsurvols.add(((DepPion) c).getArrive());
             }
             else {
-                lsurvolsRanger.add(c);
+                if( ((DepRang) c).getRang() == p.x || ((DepRang) c).getRang() == p.y )
+                    lsurvolsRanger.add(c);
             }
         }
-         System.out.println(lsurvolsRanger);
+        //System.out.println(lsurvolsRanger);
         repaint();
     }
 
@@ -186,33 +179,33 @@ public class AireDeDessin extends JComponent {
         height = d.height / N;
         int i = -1, j = -1;
 
-        if(c.dir == Direction.BAS){
-            j = c.rang;
+        if(c.getDir() == Direction.BAS){
+            j = c.getRang();
         }
-        else if(c.dir == Direction.HAUT){
-            i = moteur.N;
-            j = c.rang;
+        else if(c.getDir() == Direction.HAUT){
+            i = Moteur.N;
+            j = c.getRang();
         }
-        else if(c.dir == Direction.DROITE){
-            i = c.rang;
+        else if(c.getDir() == Direction.DROITE){
+            i = c.getRang();
         }
-        else if(c.dir == Direction.GAUCHE){
-            i = c.rang;
-            j = moteur.N;
+        else if(c.getDir() == Direction.GAUCHE){
+            i = c.getRang();
+            j = Moteur.N;
         }
         y = (i+1) * width;
         x = (j+1) * height;
 
-        if(c.dir == Direction.BAS){
+        if(c.getDir() == Direction.BAS){
             drawable.drawImage(rotate(fleche, -90),x,y,width,height, null);
         }
-        else if(c.dir == Direction.HAUT){
+        else if(c.getDir() == Direction.HAUT){
             drawable.drawImage(rotate(fleche, 90),x,y,width,height, null);
         }
-        else if(c.dir == Direction.DROITE){
+        else if(c.getDir() == Direction.DROITE){
             drawable.drawImage(rotate(fleche, 180),x,y,width,height, null);
         }
-        else if(c.dir == Direction.GAUCHE){
+        else if(c.getDir() == Direction.GAUCHE){
             drawable.drawImage(fleche,x,y,width,height, null);
         }
     }
@@ -265,8 +258,8 @@ public class AireDeDessin extends JComponent {
             dessinerSurvolRanger(drawable, (DepRang) c);
         }
 
-        for(int i =0; i < moteur.N; i++){
-            for(int j =0; j < moteur.N; j++){
+        for(int i =0; i < Moteur.N; i++){
+            for(int j =0; j < Moteur.N; j++){
                 dessinerCase(new Point(i,j),moteur.plateau.get(i).get(j), drawable);
             }
         }

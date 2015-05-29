@@ -16,7 +16,6 @@ public class EcouteurDemarrage implements ActionListener{
 		this.f = f;
 	}
 	
-	@Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
@@ -24,7 +23,7 @@ public class EcouteurDemarrage implements ActionListener{
             System.exit(0);
         }
         else if (source == f.nvpartie) {
-
+            SwingUtilities.invokeLater(new Reglages());
         }
         else if (source == f.rjeu || source == f.regles) {
             SwingUtilities.invokeLater(new ReglesQuits());
@@ -56,7 +55,6 @@ public class EcouteurDemarrage implements ActionListener{
 
         }
         else if (source == f.rejouer){
-
         }
 
 
