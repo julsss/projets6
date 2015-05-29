@@ -199,6 +199,13 @@ public class Moteur{
 		}
 	}
 
+	public Case getPlateau(int i, int j){
+		return plateau.get(i).get(j);
+	}
+	public Case setPlateau(Case c,int i,int j){
+		return plateau.get(i).set(j,c);
+	}
+
 	public boolean estCoupPossible(Point p1 , Point p2){
 		return estCoupPossible(new DepPion(p1,p2));
 	}
