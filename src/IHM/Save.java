@@ -7,7 +7,7 @@ import java.io.*;
 
 import Modele.Joueur;
 
-
+/*
 // a metre dans le moteur 
 public class Save{
 
@@ -105,4 +105,4 @@ public void charger( String filePath){
   }
   }
 
-}
+}*/
