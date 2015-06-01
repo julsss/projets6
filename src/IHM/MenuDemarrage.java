@@ -1,20 +1,24 @@
 package IHM;
 
+import static java.awt.event.ActionEvent.CTRL_MASK;
+
 import javax.swing.BoxLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+
 import java.awt.*;
+
 import javax.swing.*;
+
 import java.awt.event.*;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class MenuDemarrage implements Runnable{
 	public JFrame frame;
@@ -27,29 +31,34 @@ public class MenuDemarrage implements Runnable{
         nvpartie = new JButton("Nouvelle Partie");
         prapide = new JButton("Partie Rapide");
         charger = new JButton("Charger");
-        rjeu = new JButton("Regles du jeu");
+        rjeu = new JButton("Règles du jeu");
         scores = new JButton("Scores");
         quitter = new JButton("Quitter");
         JLabel Bienvenue = new JLabel("Bienvenue !");
 
         jeu = new JMenu("Jeu");
-        demarrer = new JMenuItem("Demarrer");
+        demarrer = new JMenuItem("Commencer une nouvelle partie");
         rejouer = new JMenuItem("Rejouer");
         Charger = new JMenuItem("Charger");
         svg = new JMenuItem("Sauvegarder");
-        Quitter = new JMenuItem("Quitter");
+        Quitter = new JMenuItem("Quitter l'application");
         svg.setEnabled(false);
         rejouer.setEnabled(false);
-
-        options = new JMenu("Options");
-        reglages = new JMenuItem("Reglages");
-
-        Scores = new JMenu("Scores");
-        afficher = new JMenuItem("Afficher");
-
+        
+        demarrer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, CTRL_MASK));
+        rejouer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, CTRL_MASK));
+        svg.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, CTRL_MASK));
+        Charger.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, CTRL_MASK));
+        Quitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, CTRL_MASK));
+        
+        //options = new JMenu("Options");
+        //Scores = new JMenu("Scores");
+        
         PInterro = new JMenu("?");
-        regles = new JMenuItem("Règles");
+        regles = new JMenuItem("Règles du jeu");
         apropos = new JMenuItem(" A propos");
+        reglages = new JMenuItem("Réglages");
+        afficher = new JMenuItem("Scores");
     }
 
 	public void run(){
@@ -79,11 +88,9 @@ public class MenuDemarrage implements Runnable{
         jeu.add(Charger);
         jeu.add(Quitter);
 
-        options.add(reglages);
-
-        Scores.add(afficher);
-
+        PInterro.add(reglages);
         PInterro.add(regles);
+        PInterro.add(afficher);
         PInterro.add(apropos);
 
         panel.add(new JLabel(image));
@@ -92,8 +99,8 @@ public class MenuDemarrage implements Runnable{
 
         JMenuBar barre = new JMenuBar();
         barre.add(jeu);
-        barre.add(options);
-        barre.add(Scores);
+        //barre.add(options);
+        //barre.add(Scores);
         barre.add(PInterro);
         frame.setJMenuBar(barre);
 
