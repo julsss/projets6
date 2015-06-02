@@ -28,6 +28,10 @@ public class EcouteurFenetre implements ActionListener{
 			fe.mot.refaire();
 			fe.frame.repaint();
 		}
+		else if(source == fe.playIA)
+		{
+			//TODO à remplir
+		}
 		else if(source == fe.nouveau || source == fe.reglages)
 		{
 			 SwingUtilities.invokeLater(new Reglages());
