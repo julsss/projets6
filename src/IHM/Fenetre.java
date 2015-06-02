@@ -109,8 +109,8 @@ public class Fenetre implements Runnable{
 		quitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, CTRL_MASK));
 
 		autres.add(reglages);
-		autres.add(scores);
 		autres.add(regles);
+		autres.add(scores);
 		autres.add(aPropos);
 
 		JMenuBar barreMenu = new JMenuBar();
